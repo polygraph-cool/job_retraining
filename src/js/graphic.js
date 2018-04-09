@@ -142,7 +142,21 @@ function init() {
 					.st('stroke', 'black')
 					.st('fill','white')
 
+					jobCircles.on('mouseenter',(d)=>{
+						const jobSelectedName = d3.select("div.job-selected-name");
+						jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
 
+						const jobComparedName = d3.select("div.job-compared-name");
+						jobComparedName.text("Compared job: "+keyObjectJobName[d.id_compared])
+
+						const jobSelectedNumber = d3.select("div.job-selected-number");
+						jobSelectedNumber.text("Main job quantity: "+keyObjectJobNumber[d.id_selected])
+
+						const jobComparedNumber = d3.select("div.job-compared-number");
+						jobComparedNumber.text("Compared job quantity: "+keyObjectJobNumber[d.id_compared])
+
+
+					})
 				// updateCircles(selectedJobID)
 			})
 

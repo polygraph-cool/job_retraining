@@ -2,11 +2,16 @@
 let mobile = false;
 let viewportWidth = window.innerWidth;
 let isMobile = viewportWidth < 700? true : false
+let allData = null
 
+const keyObjectJobName = {}
+const keyObjectJobNumber = {}
+const keyObjectJobAuto = {}
+const keyObjectJobWage = {}
 
-function selectJobData(data, selectedJobID){
+function selectJobData(allData, selectedJobID){
 
-	const selectedJobData = data.filter((item)=>{
+	const selectedJobData = allData.filter((item)=>{
 		return item.id_selected === selectedJobID;
 		// Why does this need a return statement while the X.length>6 doesn't?
 	})
@@ -57,6 +62,8 @@ function init() {
 			item.id_selected= +item.id_selected;
 		})
 
+		allData = similarity;
+
 		const chartSvg = d3.select("body").append("svg.scatter")
 
 		chartSvg.at('height', 600)
@@ -78,22 +85,18 @@ function init() {
 		let xScale = setupXScale(selectedJobData)
 
 		// Setting up transition object
-		const keyObjectJobName = {}
 		crosswalk.forEach(job=>{
 			keyObjectJobName[job.id]=job.job_name;
 		})
 
-		const keyObjectJobNumber = {}
 		crosswalk.forEach(job=>{
 			keyObjectJobNumber[job.id]=job.number;
 		})
 
-		const keyObjectJobAuto = {}
 		crosswalk.forEach(job=>{
 			keyObjectJobAuto[job.id]=job.auto;
 		})
 
-		const keyObjectJobWage = {}
 		crosswalk.forEach(job=>{
 			keyObjectJobWage[job.id]=job.wage;
 		})
@@ -115,6 +118,32 @@ function init() {
 			.st('width', 500)
 			.text((d)=>{
 				return d.job_name;
+			})
+			.on('click',(d)=>{
+				const selectedJobID=d.id;
+				const updatedData = selectJobData(allData, selectedJobID);
+				const xScale = setupXScale(updatedData);
+
+				d3.selectAll('circle.job').remove()
+
+				let jobCircles = d3.select('svg.scatter')
+					.selectAll('circle.job')
+					.data(updatedData)
+					.enter()
+					.append('circle.job')
+
+					console.log(updatedData);
+
+
+				jobCircles
+					.at('cx', d=>{return xScale(d.similarity)})
+					.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+					.at('r', d=>{return 5})
+					.st('stroke', 'black')
+					.st('fill','white')
+
+
+				// updateCircles(selectedJobID)
 			})
 
 

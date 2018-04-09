@@ -99,6 +99,21 @@ function init() {
 		})
 
 
+		const jobNames = first5Jobs.map((d)=>{
+			return keyObjectJobName[d.id_selected]
+		})
+		const uniqueJobNames = Array.from(new Set(jobNames));
+
+		const jobButtons=d3.selectAll('div.job-button')
+			.data(uniqueJobNames)
+			.enter()
+			.append('div.job-button')
+
+		jobButtons.st('height', 20)
+			.st('width', 500)
+			.text((d)=>{
+				return d;
+			})
 
 
 		let jobCircles = chartSvg

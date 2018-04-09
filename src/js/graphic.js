@@ -4,98 +4,142 @@ let viewportWidth = window.innerWidth;
 let isMobile = viewportWidth < 700? true : false
 
 
-function trimArray(array){
-	const trimmedArray = array.slice(0,5);
-	const indexedArray = newArray.map((d,i)=>({
-		id: i,
-		...d
-	}))
-	return indexedArray;
+function selectJobData(data, selectedJobID){
+
+	const selectedJobData = data.filter((item)=>{
+		return item.id_selected === selectedJobID;
+		// Why does this need a return statement while the X.length>6 doesn't?
+	})
+
+	return selectedJobData
 }
 
-function combineJobArrays(arrayOfArrays){
-	const arr1 = arrayOfArrays[0]
-	const arr2 = arrayOfArrays[1]
-	const arr3 = arrayOfArrays[2]
+function setupXScale(selectedJobData){
 
-	const firstJoinedArray = []
-	const secondJoinedArray =[]
-	const thirdJoinedArray = []
+	const xScale = d3.scaleLinear()
+		.domain(d3.extent(selectedJobData, function(d) { return d.similarity; }))
+		.range([0, 800]);
 
-arr1.forEach((itm, i) => {
-  arr3.push(Object.assign({}, itm, arr2[i]));
-});
+	return xScale;
 }
+
 
 function resize() {}
 
 
 function init() {
 
-	//
-	// const pathData = 'assets/data/'
-	// const files = []
-	// const dataCategories = ['auto', 'relative_emp', 'similar', 'wage']
-	//
-	// dataCategories.forEach((category)=>{
-	// 	files.push(pathData+category+'.csv')
-	// })
-
-	const laborersPath = 'assets/data/laborers.csv'
-	const truckersPath = 'assets/data/truckers.csv'
-	const athletesPath = 'assets/data/athletes.csv'
-	const compManagersPath = 'assets/data/comp_managers.csv'
-
-	const files = [laborersPath,truckersPath,athletesPath,compManagersPath]
+	const MAX_AUTO = 1
+	const MIN_AUTO = 0
+	const pathData = 'assets/data/'
+	const fileNames = ['crosswalk','similarity']
+	let files = []
+	fileNames.forEach((category)=>{
+		files.push(pathData+category+'.csv')
+	})
 
 	d3.loadData(...files, (err, response)=>{
-		const laborersData = response[0]
-		console.log(laborersData);
+		let crosswalk = response[0]
+		let similarity= response[1]
+
+
+		crosswalk.forEach((item)=>{
+			item.id= +item.id;
+			item.auto= +item.auto;
+			item.wage= +item.wage;
+			item.number= +item.number;
+		})
+
+
+		similarity.forEach((item)=>{
+			item.similarity= +item.similarity;
+			item.id_compared= +item.id_compared;
+			item.id_selected= +item.id_selected;
+		})
+
 		const chartSvg = d3.select("body").append("svg.scatter")
 
 		chartSvg.at('height', 600)
 			.at('width', 800)
 			.st('fill','#00000')
 
-		const xScale = d3.scaleLinear()
-    	.domain(d3.extent(laborersData, function(d) { return +d.similar_Construction_Laborers; }))
-    	.range([0, 800]);
-
-		const yScale = d3.scaleLinear()
-			.domain(d3.extent(laborersData, function(d) { return +d.Automatability; }))
-			.range([0, 600]);
-
-
-		const jobCircles = chartSvg
-			.selectAll('circle.job')
-			.data(laborersData)
-			.enter()
-			.append('circle.job')
-
-		jobCircles
-			.at('cx', d=>{return xScale(+d.similar_Construction_Laborers)})
-			.at('cy', d=>{return yScale(+d.Automatability)})
-			.at('r', d=>{
-				const employmentRatio =+d.Employment/912100;
-				return employmentRatio*5
-			})
-			.st('stroke', 'black')
-			.st('fill','white')
-
-		const jobName = d3.select("body").append("div.job-name")
-		const jobNumber = d3.select("body").append("div.job-number")
-
-		jobCircles.on('mouseenter',(d)=>{
-			const jobName = d3.select("div.job-name");
-			jobName.text(d.Job_Compared)
-
-			const jobNumber = d3.select("div.job-number");
-			jobNumber.text(d.Employment)
+		const first5Jobs=similarity.filter(item=>{
+			return item.id_selected<5
 		})
 
 
 
-		// const cleanData = response.map(trimArray);
+		let selectedJobData =	selectJobData(first5Jobs, 3)
+
+		const yScale = d3.scaleLinear()
+			.domain([MIN_AUTO,MAX_AUTO])
+			.range([0, 600]);
+
+		let xScale = setupXScale(selectedJobData)
+
+		// Setting up transition object
+		const keyObjectJobName = {}
+		crosswalk.forEach(job=>{
+			keyObjectJobName[job.id]=job.job_name;
+		})
+
+		const keyObjectJobNumber = {}
+		crosswalk.forEach(job=>{
+			keyObjectJobNumber[job.id]=job.number;
+		})
+
+		const keyObjectJobAuto = {}
+		crosswalk.forEach(job=>{
+			keyObjectJobAuto[job.id]=job.auto;
+		})
+
+		const keyObjectJobWage = {}
+		crosswalk.forEach(job=>{
+			keyObjectJobWage[job.id]=job.wage;
+		})
+
+
+
+
+		let jobCircles = chartSvg
+			.selectAll('circle.job')
+			.data(selectedJobData)
+			.enter()
+			.append('circle.job')
+
+
+
+
+		jobCircles
+			.at('cx', d=>{return xScale(d.similarity)})
+			.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+			.at('r', d=>{return 5})
+			.st('stroke', 'black')
+			.st('fill','white')
+
+		const jobSelectedName = d3.select("body").append("div.job-selected-name")
+		const jobComparedName = d3.select("body").append("div.job-compared-name")
+		const jobSelectedNumber = d3.select("body").append("div.job-selected-number")
+		const jobComparedNumber = d3.select("body").append("div.job-compared-number")
+
+		jobCircles.on('mouseenter',(d)=>{
+			const jobSelectedName = d3.select("div.job-selected-name");
+			jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
+
+			const jobComparedName = d3.select("div.job-compared-name");
+			jobComparedName.text("Compared job: "+keyObjectJobName[d.id_compared])
+
+			const jobSelectedNumber = d3.select("div.job-selected-number");
+			jobSelectedNumber.text("Main job quantity: "+keyObjectJobNumber[d.id_selected])
+
+			const jobComparedNumber = d3.select("div.job-compared-number");
+			jobComparedNumber.text("Compared job quantity: "+keyObjectJobNumber[d.id_compared])
+
+
+		})
+
+
+
 
 
 

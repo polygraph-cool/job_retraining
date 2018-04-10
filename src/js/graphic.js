@@ -166,7 +166,20 @@ function init() {
 					.st('stroke', 'black')
 
 
-					jobCircles.on('mouseenter',(d)=>{
+					jobCircles.on('mouseenter',(d,i,n)=>{
+
+
+						const jobTooltip = d3.select("div.jobTooltip")
+
+						const xCoord = d3.select(n[i])
+							.at("cx")
+
+						const yCoord = d3.select(n[i])
+							.at("cy")
+
+						jobTooltip.st("left", (xCoord+"px") )
+							.st("top", (yCoord+"px") )
+
 						const jobSelectedName = d3.select("div.job-selected-name");
 						jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
 

@@ -2,6 +2,7 @@
 let mobile = false;
 let viewportWidth = window.innerWidth;
 let isMobile = viewportWidth < 700? true : false
+
 let allData = null
 
 const keyObjectJobName = {}
@@ -84,6 +85,11 @@ function init() {
 
 		let xScale = setupXScale(selectedJobData)
 
+		const colorScale = d3.scaleLinear()
+			.domain([5, 2, 1.25, 1.1, 0.9,.75, 0.5, 0.2])
+			.range(['#a50026','#d73027','#f46d43','#fee090','#e0f3f8','#74add1','#4575b4','#313695'])
+
+
 		// Setting up transition object
 		crosswalk.forEach(job=>{
 			keyObjectJobName[job.id]=job.job_name;
@@ -124,6 +130,9 @@ function init() {
 				const updatedData = selectJobData(allData, selectedJobID);
 				const xScale = setupXScale(updatedData);
 
+
+
+
 				d3.selectAll('circle.job').remove()
 
 				let jobCircles = d3.select('svg.scatter')
@@ -138,9 +147,16 @@ function init() {
 				jobCircles
 					.at('cx', d=>{return xScale(d.similarity)})
 					.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+					.st('fill', d=>{
+						const jobSelectedWage = keyObjectJobWage[d.id_selected]
+						const jobComparedWage = keyObjectJobWage[d.id_compared]
+						const wageChange = jobSelectedWage/jobComparedWage;
+
+						return colorScale(wageChange)
+					})
 					.at('r', d=>{return 5})
 					.st('stroke', 'black')
-					.st('fill','white')
+
 
 					jobCircles.on('mouseenter',(d)=>{
 						const jobSelectedName = d3.select("div.job-selected-name");
@@ -175,7 +191,13 @@ function init() {
 			.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
 			.at('r', d=>{return 5})
 			.st('stroke', 'black')
-			.st('fill','white')
+			.st('fill', d=>{
+				const jobSelectedWage = keyObjectJobWage[d.id_selected]
+				const jobComparedWage = keyObjectJobWage[d.id_compared]
+				const wageChange = jobSelectedWage/jobComparedWage;
+
+				return colorScale(wageChange)
+			})
 
 		const jobSelectedName = d3.select("body").append("div.job-selected-name")
 		const jobComparedName = d3.select("body").append("div.job-compared-name")

@@ -65,7 +65,9 @@ function init() {
 
 		allData = similarity;
 
-		const chartSvg = d3.select("body").append("svg.scatter")
+		const chartSvg = d3.select("body")
+			.append("div.svg-container")
+			.append("svg.scatter")
 
 		chartSvg.at('height', 600)
 			.at('width', 800)
@@ -89,6 +91,9 @@ function init() {
 			.domain([5, 2, 1.25, 1.1, 0.9,.75, 0.5, 0.2])
 			.range(['#a50026','#d73027','#f46d43','#fee090','#e0f3f8','#74add1','#4575b4','#313695'])
 
+		const radiusScale = d3.scaleSqrt()
+			.domain([0,d3.max(crosswalk, (d)=>{return d.wage})])
+			.range([0,6])
 
 		// Setting up transition object
 		crosswalk.forEach(job=>{
@@ -154,7 +159,10 @@ function init() {
 
 						return colorScale(wageChange)
 					})
-					.at('r', d=>{return 5})
+					.at('r', d=>{
+						const wage=keyObjectJobNumber[d.id_compared];
+						return radiusScale(wage)
+					})
 					.st('stroke', 'black')
 
 
@@ -189,7 +197,10 @@ function init() {
 		jobCircles
 			.at('cx', d=>{return xScale(d.similarity)})
 			.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
-			.at('r', d=>{return 5})
+			.at('r', d=>{
+				const wage=keyObjectJobNumber[d.id_compared];
+				return radiusScale(wage)
+			})
 			.st('stroke', 'black')
 			.st('fill', d=>{
 				const jobSelectedWage = keyObjectJobWage[d.id_selected]
@@ -199,12 +210,22 @@ function init() {
 				return colorScale(wageChange)
 			})
 
-		const jobSelectedName = d3.select("body").append("div.job-selected-name")
-		const jobComparedName = d3.select("body").append("div.job-compared-name")
-		const jobSelectedNumber = d3.select("body").append("div.job-selected-number")
-		const jobComparedNumber = d3.select("body").append("div.job-compared-number")
+		const jobTooltip = d3.select("div.svg-container").append("div.jobTooltip")
 
-		jobCircles.on('mouseenter',(d)=>{
+		const jobSelectedName = jobTooltip.append("div.job-selected-name")
+		const jobComparedName = jobTooltip.append("div.job-compared-name")
+		const jobSelectedNumber = jobTooltip.append("div.job-selected-number")
+		const jobComparedNumber = jobTooltip.append("div.job-compared-number")
+
+		jobCircles.on('mouseenter',(d,i,n)=>{
+
+			const jobTooltip = d3.select("div.jobTooltip")
+
+			const xCoord = d3.select(n[i])
+				.at("cx")
+
+			console.log(xCoord);
+
 			const jobSelectedName = d3.select("div.job-selected-name");
 			jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
 

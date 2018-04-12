@@ -9,21 +9,19 @@ const keyObjectJobName = {}
 const keyObjectJobNumber = {}
 const keyObjectJobAuto = {}
 const keyObjectJobWage = {}
+const keyObjectSkillName = {}
+let selectedJobSkills = [0,0,0,0,0]
+let skills = []
 
-function selectJobData(allData, selectedJobID){
-
-	const selectedJobData = allData.filter((item)=>{
-		return item.id_selected === selectedJobID;
-		// Why does this need a return statement while the X.length>6 doesn't?
-	})
-
+function selectJobData(data, selectedJobID){
+	const selectedJobData = data.filter(item=> item.id_selected === selectedJobID)
 	return selectedJobData
 }
 
-function setupXScale(selectedJobData){
 
+function setupXScale(selectedJobData){
 	const xScale = d3.scaleLinear()
-		.domain(d3.extent(selectedJobData, function(d) { return d.similarity; }))
+		.domain(d3.extent(selectedJobData, d=> d.similarity))
 		.range([0, 800]);
 
 	return xScale;
@@ -38,30 +36,45 @@ function init() {
 	const MAX_AUTO = 1
 	const MIN_AUTO = 0
 	const pathData = 'assets/data/'
-	const fileNames = ['crosswalk','similarity']
+	const fileNames = ['crosswalk_jobs','similarity','crosswalk_skills','skills']
 	let files = []
 	fileNames.forEach((category)=>{
 		files.push(pathData+category+'.csv')
 	})
 
 	d3.loadData(...files, (err, response)=>{
-		let crosswalk = response[0]
-		let similarity= response[1]
+		let crosswalk    = response[0];
+		let similarity   = response[1];
+		let crosswalkSkills= response[2];
+		skills= response[3]
 
 
 		crosswalk.forEach((item)=>{
-			item.id= +item.id;
-			item.auto= +item.auto;
-			item.wage= +item.wage;
+			item.id    = +item.id;
+			item.auto  = +item.auto;
+			item.wage  = +item.wage;
 			item.number= +item.number;
 		})
 
-
 		similarity.forEach((item)=>{
-			item.similarity= +item.similarity;
+			item.similarity = +item.similarity;
 			item.id_compared= +item.id_compared;
 			item.id_selected= +item.id_selected;
 		})
+
+		skills.forEach(item=>{
+			item.id_selected= +item.id_selected;
+			item.imp        = +item.imp;
+			item.skill_id   = +item.skill_id;
+			item.rank       = +item.rank;
+		})
+
+		crosswalkSkills.forEach(item=>{
+			item.skill_id= +item.skill_id
+		})
+
+		// console.log(skills);
+		// console.log(crosswalkJobs);
 
 		allData = similarity;
 
@@ -79,7 +92,8 @@ function init() {
 
 
 
-		let selectedJobData =	selectJobData(first5Jobs, 3)
+		let selectedJobData =	selectJobData(first5Jobs, 3);
+
 
 		const yScale = d3.scaleLinear()
 			.domain([MIN_AUTO,MAX_AUTO])
@@ -112,6 +126,11 @@ function init() {
 			keyObjectJobWage[job.id]=job.wage;
 		})
 
+		crosswalkSkills.forEach(skill=>
+			keyObjectSkillName[skill.skill_id]=skill.skill
+		)
+
+
 
 		// const jobNames = crosswalk.map((d)=>{
 		// 	let jobAndId = {}
@@ -135,9 +154,6 @@ function init() {
 				const updatedData = selectJobData(allData, selectedJobID);
 				const xScale = setupXScale(updatedData);
 
-
-
-
 				d3.selectAll('circle.job').remove()
 
 				let jobCircles = d3.select('svg.scatter')
@@ -146,7 +162,7 @@ function init() {
 					.enter()
 					.append('circle.job')
 
-					console.log(updatedData);
+					// console.log(updatedData);
 
 
 				jobCircles
@@ -180,6 +196,10 @@ function init() {
 						jobTooltip.st("left", (xCoord+"px") )
 							.st("top", (yCoord+"px") )
 
+						selectedJobSkills = selectJobData(skills, d.id_compared);
+
+
+
 						const jobSelectedName = d3.select("div.job-selected-name");
 						jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
 
@@ -191,10 +211,7 @@ function init() {
 
 						const jobComparedNumber = d3.select("div.job-compared-number");
 						jobComparedNumber.text("Compared job quantity: "+keyObjectJobNumber[d.id_compared])
-
-
 					})
-				// updateCircles(selectedJobID)
 			})
 
 
@@ -203,9 +220,6 @@ function init() {
 			.data(selectedJobData)
 			.enter()
 			.append('circle.job')
-
-
-
 
 		jobCircles
 			.at('cx', d=>{return xScale(d.similarity)})
@@ -229,6 +243,20 @@ function init() {
 		const jobComparedName = jobTooltip.append("div.job-compared-name")
 		const jobSelectedNumber = jobTooltip.append("div.job-selected-number")
 		const jobComparedNumber = jobTooltip.append("div.job-compared-number")
+		const jobSkillsContainer =jobTooltip.append("div.job-skills-container")
+
+		const jobSkillsBars = jobSkillsContainer.selectAll('div.job-skills-bar')
+			.data(selectedJobSkills)
+			.enter()
+			.append('div.job-skills-bar')
+
+		jobSkillsBars.st('height','20px')
+			.st('background','#e0e0e0')
+			.st('border-style', 'solid')
+			.st('border-color','black')
+			.st('margin-bottom', '2px')
+			.st('overflow','visible')
+			.st('display','block')
 
 		jobCircles.on('mouseenter',(d,i,n)=>{
 
@@ -243,8 +271,6 @@ function init() {
 			jobTooltip.st("left", (xCoord+"px") )
 				.st("top", (yCoord+"px") )
 
-
-
 			const jobSelectedName = d3.select("div.job-selected-name");
 			jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
 
@@ -257,13 +283,26 @@ function init() {
 			const jobComparedNumber = d3.select("div.job-compared-number");
 			jobComparedNumber.text("Compared job quantity: "+keyObjectJobNumber[d.id_compared])
 
+			const jobSkillsBars = jobTooltip.select('div.job-skills-container')
+				.selectAll('div.job-skills-bar')
+
+			selectedJobSkills = selectJobData(skills, d.id_compared);
+
+			console.log(selectedJobSkills);
+
+			jobSkillsBars.data(selectedJobSkills)
+				.st('height','20px')
+				.st('width', dSkills=> {
+					return dSkills.imp+'px'
+				})
+				.text(dSkills=>keyObjectSkillName[dSkills.skill_id])
+
+
+
+
+
 
 		})
-
-
-
-
-
 
 
 	})

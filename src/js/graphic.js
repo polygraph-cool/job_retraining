@@ -85,15 +85,14 @@ function init() {
 		chartSvg.at('height', 600)
 			.at('width', 800)
 			.st('fill','#00000')
+		//
+		// const first5Jobs=similarity.filter(item=>{
+		// 	return item.id_selected<5
+		// })
 
-		const first5Jobs=similarity.filter(item=>{
-			return item.id_selected<5
-		})
 
 
-
-		let selectedJobData =	selectJobData(first5Jobs, 3);
-
+		let selectedJobData =	selectJobData(similarity, 3);
 
 		const yScale = d3.scaleLinear()
 			.domain([MIN_AUTO,MAX_AUTO])
@@ -131,26 +130,32 @@ function init() {
 		)
 
 
+		// const jobButtons=d3.selectAll('div.job-button')
+		// 	.data(crosswalk)
+		// 	.enter()
+		// 	.append('div.job-button')
 
-		// const jobNames = crosswalk.map((d)=>{
-		// 	let jobAndId = {}
-		//
-		// 	return keyObjectJobName[d.id_selected]
-		// })
-		// const uniqueJobNames = Array.from(new Set(jobNames));
 
-		const jobButtons=d3.selectAll('div.job-button')
+		const jobDropdownMenu=d3.select('body')
+			.append('select.scatter-dropdown-menu')
+
+		const jobButtons = jobDropdownMenu.selectAll('option.job-button')
 			.data(crosswalk)
 			.enter()
-			.append('div.job-button')
+			.append('option.job-button')
+			.at('value', d=>d.id)
 
-		jobButtons.st('height', 20)
-			.st('width', 500)
-			.text((d)=>{
+
+		jobButtons.text((d)=>{
 				return d.job_name;
 			})
-			.on('click',(d)=>{
-				const selectedJobID=d.id;
+
+		jobDropdownMenu
+			.on('change',(d,i,n)=>{
+				const selectedJobID=eval(d3.select(n[i]).property('value'))
+				// d3.select(this).property('value'));
+
+				console.log(selectedJobID);
 				const updatedData = selectJobData(allData, selectedJobID);
 				const xScale = setupXScale(updatedData);
 
@@ -162,8 +167,6 @@ function init() {
 					.enter()
 					.append('circle.job')
 
-					// console.log(updatedData);
-
 
 				jobCircles
 					.at('cx', d=>{return xScale(d.similarity)})
@@ -172,7 +175,6 @@ function init() {
 						const jobSelectedWage = keyObjectJobWage[d.id_selected]
 						const jobComparedWage = keyObjectJobWage[d.id_compared]
 						const wageChange = jobSelectedWage/jobComparedWage;
-
 						return colorScale(wageChange)
 					})
 					.at('r', d=>{
@@ -181,9 +183,7 @@ function init() {
 					})
 					.st('stroke', 'black')
 
-
 					jobCircles.on('mouseenter',(d,i,n)=>{
-
 
 						const jobTooltip = d3.select("div.jobTooltip")
 
@@ -197,8 +197,6 @@ function init() {
 							.st("top", (yCoord+"px") )
 
 						selectedJobSkills = selectJobData(skills, d.id_compared);
-
-
 
 						const jobSelectedName = d3.select("div.job-selected-name");
 						jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
@@ -245,20 +243,18 @@ function init() {
 		const jobComparedNumber = jobTooltip.append("div.job-compared-number")
 		const jobSkillsContainer =jobTooltip.append("div.job-skills-container")
 
-		const jobSkillsBars = jobSkillsContainer.selectAll('div.job-skills-bar')
+		const jobSkillsBarRow = jobSkillsContainer.selectAll('div.job-bar-container')
 			.data(selectedJobSkills)
 			.enter()
-			.append('div.job-skills-bar')
+			.append('div.bar-container')
 
-		jobSkillsBars.st('height','20px')
-			.st('background','#e0e0e0')
-			.st('border-style', 'solid')
-			.st('border-color','black')
-			.st('margin-bottom', '2px')
-			.st('overflow','visible')
-			.st('display','block')
+		const jobSkillsNames = jobSkillsBarRow.append("div.job-bar-name").data(selectedJobSkills).enter()
+		const jobSkillsBars  = jobSkillsBarRow.append("div.job-bar").data(selectedJobSkills).enter()
+		const jobSkillsValues= jobSkillsBarRow.append("div.job-bar-value").data(selectedJobSkills).enter()
 
 		jobCircles.on('mouseenter',(d,i,n)=>{
+
+			selectedJobSkills = selectJobData(skills, d.id_compared);
 
 			const jobTooltip = d3.select("div.jobTooltip")
 
@@ -283,28 +279,36 @@ function init() {
 			const jobComparedNumber = d3.select("div.job-compared-number");
 			jobComparedNumber.text("Compared job quantity: "+keyObjectJobNumber[d.id_compared])
 
-			const jobSkillsBars = jobTooltip.select('div.job-skills-container')
-				.selectAll('div.job-skills-bar')
 
-			selectedJobSkills = selectJobData(skills, d.id_compared);
+			const jobSkillsContainer = jobTooltip.select('div.job-skills-container')
+
+			const jobSkillsBarRow = jobSkillsContainer.selectAll('div.bar-container')
+
+			const jobSkillsNames = jobSkillsContainer.selectAll("div.job-bar-name")
+				.data(selectedJobSkills)
+
+			const jobSkillsBars  = jobSkillsContainer.selectAll("div.job-bar")
+				.data(selectedJobSkills)
+
+			const jobSkillsValues= jobSkillsContainer.selectAll("div.job-bar-value")
+				.data(selectedJobSkills)
 
 			console.log(selectedJobSkills);
 
-			jobSkillsBars.data(selectedJobSkills)
-				.st('height','20px')
-				.st('width', dSkills=> {
-					return dSkills.imp+'px'
+			jobSkillsBars.st('height','20px')
+				.st('width', skill=> {
+					return skill.imp+'px'
 				})
-				.text(dSkills=>keyObjectSkillName[dSkills.skill_id])
+				.st('background','black')
 
+			jobSkillsNames.text(skill=>{
+				return keyObjectSkillName[skill.skill_id]
+			})
 
-
-
-
-
+			jobSkillsValues.text(skill=>{
+				return skill.imp;
+			})
 		})
-
-
 	})
 }
 

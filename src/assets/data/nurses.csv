@@ -1,0 +1,121 @@
+job_selected,job_compared,skills,difference
+16,3,Programming,13
+52,32,Computers and Electronics,20
+11,19,Engineering and Technology,8
+47,25,Systems Analysis,22
+47,0,Science,47
+47,28,Systems Evaluation,19
+3,15,Design,12
+25,22,Operations Analysis,3
+50,31,Fluency of Ideas,19
+19,16,Technology Design,3
+47,28,Mathematical Reasoning,19
+56,39,Mathematics,17
+47,31,Originality,16
+75,50,Inductive Reasoning,25
+69,47,Judgment and Decision Making,22
+47,25,Mathematics.1,22
+75,53,Deductive Reasoning,22
+78,47,Oral Expression,31
+47,31,Number Facility,16
+60,47,Complex Problem Solving,13
+47,28,Management of Personnel Resources,19
+50,28,Persuasion,22
+69,53,Information Ordering,16
+72,50,Critical Thinking,22
+60,50,Category Flexibility,10
+75,47,Written Comprehension,28
+50,25,Memorization,25
+47,31,Negotiation,16
+53,38,Learning Strategies,15
+78,63,Problem Sensitivity,15
+53,44,Flexibility of Closure,9
+69,44,Written Expression,25
+47,35,Speed of Closure,12
+56,38,Instructing,18
+76,62,English Language,14
+21,38,Telecommunications,17
+78,50,Oral Comprehension,28
+72,47,Speech Recognition,25
+75,50,Speaking,25
+78,47,Active Listening,31
+60,44,Active Learning,16
+66,44,Writing,22
+47,41,Quality Control Analysis,6
+72,50,Speech Clarity,22
+72,50,Reading Comprehension,22
+72,47,Coordination,25
+75,44,Service Orientation,31
+78,44,Social Perceptiveness,34
+0,16,Installation,16
+53,53,Selective Attention,0
+53,47,Perceptual Speed,6
+36,29,Communications and Media,7
+69,50,Monitoring,19
+22,25,Management of Financial Resources,3
+28,25,Management of Material Resources,3
+44,39,Administration and Management,5
+3,1,Fine Arts,2
+69,72,Near Vision,3
+19,50,Troubleshooting,31
+37,24,Personnel and Human Resources,13
+7,5,History and Archeology,2
+34,6,Philosophy and Theology,28
+12,19,Physics,7
+72,7,Therapy and Counseling,65
+50,53,Time Management,3
+53,11,Sociology and Anthropology,42
+22,25,Sales and Marketing,3
+19,18,Economics and Accounting,1
+54,9,Biology,45
+44,50,Visualization,6
+50,47,Finger Dexterity,3
+50,47,Time Sharing,3
+19,31,Equipment Selection,12
+13,10,Dynamic Flexibility,3
+32,15,Foreign Language,17
+19,13,Explosive Strength,6
+16,22,Production and Processing,6
+0,15,Building and Construction,15
+86,14,Medicine and Dentistry,72
+83,67,Customer and Personal Service,16
+18,16,Food Production,2
+72,46,Education and Training,26
+42,27,Chemistry,15
+47,47,Visual Color Discrimination,0
+80,30,Psychology,50
+47,47,Auditory Attention,0
+44,32,Clerical,12
+42,39,Law and Government,3
+38,50,Hearing Sensitivity,12
+47,69,Operation Monitoring,22
+50,53,Arm-Hand Steadiness,3
+50,53,Manual Dexterity,3
+22,41,Wrist-Finger Speed,19
+56,47,Trunk Strength,9
+8,49,Geography,41
+25,44,Dynamic Strength,19
+22,41,Gross Body Equilibrium,19
+50,41,Stamina,9
+0,47,Equipment Maintenance,47
+53,75,Far Vision,22
+44,44,Extent Flexibility,0
+28,44,Gross Body Coordination,16
+6,44,Sound Localization,38
+25,44,Speed of Limb Movement,19
+0,47,Repairing,47
+0,47,Glare Sensitivity,47
+35,72,Operation and Control,37
+35,75,Control Precision,40
+25,69,Depth Perception,44
+0,50,Night Vision,50
+0,50,Peripheral Vision,50
+44,50,Static Strength,6
+13,55,Mechanical,42
+49,68,Public Safety and Security,19
+16,75,Transportation,59
+19,69,Rate Control,50
+6,69,Spatial Orientation,63
+44,72,Multilimb Coordination,28
+25,72,Reaction Time,47
+31,72,Response Orientation,41

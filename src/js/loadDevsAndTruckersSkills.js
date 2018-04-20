@@ -43,6 +43,21 @@ export default function loadDevsAndTruckersSkills(){
 
     const allJobSkills = [choreographers,dentists,nurses,chiropractors,farmers,construction_managers,
                           firefighters,geographers,embalmers,pipelayers]
+    const allJobSkillsNames=['choreographers','dentists','nurses','chiropractors','farmers','construction_managers',
+                          'firefighters','geographers','embalmers','pipelayers']
+
+    const allJobSkillsNamesObjects=[
+      [{'name':'choreographers'}],
+      [{'name':'dentists'}],
+      [{'name':'nurses'}],
+      [{'name':'chiropractors'}],
+      [{'name':'farmers'}],
+      [{'name':'construction_managers'}],
+      [{'name':'firefighters'}],
+      [{'name':'geographers'}],
+      [{'name':'embalmers'}],
+      [{'name':'pipelayers'}]
+    ]
 
     devAndTruckerSkills.forEach(skill=>{
       skill.difference = Math.abs(+skill.devs- +skill.truckers)
@@ -67,7 +82,7 @@ export default function loadDevsAndTruckersSkills(){
       }
     })
 
-    console.log(allJobSkills);
+    // console.log(allJobSkills);
 
 
     const chartSvg = d3.select("body")
@@ -82,23 +97,16 @@ export default function loadDevsAndTruckersSkills(){
   		.domain([0,100])
   		.range([0, 400]);
 // original
-    const skillSections = chartSvg.selectAll('g.skill-section')
-      .data(devAndTruckerSkills)
-      .enter()
-      .append('g.skill-section')
+    const skillSections = chartSvg.selectAll('g.skill-section').data(devAndTruckerSkills).enter().append('g.skill-section')
 
-      // new
-      // choreographers,dentists,nurses,chiropractors,farmers,construction_managers,firefighters,geographers,embalmers,pipelayers
-    // const skillSectionsChoreographers = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsDentists = chartSvg.selectAll('g.skill-section-dentists').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsNurses = chartSvg.selectAll('g.skill-section-nurses').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsChiropractors = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsChoreographers = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsChoreographers = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsChoreographers = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsChoreographers = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsChoreographers = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
-    // const skillSectionsChoreographers = chartSvg.selectAll('g.skill-section-choreographers').data(devAndTruckerSkills).enter().append('g.skill-section-choreographers')
+// Creating group elements tied to data from multiple jobs
+    let jobSkillGroupObject={}
+    for(i=0; i<allJobSkillsNames.length; i++){
+      jobSkillGroupObject[`${allJobSkillsNames[i]}`]=chartSvg.selectAll(`g.skill-section-${allJobSkillsNames[i]}`)
+      .data(allJobSkills[i])
+      .enter()
+      .append(`g.skill-section-${allJobSkillsNames[i]}`)
+    }
 
 
     const YBUMP = 20;
@@ -126,6 +134,16 @@ export default function loadDevsAndTruckersSkills(){
     .text(d=>d.skills)
     .st('text-anchor','right')
 
+// Adding other text labels
+    let allJobLabels = {}
+    for(i=0; i<allJobSkillsNames.length; i++){
+      allJobLabels[`${allJobSkillsNames[i]}`]=jobSkillGroupObject[allJobSkillsNames[i]].select(`text.all-jobs.job-${allJobSkillsNames[i]}`)
+      .data(allJobSkillsNamesObjects[i])
+      .enter()
+      .append(`text.all-jobs.job-${allJobSkillsNames[i]}`)
+
+    }
+
 
     const axisLines = skillSections.append('line.skill-axis')
       .at('x1',200)
@@ -135,7 +153,15 @@ export default function loadDevsAndTruckersSkills(){
       .at('stroke-width', 1)
       .st('stroke','black')
 
+// Original bars signifying different skills
     const axisDifferenceRects = skillSections.append('rect.skill-difference-axis')
+
+// Looping through array of data to create, for each job, bars signifying different skills
+    let jobSkillGroupDifferenceRects={}
+    for(i=0; i<allJobSkillsNames.length; i++){
+      jobSkillGroupDifferenceRects[`${allJobSkillsNames[i]}`]=jobSkillGroupObject[allJobSkillsNames[i]].append(`rect.other-job-skills.skill-difference-axis-${allJobSkillsNames[i]}`)
+    }
+
 
     axisDifferenceRects
     .at('x', d=>XBUMP+xScale(d.truckers))
@@ -144,14 +170,15 @@ export default function loadDevsAndTruckersSkills(){
     .st('fill','#E530BE')
     .st('opacity',0)
 
-    // axisDifferenceLines
-    // .at('x1',d=> XBUMP + xScale(d.truckers))
-    // .at('y1',0)
-    // .at('x2',d=> XBUMP + xScale(d.devs))
-    // .at('y2',0)
-    // .at('stroke-width', 3)
-    // .st('stroke','#E530BE')
-    // .st('opacity',0)
+
+    for(i=0; i<allJobSkillsNames.length; i++){
+      jobSkillGroupDifferenceRects[allJobSkillsNames[i]]
+      .at('x', d=>XBUMP+xScale(d.job_selected))
+      .at('width',d=> xScale(d.difference))
+      .at('height',3)
+      .st('fill','#E530BE')
+      .st('opacity',0)
+    }
 
 
     BUTTON_Skill_Difference.on('click',()=>{
@@ -162,7 +189,7 @@ export default function loadDevsAndTruckersSkills(){
 
     const xScaleEucledian = d3.scaleLinear()
   		.domain([0,100])
-  		.range([0, 20]);
+  		.range([0, 15]);
 
 
 BUTTON_Stack_SkillDifference.on('click',()=>{
@@ -195,7 +222,33 @@ BUTTON_Stack_SkillDifference.on('click',()=>{
   })
 
 BUTTON_Stack_AllJobs_Skills.on('click',()=>{
-  console.log("HELLO");
+  d3.selectAll('rect.other-job-skills')
+  .st('opacity',1)
+
+  let yDistanceFromTop = 0
+
+  for(i=0; i<allJobSkillsNames.length; i++){
+
+    yDistanceFromTop=i*20+20;
+
+    // console.log(jobSkillGroupDifferenceRects[allJobSkillsNames[3]]);
+
+    jobSkillGroupDifferenceRects[allJobSkillsNames[i]]
+      .at('x', d=>XBUMP+xScaleEucledian(d.xCoordStacked))
+      .at('width',d=> xScaleEucledian(d.difference))
+      .at('height',3)
+      .transition()
+      .at('transform',`translate(0,${yDistanceFromTop})`)
+      .st('fill','#E530BE')
+      .st('opacity',1)
+
+    //Adding labels
+     allJobLabels[allJobSkillsNames[i]]
+      .at('transform',`translate(50,${yDistanceFromTop})`)
+      .st('opacity',1)
+      .text(d => d.name)
+  }
+
 })
 
 

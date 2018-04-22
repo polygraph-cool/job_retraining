@@ -1,121 +1,121 @@
-job_compared,job_selected,skills,difference
-16,3,Programming,13
-52,32,Computers and Electronics,20
-11,19,Engineering and Technology,8
-47,25,Systems Analysis,22
-47,0,Science,47
-47,28,Systems Evaluation,19
-3,15,Design,12
-25,22,Operations Analysis,3
-50,31,Fluency of Ideas,19
-19,16,Technology Design,3
-47,28,Mathematical Reasoning,19
-56,39,Mathematics,17
-47,31,Originality,16
-75,50,Inductive Reasoning,25
-69,47,Judgment and Decision Making,22
-47,25,Mathematics.1,22
-75,53,Deductive Reasoning,22
-78,47,Oral Expression,31
-47,31,Number Facility,16
-60,47,Complex Problem Solving,13
-47,28,Management of Personnel Resources,19
-50,28,Persuasion,22
-69,53,Information Ordering,16
-72,50,Critical Thinking,22
-60,50,Category Flexibility,10
-75,47,Written Comprehension,28
-50,25,Memorization,25
-47,31,Negotiation,16
-53,38,Learning Strategies,15
-78,63,Problem Sensitivity,15
-53,44,Flexibility of Closure,9
-69,44,Written Expression,25
-47,35,Speed of Closure,12
-56,38,Instructing,18
-76,62,English Language,14
-21,38,Telecommunications,17
-78,50,Oral Comprehension,28
-72,47,Speech Recognition,25
-75,50,Speaking,25
-78,47,Active Listening,31
-60,44,Active Learning,16
-66,44,Writing,22
-47,41,Quality Control Analysis,6
-72,50,Speech Clarity,22
-72,50,Reading Comprehension,22
-72,47,Coordination,25
-75,44,Service Orientation,31
-78,44,Social Perceptiveness,34
-0,16,Installation,16
-53,53,Selective Attention,0
-53,47,Perceptual Speed,6
-36,29,Communications and Media,7
-69,50,Monitoring,19
-22,25,Management of Financial Resources,3
-28,25,Management of Material Resources,3
-44,39,Administration and Management,5
-3,1,Fine Arts,2
-69,72,Near Vision,3
-19,50,Troubleshooting,31
-37,24,Personnel and Human Resources,13
-7,5,History and Archeology,2
-34,6,Philosophy and Theology,28
-12,19,Physics,7
-72,7,Therapy and Counseling,65
-50,53,Time Management,3
-53,11,Sociology and Anthropology,42
-22,25,Sales and Marketing,3
-19,18,Economics and Accounting,1
-54,9,Biology,45
-44,50,Visualization,6
-50,47,Finger Dexterity,3
-50,47,Time Sharing,3
-19,31,Equipment Selection,12
-13,10,Dynamic Flexibility,3
-32,15,Foreign Language,17
-19,13,Explosive Strength,6
-16,22,Production and Processing,6
-0,15,Building and Construction,15
-86,14,Medicine and Dentistry,72
-83,67,Customer and Personal Service,16
-18,16,Food Production,2
-72,46,Education and Training,26
-42,27,Chemistry,15
-47,47,Visual Color Discrimination,0
-80,30,Psychology,50
-47,47,Auditory Attention,0
-44,32,Clerical,12
-42,39,Law and Government,3
-38,50,Hearing Sensitivity,12
-47,69,Operation Monitoring,22
-50,53,Arm-Hand Steadiness,3
-50,53,Manual Dexterity,3
-22,41,Wrist-Finger Speed,19
-56,47,Trunk Strength,9
-8,49,Geography,41
-25,44,Dynamic Strength,19
-22,41,Gross Body Equilibrium,19
-50,41,Stamina,9
-0,47,Equipment Maintenance,47
-53,75,Far Vision,22
-44,44,Extent Flexibility,0
-28,44,Gross Body Coordination,16
-6,44,Sound Localization,38
-25,44,Speed of Limb Movement,19
-0,47,Repairing,47
-0,47,Glare Sensitivity,47
-35,72,Operation and Control,37
-35,75,Control Precision,40
-25,69,Depth Perception,44
-0,50,Night Vision,50
-0,50,Peripheral Vision,50
-44,50,Static Strength,6
-13,55,Mechanical,42
-49,68,Public Safety and Security,19
-16,75,Transportation,59
-19,69,Rate Control,50
-6,69,Spatial Orientation,63
-44,72,Multilimb Coordination,28
-25,72,Reaction Time,47
-31,72,Response Orientation,41
+job_compared,job_selected,skills,difference,job_compared_name
+16,3,Programming,13,nurses
+52,32,Computers and Electronics,21,nurses
+11,19,Engineering and Technology,10,nurses
+47,25,Systems Analysis,25,nurses
+47,0,Science,51,nurses
+47,28,Systems Evaluation,24,nurses
+3,15,Design,18,nurses
+25,22,Operations Analysis,10,nurses
+50,31,Fluency of Ideas,27,nurses
+19,16,Technology Design,12,nurses
+47,28,Mathematical Reasoning,29,nurses
+56,39,Mathematics,28,nurses
+47,31,Originality,28,nurses
+75,50,Inductive Reasoning,38,nurses
+69,47,Judgment and Decision Making,36,nurses
+47,25,Mathematics.1,37,nurses
+75,53,Deductive Reasoning,38,nurses
+78,47,Oral Expression,48,nurses
+47,31,Number Facility,34,nurses
+60,47,Complex Problem Solving,32,nurses
+47,28,Management of Personnel Resources,39,nurses
+50,28,Persuasion,43,nurses
+69,53,Information Ordering,38,nurses
+72,50,Critical Thinking,45,nurses
+60,50,Category Flexibility,34,nurses
+75,47,Written Comprehension,53,nurses
+50,25,Memorization,51,nurses
+47,31,Negotiation,43,nurses
+53,38,Learning Strategies,43,nurses
+78,63,Problem Sensitivity,44,nurses
+53,44,Flexibility of Closure,39,nurses
+69,44,Written Expression,56,nurses
+47,35,Speed of Closure,44,nurses
+56,38,Instructing,51,nurses
+76,62,English Language,48,nurses
+21,38,Telecommunications,52,nurses
+78,50,Oral Comprehension,64,nurses
+72,47,Speech Recognition,62,nurses
+75,50,Speaking,63,nurses
+78,47,Active Listening,70,nurses
+60,44,Active Learning,56,nurses
+66,44,Writing,63,nurses
+47,41,Quality Control Analysis,48,nurses
+72,50,Speech Clarity,65,nurses
+72,50,Reading Comprehension,66,nurses
+72,47,Coordination,70,nurses
+75,44,Service Orientation,77,nurses
+78,44,Social Perceptiveness,81,nurses
+0,16,Installation,64,nurses
+53,53,Selective Attention,49,nurses
+53,47,Perceptual Speed,56,nurses
+36,29,Communications and Media,58,nurses
+69,50,Monitoring,71,nurses
+22,25,Management of Financial Resources,56,nurses
+28,25,Management of Material Resources,57,nurses
+44,39,Administration and Management,60,nurses
+3,1,Fine Arts,58,nurses
+69,72,Near Vision,60,nurses
+19,50,Troubleshooting,89,nurses
+37,24,Personnel and Human Resources,72,nurses
+7,5,History and Archeology,62,nurses
+34,6,Philosophy and Theology,89,nurses
+12,19,Physics,69,nurses
+72,7,Therapy and Counseling,128,nurses
+50,53,Time Management,67,nurses
+53,11,Sociology and Anthropology,107,nurses
+22,25,Sales and Marketing,69,nurses
+19,18,Economics and Accounting,68,nurses
+54,9,Biology,113,nurses
+44,50,Visualization,75,nurses
+50,47,Finger Dexterity,73,nurses
+50,47,Time Sharing,74,nurses
+19,31,Equipment Selection,84,nurses
+13,10,Dynamic Flexibility,76,nurses
+32,15,Foreign Language,91,nurses
+19,13,Explosive Strength,81,nurses
+16,22,Production and Processing,82,nurses
+0,15,Building and Construction,92,nurses
+86,14,Medicine and Dentistry,150,nurses
+83,67,Customer and Personal Service,95,nurses
+18,16,Food Production,82,nurses
+72,46,Education and Training,107,nurses
+42,27,Chemistry,97,nurses
+47,47,Visual Color Discrimination,83,nurses
+80,30,Psychology,134,nurses
+47,47,Auditory Attention,85,nurses
+44,32,Clerical,98,nurses
+42,39,Law and Government,90,nurses
+38,50,Hearing Sensitivity,100,nurses
+47,69,Operation Monitoring,111,nurses
+50,53,Arm-Hand Steadiness,93,nurses
+50,53,Manual Dexterity,94,nurses
+22,41,Wrist-Finger Speed,111,nurses
+56,47,Trunk Strength,102,nurses
+8,49,Geography,135,nurses
+25,44,Dynamic Strength,114,nurses
+22,41,Gross Body Equilibrium,115,nurses
+50,41,Stamina,106,nurses
+0,47,Equipment Maintenance,145,nurses
+53,75,Far Vision,121,nurses
+44,44,Extent Flexibility,100,nurses
+28,44,Gross Body Coordination,117,nurses
+6,44,Sound Localization,140,nurses
+25,44,Speed of Limb Movement,122,nurses
+0,47,Repairing,151,nurses
+0,47,Glare Sensitivity,152,nurses
+35,72,Operation and Control,143,nurses
+35,75,Control Precision,147,nurses
+25,69,Depth Perception,152,nurses
+0,50,Night Vision,159,nurses
+0,50,Peripheral Vision,160,nurses
+44,50,Static Strength,117,nurses
+13,55,Mechanical,154,nurses
+49,68,Public Safety and Security,132,nurses
+16,75,Transportation,173,nurses
+19,69,Rate Control,165,nurses
+6,69,Spatial Orientation,179,nurses
+44,72,Multilimb Coordination,145,nurses
+25,72,Reaction Time,165,nurses
+31,72,Response Orientation,160,nurses

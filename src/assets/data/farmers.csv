@@ -1,121 +1,121 @@
-job_compared,job_selected,skills,difference
-16.0,3,Programming,13.0
-39.0,32,Computers and Electronics,7.0
-47.66666667,19,Engineering and Technology,28.66666667
-52.0,25,Systems Analysis,27.0
-47.0,0,Science,47.0
-54.0,28,Systems Evaluation,26.0
-42.0,15,Design,27.0
-34.33333333,22,Operations Analysis,12.33333333
-52.0,31,Fluency of Ideas,21.0
-19.0,16,Technology Design,3.0
-42.66666667,28,Mathematical Reasoning,14.66666667
-66.0,39,Mathematics,27.0
-51.0,31,Originality,20.0
-69.0,50,Inductive Reasoning,19.0
-69.0,47,Judgment and Decision Making,22.0
-43.0,25,Mathematics.1,18.0
-70.0,53,Deductive Reasoning,17.0
-75.0,47,Oral Expression,28.0
-49.0,31,Number Facility,18.0
-60.66666667,47,Complex Problem Solving,13.66666667
-62.66666667,28,Management of Personnel Resources,34.66666667
-56.33333333,28,Persuasion,28.33333333
-64.0,53,Information Ordering,11.0
-72.0,50,Critical Thinking,22.0
-59.33333333,50,Category Flexibility,9.33333333
-65.66666667,47,Written Comprehension,18.66666667
-34.66666667,25,Memorization,9.66666667
-56.33333333,31,Negotiation,25.33333333
-51.0,38,Learning Strategies,13.0
-73.0,63,Problem Sensitivity,10.0
-51.0,44,Flexibility of Closure,7.0
-66.66666667,44,Written Expression,22.66666667
-38.0,35,Speed of Closure,3.0
-55.33333333,38,Instructing,17.33333333
-59.66666667,62,English Language,2.33333333
-21.66666667,38,Telecommunications,16.33333333
-75.0,50,Oral Comprehension,25.0
-61.66666667,47,Speech Recognition,14.66666667
-72.0,50,Speaking,22.0
-65.0,47,Active Listening,18.0
-57.66666667,44,Active Learning,13.66666667
-54.33333333,44,Writing,10.33333333
-49.0,41,Quality Control Analysis,8.0
-62.66666667,50,Speech Clarity,12.66666667
-61.66666667,50,Reading Comprehension,11.66666667
-62.66666667,47,Coordination,15.66666667
-47.0,44,Service Orientation,3.0
-58.66666667,44,Social Perceptiveness,14.66666667
-2.0,16,Installation,14.0
-50.0,53,Selective Attention,3.0
-43.0,47,Perceptual Speed,4.0
-29.0,29,Communications and Media,0.0
-70.0,50,Monitoring,20.0
-47.0,25,Management of Financial Resources,22.0
-46.0,25,Management of Material Resources,21.0
-78.33333333,39,Administration and Management,39.33333333
-3.0,1,Fine Arts,2.0
-64.0,72,Near Vision,8.0
-34.66666667,50,Troubleshooting,15.33333333
-60.0,24,Personnel and Human Resources,36.0
-11.33333333,5,History and Archeology,6.33333333
-19.33333333,6,Philosophy and Theology,13.33333333
-30.0,19,Physics,11.0
-14.66666667,7,Therapy and Counseling,7.66666667
-66.0,53,Time Management,13.0
-20.66666667,11,Sociology and Anthropology,9.66666667
-57.33333333,25,Sales and Marketing,32.33333333
-57.33333333,18,Economics and Accounting,39.33333333
-70.66666667,9,Biology,61.66666667
-47.0,50,Visualization,3.0
-46.0,47,Finger Dexterity,1.0
-47.0,47,Time Sharing,0.0
-30.33333333,31,Equipment Selection,0.66666667
-2.0,10,Dynamic Flexibility,8.0
-17.66666667,15,Foreign Language,2.66666667
-5.333333333,13,Explosive Strength,7.666666667
-72.33333333,22,Production and Processing,50.33333333
-45.0,15,Building and Construction,30.0
-16.0,14,Medicine and Dentistry,2.0
-56.0,67,Customer and Personal Service,11.0
-59.33333333,16,Food Production,43.33333333
-55.66666667,46,Education and Training,9.66666667
-52.66666667,27,Chemistry,25.66666667
-46.0,47,Visual Color Discrimination,1.0
-37.0,30,Psychology,7.0
-37.66666667,47,Auditory Attention,9.33333333
-42.66666667,32,Clerical,10.66666667
-46.66666667,39,Law and Government,7.66666667
-35.66666667,50,Hearing Sensitivity,14.33333333
-53.0,69,Operation Monitoring,16.0
-47.0,53,Arm-Hand Steadiness,6.0
-47.0,53,Manual Dexterity,6.0
-22.0,41,Wrist-Finger Speed,19.0
-39.66666667,47,Trunk Strength,7.33333333
-34.33333333,49,Geography,14.66666667
-24.0,44,Dynamic Strength,20.0
-22.0,41,Gross Body Equilibrium,19.0
-28.0,41,Stamina,13.0
-28.0,47,Equipment Maintenance,19.0
-49.0,75,Far Vision,26.0
-29.33333333,44,Extent Flexibility,14.66666667
-25.0,44,Gross Body Coordination,19.0
-22.0,44,Sound Localization,22.0
-17.66666667,44,Speed of Limb Movement,26.33333333
-27.0,47,Repairing,20.0
-22.0,47,Glare Sensitivity,25.0
-47.0,72,Operation and Control,25.0
-50.0,75,Control Precision,25.0
-40.0,69,Depth Perception,29.0
-21.0,50,Night Vision,29.0
-24.0,50,Peripheral Vision,26.0
-33.66666667,50,Static Strength,16.33333333
-56.33333333,55,Mechanical,1.33333333
-46.66666667,68,Public Safety and Security,21.33333333
-49.33333333,75,Transportation,25.66666667
-26.33333333,69,Rate Control,42.66666667
-25.0,69,Spatial Orientation,44.0
-49.0,72,Multilimb Coordination,23.0
-29.33333333,72,Reaction Time,42.66666667
-28.33333333,72,Response Orientation,43.66666667
+job_compared,job_selected,skills,difference,job_compared_name
+16.0,3,Programming,13.0,farmers
+39.0,32,Computers and Electronics,8.0,farmers
+47.66666667,19,Engineering and Technology,30.66666667,farmers
+52.0,25,Systems Analysis,30.0,farmers
+47.0,0,Science,51.0,farmers
+54.0,28,Systems Evaluation,31.0,farmers
+42.0,15,Design,33.0,farmers
+34.33333333,22,Operations Analysis,19.33333333,farmers
+52.0,31,Fluency of Ideas,29.0,farmers
+19.0,16,Technology Design,12.0,farmers
+42.66666667,28,Mathematical Reasoning,24.66666667,farmers
+66.0,39,Mathematics,38.0,farmers
+51.0,31,Originality,32.0,farmers
+69.0,50,Inductive Reasoning,32.0,farmers
+69.0,47,Judgment and Decision Making,36.0,farmers
+43.0,25,Mathematics.1,33.0,farmers
+70.0,53,Deductive Reasoning,33.0,farmers
+75.0,47,Oral Expression,45.0,farmers
+49.0,31,Number Facility,36.0,farmers
+60.66666667,47,Complex Problem Solving,32.66666667,farmers
+62.66666667,28,Management of Personnel Resources,54.66666667,farmers
+56.33333333,28,Persuasion,49.33333333,farmers
+64.0,53,Information Ordering,33.0,farmers
+72.0,50,Critical Thinking,45.0,farmers
+59.33333333,50,Category Flexibility,33.33333333,farmers
+65.66666667,47,Written Comprehension,43.66666667,farmers
+34.66666667,25,Memorization,35.66666667,farmers
+56.33333333,31,Negotiation,52.33333333,farmers
+51.0,38,Learning Strategies,41.0,farmers
+73.0,63,Problem Sensitivity,39.0,farmers
+51.0,44,Flexibility of Closure,37.0,farmers
+66.66666667,44,Written Expression,53.66666667,farmers
+38.0,35,Speed of Closure,35.0,farmers
+55.33333333,38,Instructing,50.33333333,farmers
+59.66666667,62,English Language,36.33333333,farmers
+21.66666667,38,Telecommunications,51.33333333,farmers
+75.0,50,Oral Comprehension,61.0,farmers
+61.66666667,47,Speech Recognition,51.66666667,farmers
+72.0,50,Speaking,60.0,farmers
+65.0,47,Active Listening,57.0,farmers
+57.66666667,44,Active Learning,53.66666667,farmers
+54.33333333,44,Writing,51.33333333,farmers
+49.0,41,Quality Control Analysis,50.0,farmers
+62.66666667,50,Speech Clarity,55.66666667,farmers
+61.66666667,50,Reading Comprehension,55.66666667,farmers
+62.66666667,47,Coordination,60.66666667,farmers
+47.0,44,Service Orientation,49.0,farmers
+58.66666667,44,Social Perceptiveness,61.66666667,farmers
+2.0,16,Installation,62.0,farmers
+50.0,53,Selective Attention,52.0,farmers
+43.0,47,Perceptual Speed,54.0,farmers
+29.0,29,Communications and Media,51.0,farmers
+70.0,50,Monitoring,72.0,farmers
+47.0,25,Management of Financial Resources,75.0,farmers
+46.0,25,Management of Material Resources,75.0,farmers
+78.33333333,39,Administration and Management,94.33333333,farmers
+3.0,1,Fine Arts,58.0,farmers
+64.0,72,Near Vision,65.0,farmers
+34.66666667,50,Troubleshooting,73.33333333,farmers
+60.0,24,Personnel and Human Resources,95.0,farmers
+11.33333333,5,History and Archeology,66.33333333,farmers
+19.33333333,6,Philosophy and Theology,74.33333333,farmers
+30.0,19,Physics,73.0,farmers
+14.66666667,7,Therapy and Counseling,70.66666667,farmers
+66.0,53,Time Management,77.0,farmers
+20.66666667,11,Sociology and Anthropology,74.66666667,farmers
+57.33333333,25,Sales and Marketing,98.33333333,farmers
+57.33333333,18,Economics and Accounting,106.33333333,farmers
+70.66666667,9,Biology,129.66666667,farmers
+47.0,50,Visualization,72.0,farmers
+46.0,47,Finger Dexterity,71.0,farmers
+47.0,47,Time Sharing,71.0,farmers
+30.33333333,31,Equipment Selection,72.66666667,farmers
+2.0,10,Dynamic Flexibility,81.0,farmers
+17.66666667,15,Foreign Language,76.66666667,farmers
+5.333333333,13,Explosive Strength,82.666666667,farmers
+72.33333333,22,Production and Processing,126.33333333,farmers
+45.0,15,Building and Construction,107.0,farmers
+16.0,14,Medicine and Dentistry,80.0,farmers
+56.0,67,Customer and Personal Service,90.0,farmers
+59.33333333,16,Food Production,123.33333333,farmers
+55.66666667,46,Education and Training,90.66666667,farmers
+52.66666667,27,Chemistry,107.66666667,farmers
+46.0,47,Visual Color Discrimination,84.0,farmers
+37.0,30,Psychology,91.0,farmers
+37.66666667,47,Auditory Attention,94.33333333,farmers
+42.66666667,32,Clerical,96.66666667,farmers
+46.66666667,39,Law and Government,94.66666667,farmers
+35.66666667,50,Hearing Sensitivity,102.33333333,farmers
+53.0,69,Operation Monitoring,105.0,farmers
+47.0,53,Arm-Hand Steadiness,96.0,farmers
+47.0,53,Manual Dexterity,97.0,farmers
+22.0,41,Wrist-Finger Speed,111.0,farmers
+39.66666667,47,Trunk Strength,100.33333333,farmers
+34.33333333,49,Geography,108.66666667,farmers
+24.0,44,Dynamic Strength,115.0,farmers
+22.0,41,Gross Body Equilibrium,115.0,farmers
+28.0,41,Stamina,110.0,farmers
+28.0,47,Equipment Maintenance,117.0,farmers
+49.0,75,Far Vision,125.0,farmers
+29.33333333,44,Extent Flexibility,114.66666667,farmers
+25.0,44,Gross Body Coordination,120.0,farmers
+22.0,44,Sound Localization,124.0,farmers
+17.66666667,44,Speed of Limb Movement,129.33333333,farmers
+27.0,47,Repairing,124.0,farmers
+22.0,47,Glare Sensitivity,130.0,farmers
+47.0,72,Operation and Control,131.0,farmers
+50.0,75,Control Precision,132.0,farmers
+40.0,69,Depth Perception,137.0,farmers
+21.0,50,Night Vision,138.0,farmers
+24.0,50,Peripheral Vision,136.0,farmers
+33.66666667,50,Static Strength,127.33333333,farmers
+56.33333333,55,Mechanical,113.33333333,farmers
+46.66666667,68,Public Safety and Security,134.33333333,farmers
+49.33333333,75,Transportation,139.66666667,farmers
+26.33333333,69,Rate Control,157.66666667,farmers
+25.0,69,Spatial Orientation,160.0,farmers
+49.0,72,Multilimb Coordination,140.0,farmers
+29.33333333,72,Reaction Time,160.66666667,farmers
+28.33333333,72,Response Orientation,162.66666667,farmers

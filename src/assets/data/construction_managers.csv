@@ -1,121 +1,121 @@
-job_compared,job_selected,skills,difference
-13,3,Programming,10
-53,32,Computers and Electronics,21
-76,19,Engineering and Technology,57
-53,25,Systems Analysis,28
-28,0,Science,28
-53,28,Systems Evaluation,25
-71,15,Design,56
-60,22,Operations Analysis,38
-53,31,Fluency of Ideas,22
-22,16,Technology Design,6
-53,28,Mathematical Reasoning,25
-71,39,Mathematics,32
-50,31,Originality,19
-63,50,Inductive Reasoning,13
-63,47,Judgment and Decision Making,16
-56,25,Mathematics.1,31
-75,53,Deductive Reasoning,22
-72,47,Oral Expression,25
-53,31,Number Facility,22
-69,47,Complex Problem Solving,22
-69,28,Management of Personnel Resources,41
-53,28,Persuasion,25
-75,53,Information Ordering,22
-72,50,Critical Thinking,22
-56,50,Category Flexibility,6
-72,47,Written Comprehension,25
-38,25,Memorization,13
-66,31,Negotiation,35
-47,38,Learning Strategies,9
-78,63,Problem Sensitivity,15
-53,44,Flexibility of Closure,9
-63,44,Written Expression,19
-50,35,Speed of Closure,15
-47,38,Instructing,9
-80,62,English Language,18
-38,38,Telecommunications,0
-72,50,Oral Comprehension,22
-63,47,Speech Recognition,16
-72,50,Speaking,22
-72,47,Active Listening,25
-66,44,Active Learning,22
-60,44,Writing,16
-50,41,Quality Control Analysis,9
-66,50,Speech Clarity,16
-69,50,Reading Comprehension,19
-69,47,Coordination,22
-50,44,Service Orientation,6
-60,44,Social Perceptiveness,16
-0,16,Installation,16
-50,53,Selective Attention,3
-50,47,Perceptual Speed,3
-37,29,Communications and Media,8
-66,50,Monitoring,16
-60,25,Management of Financial Resources,35
-56,25,Management of Material Resources,31
-76,39,Administration and Management,37
-4,1,Fine Arts,3
-63,72,Near Vision,9
-25,50,Troubleshooting,25
-44,24,Personnel and Human Resources,20
-9,5,History and Archeology,4
-6,6,Philosophy and Theology,0
-38,19,Physics,19
-12,7,Therapy and Counseling,5
-69,53,Time Management,16
-11,11,Sociology and Anthropology,0
-41,25,Sales and Marketing,16
-50,18,Economics and Accounting,32
-16,9,Biology,7
-63,50,Visualization,13
-31,47,Finger Dexterity,16
-47,47,Time Sharing,0
-3,31,Equipment Selection,28
-0,10,Dynamic Flexibility,10
-9,15,Foreign Language,6
-0,13,Explosive Strength,13
-44,22,Production and Processing,22
-95,15,Building and Construction,80
-6,14,Medicine and Dentistry,8
-64,67,Customer and Personal Service,3
-1,16,Food Production,15
-45,46,Education and Training,1
-27,27,Chemistry,0
-50,47,Visual Color Discrimination,3
-32,30,Psychology,2
-44,47,Auditory Attention,3
-50,32,Clerical,18
-48,39,Law and Government,9
-35,50,Hearing Sensitivity,15
-44,69,Operation Monitoring,25
-10,53,Arm-Hand Steadiness,43
-3,53,Manual Dexterity,50
-3,41,Wrist-Finger Speed,38
-19,47,Trunk Strength,28
-26,49,Geography,23
-6,44,Dynamic Strength,38
-19,41,Gross Body Equilibrium,22
-6,41,Stamina,35
-0,47,Equipment Maintenance,47
-60,75,Far Vision,15
-10,44,Extent Flexibility,34
-10,44,Gross Body Coordination,34
-0,44,Sound Localization,44
-0,44,Speed of Limb Movement,44
-0,47,Repairing,47
-19,47,Glare Sensitivity,28
-28,72,Operation and Control,44
-25,75,Control Precision,50
-38,69,Depth Perception,31
-0,50,Night Vision,50
-0,50,Peripheral Vision,50
-6,50,Static Strength,44
-61,55,Mechanical,6
-61,68,Public Safety and Security,7
-36,75,Transportation,39
-0,69,Rate Control,69
-25,69,Spatial Orientation,44
-25,72,Multilimb Coordination,47
-25,72,Reaction Time,47
-0,72,Response Orientation,72
+job_compared,job_selected,skills,difference,job_compared_name
+13,3,Programming,10,construction_managers
+53,32,Computers and Electronics,22,construction_managers
+76,19,Engineering and Technology,59,construction_managers
+53,25,Systems Analysis,31,construction_managers
+28,0,Science,32,construction_managers
+53,28,Systems Evaluation,30,construction_managers
+71,15,Design,62,construction_managers
+60,22,Operations Analysis,45,construction_managers
+53,31,Fluency of Ideas,30,construction_managers
+22,16,Technology Design,15,construction_managers
+53,28,Mathematical Reasoning,35,construction_managers
+71,39,Mathematics,43,construction_managers
+50,31,Originality,31,construction_managers
+63,50,Inductive Reasoning,26,construction_managers
+63,47,Judgment and Decision Making,30,construction_managers
+56,25,Mathematics.1,46,construction_managers
+75,53,Deductive Reasoning,38,construction_managers
+72,47,Oral Expression,42,construction_managers
+53,31,Number Facility,40,construction_managers
+69,47,Complex Problem Solving,41,construction_managers
+69,28,Management of Personnel Resources,61,construction_managers
+53,28,Persuasion,46,construction_managers
+75,53,Information Ordering,44,construction_managers
+72,50,Critical Thinking,45,construction_managers
+56,50,Category Flexibility,30,construction_managers
+72,47,Written Comprehension,50,construction_managers
+38,25,Memorization,39,construction_managers
+66,31,Negotiation,62,construction_managers
+47,38,Learning Strategies,37,construction_managers
+78,63,Problem Sensitivity,44,construction_managers
+53,44,Flexibility of Closure,39,construction_managers
+63,44,Written Expression,50,construction_managers
+50,35,Speed of Closure,47,construction_managers
+47,38,Instructing,42,construction_managers
+80,62,English Language,52,construction_managers
+38,38,Telecommunications,35,construction_managers
+72,50,Oral Comprehension,58,construction_managers
+63,47,Speech Recognition,53,construction_managers
+72,50,Speaking,60,construction_managers
+72,47,Active Listening,64,construction_managers
+66,44,Active Learning,62,construction_managers
+60,44,Writing,57,construction_managers
+50,41,Quality Control Analysis,51,construction_managers
+66,50,Speech Clarity,59,construction_managers
+69,50,Reading Comprehension,63,construction_managers
+69,47,Coordination,67,construction_managers
+50,44,Service Orientation,52,construction_managers
+60,44,Social Perceptiveness,63,construction_managers
+0,16,Installation,64,construction_managers
+50,53,Selective Attention,52,construction_managers
+50,47,Perceptual Speed,53,construction_managers
+37,29,Communications and Media,59,construction_managers
+66,50,Monitoring,68,construction_managers
+60,25,Management of Financial Resources,88,construction_managers
+56,25,Management of Material Resources,85,construction_managers
+76,39,Administration and Management,92,construction_managers
+4,1,Fine Arts,59,construction_managers
+63,72,Near Vision,66,construction_managers
+25,50,Troubleshooting,83,construction_managers
+44,24,Personnel and Human Resources,79,construction_managers
+9,5,History and Archeology,64,construction_managers
+6,6,Philosophy and Theology,61,construction_managers
+38,19,Physics,81,construction_managers
+12,7,Therapy and Counseling,68,construction_managers
+69,53,Time Management,80,construction_managers
+11,11,Sociology and Anthropology,65,construction_managers
+41,25,Sales and Marketing,82,construction_managers
+50,18,Economics and Accounting,99,construction_managers
+16,9,Biology,75,construction_managers
+63,50,Visualization,82,construction_managers
+31,47,Finger Dexterity,86,construction_managers
+47,47,Time Sharing,71,construction_managers
+3,31,Equipment Selection,100,construction_managers
+0,10,Dynamic Flexibility,83,construction_managers
+9,15,Foreign Language,80,construction_managers
+0,13,Explosive Strength,88,construction_managers
+44,22,Production and Processing,98,construction_managers
+95,15,Building and Construction,157,construction_managers
+6,14,Medicine and Dentistry,86,construction_managers
+64,67,Customer and Personal Service,82,construction_managers
+1,16,Food Production,95,construction_managers
+45,46,Education and Training,82,construction_managers
+27,27,Chemistry,82,construction_managers
+50,47,Visual Color Discrimination,86,construction_managers
+32,30,Psychology,86,construction_managers
+44,47,Auditory Attention,88,construction_managers
+50,32,Clerical,104,construction_managers
+48,39,Law and Government,96,construction_managers
+35,50,Hearing Sensitivity,103,construction_managers
+44,69,Operation Monitoring,114,construction_managers
+10,53,Arm-Hand Steadiness,133,construction_managers
+3,53,Manual Dexterity,141,construction_managers
+3,41,Wrist-Finger Speed,130,construction_managers
+19,47,Trunk Strength,121,construction_managers
+26,49,Geography,117,construction_managers
+6,44,Dynamic Strength,133,construction_managers
+19,41,Gross Body Equilibrium,118,construction_managers
+6,41,Stamina,132,construction_managers
+0,47,Equipment Maintenance,145,construction_managers
+60,75,Far Vision,114,construction_managers
+10,44,Extent Flexibility,134,construction_managers
+10,44,Gross Body Coordination,135,construction_managers
+0,44,Sound Localization,146,construction_managers
+0,44,Speed of Limb Movement,147,construction_managers
+0,47,Repairing,151,construction_managers
+19,47,Glare Sensitivity,133,construction_managers
+28,72,Operation and Control,150,construction_managers
+25,75,Control Precision,157,construction_managers
+38,69,Depth Perception,139,construction_managers
+0,50,Night Vision,159,construction_managers
+0,50,Peripheral Vision,160,construction_managers
+6,50,Static Strength,155,construction_managers
+61,55,Mechanical,118,construction_managers
+61,68,Public Safety and Security,120,construction_managers
+36,75,Transportation,153,construction_managers
+0,69,Rate Control,184,construction_managers
+25,69,Spatial Orientation,160,construction_managers
+25,72,Multilimb Coordination,164,construction_managers
+25,72,Reaction Time,165,construction_managers
+0,72,Response Orientation,191,construction_managers

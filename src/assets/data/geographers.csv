@@ -1,121 +1,121 @@
-job_compared,job_selected,skills,difference
-16,3,Programming,13
-66,32,Computers and Electronics,34
-24,19,Engineering and Technology,5
-63,25,Systems Analysis,38
-66,0,Science,66
-50,28,Systems Evaluation,22
-39,15,Design,24
-41,22,Operations Analysis,19
-60,31,Fluency of Ideas,29
-22,16,Technology Design,6
-50,28,Mathematical Reasoning,22
-61,39,Mathematics,22
-56,31,Originality,25
-75,50,Inductive Reasoning,25
-69,47,Judgment and Decision Making,22
-47,25,Mathematics.1,22
-75,53,Deductive Reasoning,22
-75,47,Oral Expression,28
-50,31,Number Facility,19
-66,47,Complex Problem Solving,19
-44,28,Management of Personnel Resources,16
-41,28,Persuasion,13
-69,53,Information Ordering,16
-72,50,Critical Thinking,22
-69,50,Category Flexibility,19
-75,47,Written Comprehension,28
-41,25,Memorization,16
-44,31,Negotiation,13
-56,38,Learning Strategies,18
-69,63,Problem Sensitivity,6
-56,44,Flexibility of Closure,12
-75,44,Written Expression,31
-31,35,Speed of Closure,4
-56,38,Instructing,18
-79,62,English Language,17
-18,38,Telecommunications,20
-75,50,Oral Comprehension,25
-66,47,Speech Recognition,19
-75,50,Speaking,25
-72,47,Active Listening,25
-69,44,Active Learning,25
-75,44,Writing,31
-10,41,Quality Control Analysis,31
-72,50,Speech Clarity,22
-75,50,Reading Comprehension,25
-50,47,Coordination,3
-50,44,Service Orientation,6
-50,44,Social Perceptiveness,6
-0,16,Installation,16
-47,53,Selective Attention,6
-44,47,Perceptual Speed,3
-41,29,Communications and Media,12
-50,50,Monitoring,0
-25,25,Management of Financial Resources,0
-25,25,Management of Material Resources,0
-47,39,Administration and Management,8
-9,1,Fine Arts,8
-69,72,Near Vision,3
-0,50,Troubleshooting,50
-28,24,Personnel and Human Resources,4
-61,5,History and Archeology,56
-44,6,Philosophy and Theology,38
-29,19,Physics,10
-9,7,Therapy and Counseling,2
-50,53,Time Management,3
-67,11,Sociology and Anthropology,56
-12,25,Sales and Marketing,13
-18,18,Economics and Accounting,0
-41,9,Biology,32
-47,50,Visualization,3
-16,47,Finger Dexterity,31
-41,47,Time Sharing,6
-0,31,Equipment Selection,31
-0,10,Dynamic Flexibility,10
-35,15,Foreign Language,20
-0,13,Explosive Strength,13
-12,22,Production and Processing,10
-9,15,Building and Construction,6
-6,14,Medicine and Dentistry,8
-32,67,Customer and Personal Service,35
-7,16,Food Production,9
-76,46,Education and Training,30
-23,27,Chemistry,4
-35,47,Visual Color Discrimination,12
-35,30,Psychology,5
-25,47,Auditory Attention,22
-44,32,Clerical,12
-35,39,Law and Government,4
-25,50,Hearing Sensitivity,25
-22,69,Operation Monitoring,47
-0,53,Arm-Hand Steadiness,53
-0,53,Manual Dexterity,53
-3,41,Wrist-Finger Speed,38
-13,47,Trunk Strength,34
-100,49,Geography,51
-0,44,Dynamic Strength,44
-0,41,Gross Body Equilibrium,41
-0,41,Stamina,41
-0,47,Equipment Maintenance,47
-50,75,Far Vision,25
-0,44,Extent Flexibility,44
-0,44,Gross Body Coordination,44
-0,44,Sound Localization,44
-0,44,Speed of Limb Movement,44
-0,47,Repairing,47
-0,47,Glare Sensitivity,47
-0,72,Operation and Control,72
-0,75,Control Precision,75
-22,69,Depth Perception,47
-0,50,Night Vision,50
-0,50,Peripheral Vision,50
-0,50,Static Strength,50
-11,55,Mechanical,44
-20,68,Public Safety and Security,48
-34,75,Transportation,41
-0,69,Rate Control,69
-0,69,Spatial Orientation,69
-0,72,Multilimb Coordination,72
-0,72,Reaction Time,72
-0,72,Response Orientation,72
+job_compared,job_selected,skills,difference,job_compared_name
+16,3,Programming,13,geographers
+66,32,Computers and Electronics,35,geographers
+24,19,Engineering and Technology,7,geographers
+63,25,Systems Analysis,41,geographers
+66,0,Science,70,geographers
+50,28,Systems Evaluation,27,geographers
+39,15,Design,30,geographers
+41,22,Operations Analysis,26,geographers
+60,31,Fluency of Ideas,37,geographers
+22,16,Technology Design,15,geographers
+50,28,Mathematical Reasoning,32,geographers
+61,39,Mathematics,33,geographers
+56,31,Originality,37,geographers
+75,50,Inductive Reasoning,38,geographers
+69,47,Judgment and Decision Making,36,geographers
+47,25,Mathematics.1,37,geographers
+75,53,Deductive Reasoning,38,geographers
+75,47,Oral Expression,45,geographers
+50,31,Number Facility,37,geographers
+66,47,Complex Problem Solving,38,geographers
+44,28,Management of Personnel Resources,36,geographers
+41,28,Persuasion,34,geographers
+69,53,Information Ordering,38,geographers
+72,50,Critical Thinking,45,geographers
+69,50,Category Flexibility,43,geographers
+75,47,Written Comprehension,53,geographers
+41,25,Memorization,42,geographers
+44,31,Negotiation,40,geographers
+56,38,Learning Strategies,46,geographers
+69,63,Problem Sensitivity,35,geographers
+56,44,Flexibility of Closure,42,geographers
+75,44,Written Expression,62,geographers
+31,35,Speed of Closure,36,geographers
+56,38,Instructing,51,geographers
+79,62,English Language,51,geographers
+18,38,Telecommunications,55,geographers
+75,50,Oral Comprehension,61,geographers
+66,47,Speech Recognition,56,geographers
+75,50,Speaking,63,geographers
+72,47,Active Listening,64,geographers
+69,44,Active Learning,65,geographers
+75,44,Writing,72,geographers
+10,41,Quality Control Analysis,73,geographers
+72,50,Speech Clarity,65,geographers
+75,50,Reading Comprehension,69,geographers
+50,47,Coordination,48,geographers
+50,44,Service Orientation,52,geographers
+50,44,Social Perceptiveness,53,geographers
+0,16,Installation,64,geographers
+47,53,Selective Attention,55,geographers
+44,47,Perceptual Speed,53,geographers
+41,29,Communications and Media,63,geographers
+50,50,Monitoring,52,geographers
+25,25,Management of Financial Resources,53,geographers
+25,25,Management of Material Resources,54,geographers
+47,39,Administration and Management,63,geographers
+9,1,Fine Arts,64,geographers
+69,72,Near Vision,60,geographers
+0,50,Troubleshooting,108,geographers
+28,24,Personnel and Human Resources,63,geographers
+61,5,History and Archeology,116,geographers
+44,6,Philosophy and Theology,99,geographers
+29,19,Physics,72,geographers
+9,7,Therapy and Counseling,65,geographers
+50,53,Time Management,67,geographers
+67,11,Sociology and Anthropology,121,geographers
+12,25,Sales and Marketing,79,geographers
+18,18,Economics and Accounting,67,geographers
+41,9,Biology,100,geographers
+47,50,Visualization,72,geographers
+16,47,Finger Dexterity,101,geographers
+41,47,Time Sharing,77,geographers
+0,31,Equipment Selection,103,geographers
+0,10,Dynamic Flexibility,83,geographers
+35,15,Foreign Language,94,geographers
+0,13,Explosive Strength,88,geographers
+12,22,Production and Processing,86,geographers
+9,15,Building and Construction,83,geographers
+6,14,Medicine and Dentistry,86,geographers
+32,67,Customer and Personal Service,114,geographers
+7,16,Food Production,89,geographers
+76,46,Education and Training,111,geographers
+23,27,Chemistry,86,geographers
+35,47,Visual Color Discrimination,95,geographers
+35,30,Psychology,89,geographers
+25,47,Auditory Attention,107,geographers
+44,32,Clerical,98,geographers
+35,39,Law and Government,91,geographers
+25,50,Hearing Sensitivity,113,geographers
+22,69,Operation Monitoring,136,geographers
+0,53,Arm-Hand Steadiness,143,geographers
+0,53,Manual Dexterity,144,geographers
+3,41,Wrist-Finger Speed,130,geographers
+13,47,Trunk Strength,127,geographers
+100,49,Geography,145,geographers
+0,44,Dynamic Strength,139,geographers
+0,41,Gross Body Equilibrium,137,geographers
+0,41,Stamina,138,geographers
+0,47,Equipment Maintenance,145,geographers
+50,75,Far Vision,124,geographers
+0,44,Extent Flexibility,144,geographers
+0,44,Gross Body Coordination,145,geographers
+0,44,Sound Localization,146,geographers
+0,44,Speed of Limb Movement,147,geographers
+0,47,Repairing,151,geographers
+0,47,Glare Sensitivity,152,geographers
+0,72,Operation and Control,178,geographers
+0,75,Control Precision,182,geographers
+22,69,Depth Perception,155,geographers
+0,50,Night Vision,159,geographers
+0,50,Peripheral Vision,160,geographers
+0,50,Static Strength,161,geographers
+11,55,Mechanical,156,geographers
+20,68,Public Safety and Security,161,geographers
+34,75,Transportation,155,geographers
+0,69,Rate Control,184,geographers
+0,69,Spatial Orientation,185,geographers
+0,72,Multilimb Coordination,189,geographers
+0,72,Reaction Time,190,geographers
+0,72,Response Orientation,191,geographers

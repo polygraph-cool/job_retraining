@@ -26,6 +26,7 @@ export default function loadDevsAndTruckersSkills(){
     const BUTTON_Skill_Difference = d3.select("div.skill-difference")
     const BUTTON_Stack_SkillDifference = d3.select("div.skill-stack-difference")
     const BUTTON_Stack_AllJobs_Skills =d3.select('div.all-skills-difference')
+    const BUTTON_Skills_Similarity_Single_Axis=d3.select('div.only-similarity-axis')
 
     const devAndTruckerSkills = response[0];
 
@@ -47,7 +48,6 @@ export default function loadDevsAndTruckersSkills(){
       job.forEach(skill=>{
         skill.difference = Math.abs(+skill.job_selected- +skill.job_compared)
       })
-
     })
 
     let i;
@@ -284,6 +284,10 @@ BUTTON_Stack_AllJobs_Skills.on('click',()=>{
 //       .text(d => d.name)
 //   }
 })
+
+  BUTTON_Skills_Similarity_Single_Axis.on('click',()=>{
+    
+  })
 
 
   })

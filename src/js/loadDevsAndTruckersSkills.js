@@ -36,38 +36,18 @@ export default function loadDevsAndTruckersSkills(){
       allJobSkillsRaw.push(response[i])
     }
 
-    // const choreographers = response[1]
-    // const dentists = response[2]
-    // const nurses = response[3]
-    // const chiropractors = response[4]
-    // const farmers = response[5]
-    // const construction_managers = response[6]
-    // const firefighters = response[7]
-    // const geographers = response[8]
-    // const embalmers = response[9]
-    // const pipelayers = response[10]
-    // const allProfessionSkills = response[11];
-
-    // const allJobSkills = [choreographers,dentists,nurses,chiropractors,farmers,construction_managers,
-    //                       firefighters,geographers,embalmers,pipelayers]
     const allJobSkillsNames=['choreographers','dentists','nurses','chiropractors','farmers','construction_managers',
                           'firefighters','geographers','embalmers','pipelayers']
 
-    // const allJobSkillsNamesObjects=[
-    //   [{'name':'choreographers'}],
-    //   [{'name':'dentists'}],
-    //   [{'name':'nurses'}],
-    //   [{'name':'chiropractors'}],
-    //   [{'name':'farmers'}],
-    //   [{'name':'construction_managers'}],
-    //   [{'name':'firefighters'}],
-    //   [{'name':'geographers'}],
-    //   [{'name':'embalmers'}],
-    //   [{'name':'pipelayers'}]
-    // ]
-
     devAndTruckerSkills.forEach(skill=>{
       skill.difference = Math.abs(+skill.devs- +skill.truckers)
+    })
+
+    allJobSkillsRaw.forEach(job=>{
+      job.forEach(skill=>{
+        skill.difference = Math.abs(+skill.job_selected- +skill.job_compared)
+      })
+
     })
 
     let i;
@@ -88,6 +68,9 @@ export default function loadDevsAndTruckersSkills(){
         xSum+= +jobAndTruckerSkills[i]['difference'] + stackPadding
       }
     })
+
+    console.log(devAndTruckerSkills);
+    console.log(allJobSkillsRaw);
 
     let allJobSkillsFlat = [].concat.apply([], allJobSkillsRaw);
 
@@ -169,7 +152,7 @@ export default function loadDevsAndTruckersSkills(){
       .st('text-anchor','right')
 
 
-// Adding other text labels
+// Adding other text label
     // let allJobLabels = {}
     // for(i=0; i<allJobSkillsNames.length; i++){
     //   allJobLabels[`${allJobSkillsNames[i]}`]=jobSkillGroupObject[allJobSkillsNames[i]].select(`text.all-jobs.job-${allJobSkillsNames[i]}`)
@@ -206,6 +189,8 @@ export default function loadDevsAndTruckersSkills(){
     .at('height',3)
     .st('fill','#E530BE')
     .st('opacity',0)
+
+
 
 // Adding difference retangles for all other jobs
 

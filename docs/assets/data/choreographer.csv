@@ -1,121 +1,121 @@
-job_compared,job_selected,skills,difference
-0,3,Programming,3
-19,32,Computers and Electronics,13
-5,19,Engineering and Technology,14
-38,25,Systems Analysis,13
-10,0,Science,10
-41,28,Systems Evaluation,13
-39,15,Design,24
-44,22,Operations Analysis,22
-72,31,Fluency of Ideas,41
-19,16,Technology Design,3
-16,28,Mathematical Reasoning,12
-28,39,Mathematics,11
-78,31,Originality,47
-56,50,Inductive Reasoning,6
-66,47,Judgment and Decision Making,19
-13,25,Mathematics.1,12
-63,53,Deductive Reasoning,10
-81,47,Oral Expression,34
-22,31,Number Facility,9
-53,47,Complex Problem Solving,6
-63,28,Management of Personnel Resources,35
-53,28,Persuasion,25
-56,53,Information Ordering,3
-66,50,Critical Thinking,16
-50,50,Category Flexibility,0
-69,47,Written Comprehension,22
-47,25,Memorization,22
-56,31,Negotiation,25
-60,38,Learning Strategies,22
-69,63,Problem Sensitivity,6
-44,44,Flexibility of Closure,0
-53,44,Written Expression,9
-28,35,Speed of Closure,7
-75,38,Instructing,37
-54,62,English Language,8
-16,38,Telecommunications,22
-81,50,Oral Comprehension,31
-63,47,Speech Recognition,16
-78,50,Speaking,28
-78,47,Active Listening,31
-60,44,Active Learning,16
-50,44,Writing,6
-3,41,Quality Control Analysis,38
-69,50,Speech Clarity,19
-66,50,Reading Comprehension,16
-75,47,Coordination,28
-56,44,Service Orientation,12
-69,44,Social Perceptiveness,25
-0,16,Installation,16
-60,53,Selective Attention,7
-38,47,Perceptual Speed,9
-50,29,Communications and Media,21
-72,50,Monitoring,22
-16,25,Management of Financial Resources,9
-16,25,Management of Material Resources,9
-57,39,Administration and Management,18
-97,1,Fine Arts,96
-53,72,Near Vision,19
-0,50,Troubleshooting,50
-39,24,Personnel and Human Resources,15
-51,5,History and Archeology,46
-43,6,Philosophy and Theology,37
-22,19,Physics,3
-29,7,Therapy and Counseling,22
-72,53,Time Management,19
-53,11,Sociology and Anthropology,42
-39,25,Sales and Marketing,14
-17,18,Economics and Accounting,1
-12,9,Biology,3
-53,50,Visualization,3
-31,47,Finger Dexterity,16
-47,47,Time Sharing,0
-3,31,Equipment Selection,28
-38,10,Dynamic Flexibility,28
-34,15,Foreign Language,19
-16,13,Explosive Strength,3
-11,22,Production and Processing,11
-11,15,Building and Construction,4
-19,14,Medicine and Dentistry,5
-28,67,Customer and Personal Service,39
-0,16,Food Production,16
-68,46,Education and Training,22
-5,27,Chemistry,22
-35,47,Visual Color Discrimination,12
-62,30,Psychology,32
-25,47,Auditory Attention,22
-27,32,Clerical,5
-16,39,Law and Government,23
-25,50,Hearing Sensitivity,25
-13,69,Operation Monitoring,56
-50,53,Arm-Hand Steadiness,3
-25,53,Manual Dexterity,28
-3,41,Wrist-Finger Speed,38
-63,47,Trunk Strength,16
-18,49,Geography,31
-60,44,Dynamic Strength,16
-72,41,Gross Body Equilibrium,31
-63,41,Stamina,22
-0,47,Equipment Maintenance,47
-44,75,Far Vision,31
-66,44,Extent Flexibility,22
-85,44,Gross Body Coordination,41
-0,44,Sound Localization,44
-44,44,Speed of Limb Movement,0
-0,47,Repairing,47
-16,47,Glare Sensitivity,31
-0,72,Operation and Control,72
-0,75,Control Precision,75
-22,69,Depth Perception,47
-0,50,Night Vision,50
-10,50,Peripheral Vision,40
-38,50,Static Strength,12
-8,55,Mechanical,47
-13,68,Public Safety and Security,55
-20,75,Transportation,55
-3,69,Rate Control,66
-25,69,Spatial Orientation,44
-66,72,Multilimb Coordination,6
-10,72,Reaction Time,62
-16,72,Response Orientation,56
+job_compared,job_selected,skills,difference,job_compared_name
+0,3,Programming,3,choreographer
+19,32,Computers and Electronics,14,choreographer
+5,19,Engineering and Technology,16,choreographer
+38,25,Systems Analysis,16,choreographer
+10,0,Science,14,choreographer
+41,28,Systems Evaluation,18,choreographer
+39,15,Design,30,choreographer
+44,22,Operations Analysis,29,choreographer
+72,31,Fluency of Ideas,49,choreographer
+19,16,Technology Design,12,choreographer
+16,28,Mathematical Reasoning,22,choreographer
+28,39,Mathematics,22,choreographer
+78,31,Originality,59,choreographer
+56,50,Inductive Reasoning,19,choreographer
+66,47,Judgment and Decision Making,33,choreographer
+13,25,Mathematics.1,27,choreographer
+63,53,Deductive Reasoning,26,choreographer
+81,47,Oral Expression,51,choreographer
+22,31,Number Facility,27,choreographer
+53,47,Complex Problem Solving,25,choreographer
+63,28,Management of Personnel Resources,55,choreographer
+53,28,Persuasion,46,choreographer
+56,53,Information Ordering,25,choreographer
+66,50,Critical Thinking,39,choreographer
+50,50,Category Flexibility,24,choreographer
+69,47,Written Comprehension,47,choreographer
+47,25,Memorization,48,choreographer
+56,31,Negotiation,52,choreographer
+60,38,Learning Strategies,50,choreographer
+69,63,Problem Sensitivity,35,choreographer
+44,44,Flexibility of Closure,30,choreographer
+53,44,Written Expression,40,choreographer
+28,35,Speed of Closure,39,choreographer
+75,38,Instructing,70,choreographer
+54,62,English Language,42,choreographer
+16,38,Telecommunications,57,choreographer
+81,50,Oral Comprehension,67,choreographer
+63,47,Speech Recognition,53,choreographer
+78,50,Speaking,66,choreographer
+78,47,Active Listening,70,choreographer
+60,44,Active Learning,56,choreographer
+50,44,Writing,47,choreographer
+3,41,Quality Control Analysis,80,choreographer
+69,50,Speech Clarity,62,choreographer
+66,50,Reading Comprehension,60,choreographer
+75,47,Coordination,73,choreographer
+56,44,Service Orientation,58,choreographer
+69,44,Social Perceptiveness,72,choreographer
+0,16,Installation,64,choreographer
+60,53,Selective Attention,56,choreographer
+38,47,Perceptual Speed,59,choreographer
+50,29,Communications and Media,72,choreographer
+72,50,Monitoring,74,choreographer
+16,25,Management of Financial Resources,62,choreographer
+16,25,Management of Material Resources,63,choreographer
+57,39,Administration and Management,73,choreographer
+97,1,Fine Arts,152,choreographer
+53,72,Near Vision,76,choreographer
+0,50,Troubleshooting,108,choreographer
+39,24,Personnel and Human Resources,74,choreographer
+51,5,History and Archeology,106,choreographer
+43,6,Philosophy and Theology,98,choreographer
+22,19,Physics,65,choreographer
+29,7,Therapy and Counseling,85,choreographer
+72,53,Time Management,83,choreographer
+53,11,Sociology and Anthropology,107,choreographer
+39,25,Sales and Marketing,80,choreographer
+17,18,Economics and Accounting,68,choreographer
+12,9,Biology,71,choreographer
+53,50,Visualization,72,choreographer
+31,47,Finger Dexterity,86,choreographer
+47,47,Time Sharing,71,choreographer
+3,31,Equipment Selection,100,choreographer
+38,10,Dynamic Flexibility,101,choreographer
+34,15,Foreign Language,93,choreographer
+16,13,Explosive Strength,78,choreographer
+11,22,Production and Processing,87,choreographer
+11,15,Building and Construction,81,choreographer
+19,14,Medicine and Dentistry,83,choreographer
+28,67,Customer and Personal Service,118,choreographer
+0,16,Food Production,96,choreographer
+68,46,Education and Training,103,choreographer
+5,27,Chemistry,104,choreographer
+35,47,Visual Color Discrimination,95,choreographer
+62,30,Psychology,116,choreographer
+25,47,Auditory Attention,107,choreographer
+27,32,Clerical,91,choreographer
+16,39,Law and Government,110,choreographer
+25,50,Hearing Sensitivity,113,choreographer
+13,69,Operation Monitoring,145,choreographer
+50,53,Arm-Hand Steadiness,93,choreographer
+25,53,Manual Dexterity,119,choreographer
+3,41,Wrist-Finger Speed,130,choreographer
+63,47,Trunk Strength,109,choreographer
+18,49,Geography,125,choreographer
+60,44,Dynamic Strength,111,choreographer
+72,41,Gross Body Equilibrium,127,choreographer
+63,41,Stamina,119,choreographer
+0,47,Equipment Maintenance,145,choreographer
+44,75,Far Vision,130,choreographer
+66,44,Extent Flexibility,122,choreographer
+85,44,Gross Body Coordination,142,choreographer
+0,44,Sound Localization,146,choreographer
+44,44,Speed of Limb Movement,103,choreographer
+0,47,Repairing,151,choreographer
+16,47,Glare Sensitivity,136,choreographer
+0,72,Operation and Control,178,choreographer
+0,75,Control Precision,182,choreographer
+22,69,Depth Perception,155,choreographer
+0,50,Night Vision,159,choreographer
+10,50,Peripheral Vision,150,choreographer
+38,50,Static Strength,123,choreographer
+8,55,Mechanical,159,choreographer
+13,68,Public Safety and Security,168,choreographer
+20,75,Transportation,169,choreographer
+3,69,Rate Control,181,choreographer
+25,69,Spatial Orientation,160,choreographer
+66,72,Multilimb Coordination,123,choreographer
+10,72,Reaction Time,180,choreographer
+16,72,Response Orientation,175,choreographer

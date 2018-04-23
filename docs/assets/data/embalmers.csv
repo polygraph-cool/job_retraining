@@ -1,121 +1,121 @@
-job_compared,job_selected,skills,difference
-0,3,Programming,3
-47,32,Computers and Electronics,15
-31,19,Engineering and Technology,12
-28,25,Systems Analysis,3
-41,0,Science,41
-28,28,Systems Evaluation,0
-14,15,Design,1
-25,22,Operations Analysis,3
-38,31,Fluency of Ideas,7
-16,16,Technology Design,0
-25,28,Mathematical Reasoning,3
-45,39,Mathematics,6
-31,31,Originality,0
-53,50,Inductive Reasoning,3
-53,47,Judgment and Decision Making,6
-25,25,Mathematics.1,0
-60,53,Deductive Reasoning,7
-60,47,Oral Expression,13
-25,31,Number Facility,6
-50,47,Complex Problem Solving,3
-44,28,Management of Personnel Resources,16
-35,28,Persuasion,7
-53,53,Information Ordering,0
-56,50,Critical Thinking,6
-44,50,Category Flexibility,6
-50,47,Written Comprehension,3
-28,25,Memorization,3
-31,31,Negotiation,0
-35,38,Learning Strategies,3
-69,63,Problem Sensitivity,6
-41,44,Flexibility of Closure,3
-47,44,Written Expression,3
-25,35,Speed of Closure,10
-41,38,Instructing,3
-74,62,English Language,12
-24,38,Telecommunications,14
-66,50,Oral Comprehension,16
-53,47,Speech Recognition,6
-69,50,Speaking,19
-63,47,Active Listening,16
-44,44,Active Learning,0
-47,44,Writing,3
-35,41,Quality Control Analysis,6
-50,50,Speech Clarity,0
-47,50,Reading Comprehension,3
-53,47,Coordination,6
-53,44,Service Orientation,9
-53,44,Social Perceptiveness,9
-0,16,Installation,16
-41,53,Selective Attention,12
-28,47,Perceptual Speed,19
-34,29,Communications and Media,5
-53,50,Monitoring,3
-19,25,Management of Financial Resources,6
-25,25,Management of Material Resources,0
-68,39,Administration and Management,29
-16,1,Fine Arts,15
-69,72,Near Vision,3
-25,50,Troubleshooting,25
-47,24,Personnel and Human Resources,23
-24,5,History and Archeology,19
-56,6,Philosophy and Theology,50
-34,19,Physics,15
-44,7,Therapy and Counseling,37
-50,53,Time Management,3
-47,11,Sociology and Anthropology,36
-45,25,Sales and Marketing,20
-53,18,Economics and Accounting,35
-62,9,Biology,53
-53,50,Visualization,3
-56,47,Finger Dexterity,9
-28,47,Time Sharing,19
-28,31,Equipment Selection,3
-0,10,Dynamic Flexibility,10
-16,15,Foreign Language,1
-3,13,Explosive Strength,10
-46,22,Production and Processing,24
-30,15,Building and Construction,15
-30,14,Medicine and Dentistry,16
-89,67,Customer and Personal Service,22
-0,16,Food Production,16
-50,46,Education and Training,4
-72,27,Chemistry,45
-50,47,Visual Color Discrimination,3
-60,30,Psychology,30
-19,47,Auditory Attention,28
-50,32,Clerical,18
-56,39,Law and Government,17
-22,50,Hearing Sensitivity,28
-41,69,Operation Monitoring,28
-56,53,Arm-Hand Steadiness,3
-60,53,Manual Dexterity,7
-25,41,Wrist-Finger Speed,16
-47,47,Trunk Strength,0
-13,49,Geography,36
-22,44,Dynamic Strength,22
-16,41,Gross Body Equilibrium,25
-25,41,Stamina,16
-25,47,Equipment Maintenance,22
-38,75,Far Vision,37
-22,44,Extent Flexibility,22
-22,44,Gross Body Coordination,22
-16,44,Sound Localization,28
-19,44,Speed of Limb Movement,25
-22,47,Repairing,25
-16,47,Glare Sensitivity,31
-31,72,Operation and Control,41
-44,75,Control Precision,31
-41,69,Depth Perception,28
-16,50,Night Vision,34
-16,50,Peripheral Vision,34
-47,50,Static Strength,3
-41,55,Mechanical,14
-51,68,Public Safety and Security,17
-43,75,Transportation,32
-19,69,Rate Control,50
-16,69,Spatial Orientation,53
-47,72,Multilimb Coordination,25
-19,72,Reaction Time,53
-19,72,Response Orientation,53
+job_compared,job_selected,skills,difference,job_compared_name
+0,3,Programming,3,embalmers
+47,32,Computers and Electronics,16,embalmers
+31,19,Engineering and Technology,14,embalmers
+28,25,Systems Analysis,6,embalmers
+41,0,Science,45,embalmers
+28,28,Systems Evaluation,5,embalmers
+14,15,Design,7,embalmers
+25,22,Operations Analysis,10,embalmers
+38,31,Fluency of Ideas,15,embalmers
+16,16,Technology Design,9,embalmers
+25,28,Mathematical Reasoning,13,embalmers
+45,39,Mathematics,17,embalmers
+31,31,Originality,12,embalmers
+53,50,Inductive Reasoning,16,embalmers
+53,47,Judgment and Decision Making,20,embalmers
+25,25,Mathematics.1,15,embalmers
+60,53,Deductive Reasoning,23,embalmers
+60,47,Oral Expression,30,embalmers
+25,31,Number Facility,24,embalmers
+50,47,Complex Problem Solving,22,embalmers
+44,28,Management of Personnel Resources,36,embalmers
+35,28,Persuasion,28,embalmers
+53,53,Information Ordering,22,embalmers
+56,50,Critical Thinking,29,embalmers
+44,50,Category Flexibility,30,embalmers
+50,47,Written Comprehension,28,embalmers
+28,25,Memorization,29,embalmers
+31,31,Negotiation,27,embalmers
+35,38,Learning Strategies,31,embalmers
+69,63,Problem Sensitivity,35,embalmers
+41,44,Flexibility of Closure,33,embalmers
+47,44,Written Expression,34,embalmers
+25,35,Speed of Closure,42,embalmers
+41,38,Instructing,36,embalmers
+74,62,English Language,46,embalmers
+24,38,Telecommunications,49,embalmers
+66,50,Oral Comprehension,52,embalmers
+53,47,Speech Recognition,43,embalmers
+69,50,Speaking,57,embalmers
+63,47,Active Listening,55,embalmers
+44,44,Active Learning,40,embalmers
+47,44,Writing,44,embalmers
+35,41,Quality Control Analysis,48,embalmers
+50,50,Speech Clarity,43,embalmers
+47,50,Reading Comprehension,47,embalmers
+53,47,Coordination,51,embalmers
+53,44,Service Orientation,55,embalmers
+53,44,Social Perceptiveness,56,embalmers
+0,16,Installation,64,embalmers
+41,53,Selective Attention,61,embalmers
+28,47,Perceptual Speed,69,embalmers
+34,29,Communications and Media,56,embalmers
+53,50,Monitoring,55,embalmers
+19,25,Management of Financial Resources,59,embalmers
+25,25,Management of Material Resources,54,embalmers
+68,39,Administration and Management,84,embalmers
+16,1,Fine Arts,71,embalmers
+69,72,Near Vision,60,embalmers
+25,50,Troubleshooting,83,embalmers
+47,24,Personnel and Human Resources,82,embalmers
+24,5,History and Archeology,79,embalmers
+56,6,Philosophy and Theology,111,embalmers
+34,19,Physics,77,embalmers
+44,7,Therapy and Counseling,100,embalmers
+50,53,Time Management,67,embalmers
+47,11,Sociology and Anthropology,101,embalmers
+45,25,Sales and Marketing,86,embalmers
+53,18,Economics and Accounting,102,embalmers
+62,9,Biology,121,embalmers
+53,50,Visualization,72,embalmers
+56,47,Finger Dexterity,79,embalmers
+28,47,Time Sharing,90,embalmers
+28,31,Equipment Selection,75,embalmers
+0,10,Dynamic Flexibility,83,embalmers
+16,15,Foreign Language,75,embalmers
+3,13,Explosive Strength,85,embalmers
+46,22,Production and Processing,100,embalmers
+30,15,Building and Construction,92,embalmers
+30,14,Medicine and Dentistry,94,embalmers
+89,67,Customer and Personal Service,101,embalmers
+0,16,Food Production,96,embalmers
+50,46,Education and Training,85,embalmers
+72,27,Chemistry,127,embalmers
+50,47,Visual Color Discrimination,86,embalmers
+60,30,Psychology,114,embalmers
+19,47,Auditory Attention,113,embalmers
+50,32,Clerical,104,embalmers
+56,39,Law and Government,104,embalmers
+22,50,Hearing Sensitivity,116,embalmers
+41,69,Operation Monitoring,117,embalmers
+56,53,Arm-Hand Steadiness,93,embalmers
+60,53,Manual Dexterity,98,embalmers
+25,41,Wrist-Finger Speed,108,embalmers
+47,47,Trunk Strength,93,embalmers
+13,49,Geography,130,embalmers
+22,44,Dynamic Strength,117,embalmers
+16,41,Gross Body Equilibrium,121,embalmers
+25,41,Stamina,113,embalmers
+25,47,Equipment Maintenance,120,embalmers
+38,75,Far Vision,136,embalmers
+22,44,Extent Flexibility,122,embalmers
+22,44,Gross Body Coordination,123,embalmers
+16,44,Sound Localization,130,embalmers
+19,44,Speed of Limb Movement,128,embalmers
+22,47,Repairing,129,embalmers
+16,47,Glare Sensitivity,136,embalmers
+31,72,Operation and Control,147,embalmers
+44,75,Control Precision,138,embalmers
+41,69,Depth Perception,136,embalmers
+16,50,Night Vision,143,embalmers
+16,50,Peripheral Vision,144,embalmers
+47,50,Static Strength,114,embalmers
+41,55,Mechanical,126,embalmers
+51,68,Public Safety and Security,130,embalmers
+43,75,Transportation,146,embalmers
+19,69,Rate Control,165,embalmers
+16,69,Spatial Orientation,169,embalmers
+47,72,Multilimb Coordination,142,embalmers
+19,72,Reaction Time,171,embalmers
+19,72,Response Orientation,172,embalmers

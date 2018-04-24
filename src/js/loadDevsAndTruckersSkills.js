@@ -72,22 +72,20 @@ export default function loadDevsAndTruckersSkills(){
     console.log(devAndTruckerSkills);
     console.log(allJobSkillsRaw);
 
+    d3.selectAll('circle.truckers-devs-circles').st('opacity',0)
+    d3.selectAll('g.intro-y-axis').st('opacity',0)
+    d3.selectAll('g.intro-x-axis').st('opacity',0)
+
     let allJobSkillsFlat = [].concat.apply([], allJobSkillsRaw);
 
     let allJobSkillsGrouped = d3.nest()
       .key(d=>d.job_compared_name)
       .entries(allJobSkillsFlat)
 
-    // console.log(allJobSkills);
-
-
-    const chartSvg = d3.select("body")
-      .append("div.svg-container")
-      .append("svg.scatter")
-
-    chartSvg.at('height', 2200)
-      .at('width', 800)
-      .st('fill','#00000')
+    // const chartSvg = d3.select("body")
+    //   .append("div.svg-container")
+    //   .append("svg.scatter")
+    const chartSvg = d3.select('svg.scatter')
 
     const xScale = d3.scaleLinear()
   		.domain([0,100])
@@ -99,7 +97,7 @@ export default function loadDevsAndTruckersSkills(){
       .data(allJobSkillsGrouped)
       .enter()
       .append('g')
-      .at('class',d=> 'all-skills-'+d.key)
+      .at('class',d=> 'all-skills '+d.key)
 
     const skillItemsAllJobs = skillSectionsAllJobs.selectAll('g.skill-item')
       .data(d=>d.values)
@@ -260,33 +258,10 @@ BUTTON_Stack_AllJobs_Skills.on('click',()=>{
     return 'translate(0,'+(i*20+20)+')'
   })
 
-//   d3.selectAll('rect.other-job-skills').st('opacity',1)
-//
-//   let yDistanceFromTop = 0
-//
-//   for(i=0; i<allJobSkillsNames.length; i++){
-//
-//     yDistanceFromTop=i*20+20;
-//
-//     jobSkillGroupDifferenceRects[allJobSkillsNames[i]]
-//       .at('x', d=>XBUMP+xScaleEucledian(d.xCoordStacked))
-//       .at('width',d=> xScaleEucledian(d.difference))
-//       .at('height',3)
-//       .transition()
-//       .at('transform',`translate(0,${yDistanceFromTop})`)
-//       .st('fill','#E530BE')
-//       .st('opacity',1)
-//
-//     //Adding labels
-//      allJobLabels[allJobSkillsNames[i]]
-//       .at('transform',`translate(50,${yDistanceFromTop})`)
-//       .st('opacity',1)
-//       .text(d => d.name)
-//   }
 })
 
   BUTTON_Skills_Similarity_Single_Axis.on('click',()=>{
-    
+
   })
 
 

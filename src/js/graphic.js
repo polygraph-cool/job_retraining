@@ -1,15 +1,102 @@
 import loadIntro from './truckerDevIntro';
 import loadScatterplot from './scatterplotUpdated';
 import loadDevsAndTruckersSkills from './loadDevsAndTruckersSkills';
+
+const controller = new ScrollMagic.Controller();
 // import loadSingleAxisSimilarity from './singleAxisSimilarity';
 
 let mobile = false;
 let viewportWidth = window.innerWidth;
-let isMobile = viewportWidth < 700? true : false
+let viewportHeight = window.innerHeight;
+let isMobile = viewportWidth < 700? true : false;
+
+function getHeight(idSelector){
+  var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+  var elementHeightOffset = 0
+  var elementHeight = d3.select(idSelector)
+  elementHeight = elementHeight.node()
+  return elementHeight.getBoundingClientRect().height - h/2;
+}
 
 function resize() {}
 
 function init() {
+
+
+
+
+
+  const chartSvg = d3.select("body")
+    .select("div.svg-container")
+    .select("svg.scatter")
+
+  chartSvg.at('height', ()=>viewportHeight/2)
+    .at('width', ()=>viewportWidth* 0.8)
+    .st('fill','#00000')
+
+  const mainSectionHeight = getHeight('#content')
+
+
+  const sceneStick = new ScrollMagic.Scene({
+    triggerElement: ".svg-container",
+    	offset: 0,
+    	duration: mainSectionHeight,
+    	triggerHook: 0
+    })
+    .setPin(".svg-container",{pushFollowers: false})
+    .addIndicators({name: "indicatorScatter"})
+    .addTo(controller)
+
+    const sceneLoadIntro = new ScrollMagic.Scene({
+      triggerElement: ".svg-container",
+      offset:  0,
+      duration: 1,
+      triggerHook: 0
+    })
+    .on("enter", (e)=>{
+        loadIntro();
+    })
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){
+          }
+      else{}})
+    .addTo(controller)
+
+
+    const sceneLoadSkillComparison = new ScrollMagic.Scene({
+      triggerElement: ".two-jobs-all-skills",
+      offset:  0,
+      duration: 1,
+      triggerHook: 0
+    })
+    // .addIndicators({name: ""})
+    .on("enter", (e)=>{
+      loadDevsAndTruckersSkills()
+    })
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      else{}})
+    .addTo(controller)
+
+
+    const sceneLoadScatter = new ScrollMagic.Scene({
+      triggerElement: ".x-axis-scatter",
+      offset:  0,
+      duration: 1,
+      triggerHook: 0
+    })
+    // .addIndicators({name: ""})
+    .on("enter", (e)=>{
+      loadScatterplot()
+    })
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      else{}})
+    .addTo(controller)
+
+
+
+
 
 // Buttons for stepper progression
   const $TEMP_buttons_Container = d3.select('body').append('div.buttons-container')

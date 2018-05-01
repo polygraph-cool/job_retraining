@@ -29,6 +29,7 @@ function changeDropDown(d,i,n){
 }
 
 export default function loadScatterplotUpdated(){
+  const controllerScatter = new ScrollMagic.Controller();
 
   let allData = null
 
@@ -81,9 +82,6 @@ export default function loadScatterplotUpdated(){
 			item.skill_id= +item.skill_id
 		})
 
-		// console.log(skills);
-		// console.log(crosswalkJobs);
-
 		allData = similarity;
 
 		const jobSelector = d3.select("body")
@@ -96,7 +94,6 @@ export default function loadScatterplotUpdated(){
 			.append("div.job-selected-number")
 
 		const chartSvg = d3.select("svg.scatter")
-
 
 		let selectedJobData =	selectJobData(similarity, 415);
 
@@ -174,17 +171,6 @@ export default function loadScatterplotUpdated(){
 				jobCircles
 					.at('cx', d=>{return xScale(d.similarity)})
           .at('cy', 50)
-					// .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
-					// .st('fill', d=>{
-					// 	const jobSelectedWage = keyObjectJobWage[d.id_selected]
-					// 	const jobComparedWage = keyObjectJobWage[d.id_compared]
-					// 	const wageChange = jobSelectedWage/jobComparedWage;
-					// 	return colorScale(wageChange)
-					// })
-          // .at('r', d=>{
-					// 	const wage=keyObjectJobNumber[d.id_compared];
-					// 	return radiusScale(wage)
-					// })
           .st('fill', 'white')
 					.st('stroke', 'black')
           .at('r','3')
@@ -357,11 +343,27 @@ export default function loadScatterplotUpdated(){
     const $show_Number_Jobs_Available =d3.select('div.transition-button.jobs-available')
 
     // Adding in Y axis to scatterplot
-    $show_XY_Axes_Similarity_All_Jobs.on('click',()=>{
+    // $show_XY_Axes_Similarity_All_Jobs.on('click',()=>{
+    //   jobCircles
+    //     .transition()
+    //   	.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+    // })
+
+    const sceneJob1 = new ScrollMagic.Scene({
+      triggerElement: ".xy-axes-scatter",
+      offset:  0,
+      duration: 1,
+      triggerHook: 0
+    })
+    .on("enter", (e)=>{
       jobCircles
         .transition()
       	.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
     })
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      else{}})
+    .addTo(controllerScatter)
 
     // Adding in color to scatterplot
     $show_Earnings_Comparison.on('click',()=>{
@@ -375,6 +377,28 @@ export default function loadScatterplotUpdated(){
       	})
     })
 
+
+    const sceneJob2 = new ScrollMagic.Scene({
+      triggerElement: ".show-similarity-auto-wage",
+      offset:  0,
+      duration: 1,
+      triggerHook: 0
+    })
+    .on("enter", (e)=>{
+      jobCircles
+        .transition()
+      	.st('fill', d=>{
+      		const jobSelectedWage = keyObjectJobWage[d.id_selected]
+      		const jobComparedWage = keyObjectJobWage[d.id_compared]
+      		const wageChange = jobSelectedWage/jobComparedWage;
+      		return colorScale(wageChange)
+      	})
+    })
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      else{}})
+    .addTo(controllerScatter)
+
     // Adding in radius to scatterplot
     $show_Number_Jobs_Available.on('click',()=>{
       jobCircles
@@ -385,6 +409,29 @@ export default function loadScatterplotUpdated(){
   			})
 
     })
+
+
+
+        const sceneJob3 = new ScrollMagic.Scene({
+          triggerElement: ".show-similarity-auto-wage-number",
+          offset:  0,
+          duration: 1,
+          triggerHook: 0
+        })
+        .on("enter", (e)=>{
+          jobCircles
+            .transition()
+      			.at('r', d=>{
+      				const wage=keyObjectJobNumber[d.id_compared];
+      				return radiusScale(wage)
+      			})
+        })
+        .on("leave", (e)=>{
+          if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+          else{}})
+        .addTo(controllerScatter)
+
+
 
   })
 }

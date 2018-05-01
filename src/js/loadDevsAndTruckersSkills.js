@@ -1,6 +1,11 @@
 
 
 export default function loadDevsAndTruckersSkills(){
+
+  var viewportWidth = window.innerWidth;
+  var viewportHeight = window.innerHeight;
+  var isMobile = viewportWidth < 700? true : false
+
   let allData = null;
   const fileNames = ['devs_and_truckers_skills',
                     'choreographer',
@@ -22,6 +27,7 @@ export default function loadDevsAndTruckersSkills(){
   })
 
   d3.loadData(...files, (err, response)=>{
+    const controllerSkills = new ScrollMagic.Controller();
 
     const BUTTON_Skill_Difference = d3.select("div.skill-difference")
     const BUTTON_Stack_SkillDifference = d3.select("div.skill-stack-difference")
@@ -69,12 +75,15 @@ export default function loadDevsAndTruckersSkills(){
       }
     })
 
-    console.log(devAndTruckerSkills);
-    console.log(allJobSkillsRaw);
+    const chartSvg = d3.select('svg.scatter')
 
-    d3.selectAll('circle.truckers-devs-circles').st('opacity',0)
-    d3.selectAll('g.intro-y-axis').st('opacity',0)
-    d3.selectAll('g.intro-x-axis').st('opacity',0)
+    chartSvg.selectAll('circle.truckers-devs-circles').st('opacity',0);
+
+    chartSvg.select('g.intro-y-axis').st('opacity',0);
+
+    chartSvg.select('g.intro-x-axis').st('opacity',0);
+
+    chartSvg.selectAll('text.two-job-skill-value').st('opacity',0)
 
     let allJobSkillsFlat = [].concat.apply([], allJobSkillsRaw);
 
@@ -82,10 +91,6 @@ export default function loadDevsAndTruckersSkills(){
       .key(d=>d.job_compared_name)
       .entries(allJobSkillsFlat)
 
-    // const chartSvg = d3.select("body")
-    //   .append("div.svg-container")
-    //   .append("svg.scatter")
-    const chartSvg = d3.select('svg.scatter')
 
     const xScale = d3.scaleLinear()
   		.domain([0,100])
@@ -104,18 +109,6 @@ export default function loadDevsAndTruckersSkills(){
       .enter()
       .append('g')
       .at('class',d=>'skill-item-'+d.skills.replace(/ /g,'_'))
-
-
-
-// Creating group elements tied to data from multiple jobs
-    // let jobSkillGroupObject={}
-    // for(i=0; i<allJobSkillsNames.length; i++){
-    //   jobSkillGroupObject[`${allJobSkillsNames[i]}`]=chartSvg.selectAll(`g.skill-section-${allJobSkillsNames[i]}`)
-    //   .data(allJobSkills[i])
-    //   .enter()
-    //   .append(`g.skill-section-${allJobSkillsNames[i]}`)
-    // }
-
 
     const YBUMP = 20;
     const XBUMP = 250;
@@ -150,16 +143,6 @@ export default function loadDevsAndTruckersSkills(){
       .st('text-anchor','right')
 
 
-// Adding other text label
-    // let allJobLabels = {}
-    // for(i=0; i<allJobSkillsNames.length; i++){
-    //   allJobLabels[`${allJobSkillsNames[i]}`]=jobSkillGroupObject[allJobSkillsNames[i]].select(`text.all-jobs.job-${allJobSkillsNames[i]}`)
-    //   .data(allJobSkillsNamesObjects[i])
-    //   .enter()
-    //   .append(`text.all-jobs.job-${allJobSkillsNames[i]}`)
-    // }
-
-
     const axisLines = skillSections.append('line.skill-axis')
       .at('x1',200)
       .at('y1',0)
@@ -173,13 +156,6 @@ export default function loadDevsAndTruckersSkills(){
 
     const axisDifferenceRectsAllJobs = skillItemsAllJobs.append('rect.skill-difference-axis-all-jobs')
 
-// Looping through array of data to create, for each job, bars signifying different skills
-    // let jobSkillGroupDifferenceRects={}
-    // for(i=0; i<allJobSkillsNames.length; i++){
-    //   jobSkillGroupDifferenceRects[`${allJobSkillsNames[i]}`]=jobSkillGroupObject[allJobSkillsNames[i]].append(`rect.other-job-skills.skill-difference-axis-${allJobSkillsNames[i]}`)
-    // }
-
-
 // Adding difference rectangles for devs and truckers
     axisDifferenceRects
     .at('x', d=>XBUMP+xScale(d.truckers))
@@ -192,73 +168,142 @@ export default function loadDevsAndTruckersSkills(){
 
 // Adding difference retangles for all other jobs
 
-    // for(i=0; i<allJobSkillsNames.length; i++){
-    //   jobSkillGroupDifferenceRects[allJobSkillsNames[i]]
-    //   .at('x', d=>XBUMP+xScale(d.job_selected))
-    //   .at('width',d=> xScale(d.difference))
-    //   .at('height',3)
-    //   .st('fill','#E530BE')
-    //   .st('opacity',0)
-    // }
 
-
-    BUTTON_Skill_Difference.on('click',()=>{
-       axisDifferenceRects
-        .transition()
-        .st('opacity',1)
+    // BUTTON_Skill_Difference.on('click',()=>{
+    //    axisDifferenceRects
+    //     .transition()
+    //     .st('opacity',1)
+    // })
+    // showing skill difference
+    const sceneShowDifferences = new ScrollMagic.Scene({triggerElement: ".two-jobs-skills-difference",offset:  0,duration: 1,triggerHook: 0})
+    .on("enter", (e)=>{
+      axisDifferenceRects
+       .transition()
+       .st('opacity',1)
     })
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      else{}})
+    .addTo(controllerSkills)
+
+
+
 
     const xScaleEucledian = d3.scaleLinear()
   		.domain([0,100])
   		.range([0, 15]);
 
 
-BUTTON_Stack_SkillDifference.on('click',()=>{
-  axisDifferenceRects
-  .at('x',d=> xScaleEucledian(d.xCoordStacked))
-  .at('width',d=> xScaleEucledian(d.difference))
-  .on('mouseenter',d=>console.log(d.skills))
+// BUTTON_Stack_SkillDifference.on('click',()=>{
+//   axisDifferenceRects
+//   .at('x',d=> xScaleEucledian(d.xCoordStacked))
+//   .at('width',d=> xScaleEucledian(d.difference))
+//   .on('mouseenter',d=>console.log(d.skills))
+//
+//   skillSections
+//     .transition()
+//     .at('transform','translate(250,10)')
+//
+//   axisLines
+//     .st('opacity',0)
+//
+//   skillSectionsText
+//     .st('opacity',0)
+//     .text((d,i)=> {
+//       if (i===devAndTruckerSkills.length-1){return 'Developers'}
+//       else return ''
+//     })
+//     .transition()
+//     .st('opacity',1)
+//
+//   devCircles
+//     .st('opacity',0)
+//
+//   truckerCircles
+//     .st('opacity',0)
+//   })
 
-  skillSections
-    .transition()
-    .at('transform','translate(250,10)')
 
-  axisLines
-    .st('opacity',0)
 
-  skillSectionsText
-    .st('opacity',0)
-    .text((d,i)=> {
-      if (i===devAndTruckerSkills.length-1){return 'Developers'}
-      else return ''
+  const sceneStackDifferences = new ScrollMagic.Scene({triggerElement: ".two-jobs-stack-difference",offset:  0,duration: 1,triggerHook: 0})
+  .on("enter", (e)=>{
+    axisDifferenceRects
+    .at('x',d=> xScaleEucledian(d.xCoordStacked))
+    .at('width',d=> xScaleEucledian(d.difference))
+    .on('mouseenter',d=>console.log(d.skills))
+
+    skillSections
+      .transition()
+      .at('transform','translate(250,10)')
+
+    axisLines
+      .st('opacity',0)
+
+    skillSectionsText
+      .st('opacity',0)
+      .text((d,i)=> {
+        if (i===devAndTruckerSkills.length-1){return 'Developers'}
+        else return ''
+      })
+      .transition()
+      .st('opacity',1)
+
+    devCircles
+      .st('opacity',0)
+
+    truckerCircles
+      .st('opacity',0)
+  })
+  .on("leave", (e)=>{
+    if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+    else{}})
+  .addTo(controllerSkills)
+
+
+
+
+// BUTTON_Stack_AllJobs_Skills.on('click',()=>{
+//
+//   axisDifferenceRectsAllJobs
+//   .at('x',d=> xScaleEucledian(d.xCoordStacked))
+//   .at('width',d=> xScaleEucledian(d.difference))
+//   .at('height',3)
+//   .st('fill','#E530BE')
+//   .at('transform',(d,i)=>{
+//     return 'translate(250,0)'
+//   })
+//   .on('mouseenter',d=>console.log(d.skills))
+//
+//   skillSectionsAllJobs.at('transform',(d,i)=>{
+//     return 'translate(0,'+(i*20+20)+')'
+//   })
+//
+// })
+
+
+const sceneStackAllSkills = new ScrollMagic.Scene({triggerElement: ".many-jobs-stack-difference",offset:  0,duration: 1,triggerHook: 0})
+.on("enter", (e)=>{
+
+    axisDifferenceRectsAllJobs
+    .at('x',d=> xScaleEucledian(d.xCoordStacked))
+    .at('width',d=> xScaleEucledian(d.difference))
+    .at('height',3)
+    .st('fill','#E530BE')
+    .at('transform',(d,i)=>{
+      return 'translate(250,0)'
     })
-    .transition()
-    .st('opacity',1)
+    .on('mouseenter',d=>console.log(d.skills))
 
-  devCircles
-    .st('opacity',0)
-
-  truckerCircles
-    .st('opacity',0)
-  })
-
-BUTTON_Stack_AllJobs_Skills.on('click',()=>{
-
-  axisDifferenceRectsAllJobs
-  .at('x',d=> xScaleEucledian(d.xCoordStacked))
-  .at('width',d=> xScaleEucledian(d.difference))
-  .at('height',3)
-  .st('fill','#E530BE')
-  .at('transform',(d,i)=>{
-    return 'translate(250,0)'
-  })
-  .on('mouseenter',d=>console.log(d.skills))
-
-  skillSectionsAllJobs.at('transform',(d,i)=>{
-    return 'translate(0,'+(i*20+20)+')'
-  })
-
+    skillSectionsAllJobs.at('transform',(d,i)=>{
+      return 'translate(0,'+(i*20+20)+')'
+    })
 })
+.on("leave", (e)=>{
+  if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+  else{}})
+.addTo(controllerSkills)
+
+
 
   BUTTON_Skills_Similarity_Single_Axis.on('click',()=>{
 

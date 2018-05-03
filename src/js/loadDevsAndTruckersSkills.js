@@ -2,9 +2,9 @@
 
 export default function loadDevsAndTruckersSkills(){
 
-  var viewportWidth = window.innerWidth;
-  var viewportHeight = window.innerHeight;
-  var isMobile = viewportWidth < 700? true : false
+  const viewportWidth = window.innerWidth;
+  const viewportHeight = window.innerHeight;
+  const isMobile = viewportWidth < 700? true : false;
 
   let allData = null;
   const fileNames = ['devs_and_truckers_skills',
@@ -92,9 +92,30 @@ export default function loadDevsAndTruckersSkills(){
       .entries(allJobSkillsFlat)
 
 
+
+
+    const svgWidth = chartSvg.at('width')
+    const svgHeight = chartSvg.at('height')
+
+    const widthPercentage = 0.7;
+    const heightPercentage = 0.7;
+
+    const yMaxScaleValue = svgHeight * heightPercentage;
+    const xMaxScaleValue = svgWidth * widthPercentage;
+
+    const xPadding = (1-widthPercentage)*svgWidth;
+    const yPadding = (1-heightPercentage)*svgHeight;
+
+
+
     const xScale = d3.scaleLinear()
   		.domain([0,100])
-  		.range([0, 400]);
+  		.range([xPadding, xMaxScaleValue]);
+
+
+    const xScaleRectangle = d3.scaleLinear()
+  		.domain([0,100])
+  		.range([0, (xMaxScaleValue-xPadding)]);
 // original
     const skillSections = chartSvg.selectAll('g.skill-section').data(devAndTruckerSkills).enter().append('g.skill-section')
 
@@ -117,13 +138,13 @@ export default function loadDevsAndTruckersSkills(){
     const devCircles = skillSections.append('circle.devs-skill-circle')
     const truckerCircles = skillSections.append('circle.truckers-skill-circle')
 
-    devCircles.at('cx',(d)=> XBUMP+ xScale(d.devs))
+    devCircles.at('cx',(d)=> xScale(d.devs))
       .at('r',5)
       .st('fill','#0B24FB')
       .on('mouseenter')
 
 
-    truckerCircles.at('cx',(d)=>XBUMP+ xScale(d.truckers))
+    truckerCircles.at('cx',(d)=>xScale(d.truckers))
       .at('r',5)
       .st('fill','#EB5757')
 
@@ -144,9 +165,9 @@ export default function loadDevsAndTruckersSkills(){
 
 
     const axisLines = skillSections.append('line.skill-axis')
-      .at('x1',200)
+      .at('x1',()=>xScale(0))
       .at('y1',0)
-      .at('x2',800)
+      .at('x2',()=>xScale(100))
       .at('y2',0)
       .at('stroke-width', 1)
       .st('stroke','black')
@@ -158,8 +179,10 @@ export default function loadDevsAndTruckersSkills(){
 
 // Adding difference rectangles for devs and truckers
     axisDifferenceRects
-    .at('x', d=>XBUMP+xScale(d.truckers))
-    .at('width',d=> xScale(d.difference))
+    .at('x', d=>xScale(d.truckers))
+    .at('width',d=>{
+      return xScaleRectangle(d.difference);
+    })
     .at('height',3)
     .st('fill','#E530BE')
     .st('opacity',0)

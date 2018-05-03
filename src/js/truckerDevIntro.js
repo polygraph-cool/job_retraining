@@ -29,10 +29,6 @@ export default function loadtruckerDevIntro(){
     .select("div.svg-container")
     .select("svg.scatter")
 
-  chartSvg.at('height', ()=>viewportHeight/2)
-    .at('width', ()=>viewportWidth* 0.8)
-    .st('fill','#00000')
-
 
 
   const truckerDeveloperJoin = chartSvg.selectAll('circle.truckers-devs-circles')

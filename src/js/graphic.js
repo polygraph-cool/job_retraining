@@ -30,7 +30,9 @@ function init() {
     .select("div.svg-container")
     .select("svg.scatter")
 
-  chartSvg.at('height', ()=>viewportHeight/2)
+    console.log(viewportHeight);
+
+  chartSvg.at('height', ()=> viewportHeight)
     .at('width', ()=>viewportWidth* 0.8)
     .st('fill','#00000')
 

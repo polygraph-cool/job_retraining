@@ -5,10 +5,16 @@ import loadDevsAndTruckersSkills from './loadDevsAndTruckersSkills';
 const controller = new ScrollMagic.Controller();
 // import loadSingleAxisSimilarity from './singleAxisSimilarity';
 
+
+
+
 let mobile = false;
 let viewportWidth = window.innerWidth;
 let viewportHeight = window.innerHeight;
 let isMobile = viewportWidth < 700? true : false;
+
+
+console.log(Math.max(document.documentElement.clientHeight));
 
 function getHeight(idSelector){
   var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -30,9 +36,9 @@ function init() {
     .select("div.svg-container")
     .select("svg.scatter")
 
-    console.log(viewportHeight);
 
-  chartSvg.at('height', ()=> viewportHeight)
+
+  chartSvg.at('height', ()=> viewportHeight*0.9)
     .at('width', ()=>viewportWidth* 0.8)
     .st('fill','#00000')
 

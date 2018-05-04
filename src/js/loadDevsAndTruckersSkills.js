@@ -6,18 +6,89 @@ export default function loadDevsAndTruckersSkills(){
   const viewportHeight = window.innerHeight;
   const isMobile = viewportWidth < 700? true : false;
 
+  const JOB_LABEL_MARGIN_LEFT = 60;
+
+  const ALL_JOBS_STARTING_Y_LOCATION = 15;
+
   let allData = null;
-  const fileNames = ['devs_and_truckers_skills',
-                    'choreographer',
-                    'dentists',
-                    'nurses',
-                    'chiropractors',
-                    'farmers',
-                    'construction_managers',
-                    'firefighters',
-                    'geographers',
-                    'embalmers',
-                    'pipelayers']
+
+
+
+
+  const fileNames = ["devs_and_truckers_skills",
+    "Choreographers",
+    "Dentists",
+    "Nurses",
+    "Chiropractors",
+    "Farmers",
+    "Construction_Managers",
+    "Firefighters",
+    "Geographers",
+    "Embalmers",
+    "Piplayers",
+    "Podiatrists",
+    "Fabric_Patternmakers",
+    "Clergy",
+    "Makeup_Artists",
+    "Family_Therapists",
+    "CEOs",
+    "Art_Directors",
+    "Interrior_Designers",
+    "Craft_Artists",
+    "Event_Planners",
+    "Veterinarians",
+    "Writers",
+    "Political_Scientists",
+    "Ship_Engineers",
+    "Paramedics",
+    "Mathematicians",
+    "Florists",
+    "Travel_Guides",
+    "News_Analysts",
+    "Musicians",
+    "Fitness_Trainers",
+    "Graphic_Designers",
+    "Childcare_Workers",
+    "Police_Officers",
+    "Hairdressers",
+    "Journalists",
+    "Air_Traffic_Controllers",
+    "Dancers",
+    "Optometrists",
+    "Physician_Assistants",
+    "Electricians",
+    "Ambulance_Drivers",
+    "Athletes",
+    "Skincare_Specialists",
+    "Private_Cooks",
+    "Funeral_Attendants",
+    "Actors",
+    "Judges",
+    "Economists",
+    "historians",
+    "Dental_Assistants",
+    "Cobblers",
+    "Massage_Therapists",
+    "Millwrights",
+    "Librarians",
+    "Maids",
+    "Bartenders",
+    "Dishwashers",
+    "Fast_Food_Cooks",
+    "Barbers",
+    "Real_Estate_Agents",
+    "Proofreaders"]
+  // const fileNames = ['devs_and_truckers_skills',
+  //                   'choreographer',
+  //                   'dentists',
+  //                   'nurses',
+  //                   'chiropractors',
+  //                   'farmers',
+  //                   'construction_managers',
+  //                   'firefighters',
+  //                   'geographers',
+  //                   'embalmers',
+  //                   'pipelayers']
   const pathData = 'assets/data/'
 
   let files=[]
@@ -43,8 +114,16 @@ export default function loadDevsAndTruckersSkills(){
       allJobSkillsRaw.push(response[i])
     }
 
-    const allJobSkillsNames=['choreographers','dentists','nurses','chiropractors','farmers','construction_managers',
-                          'firefighters','geographers','embalmers','pipelayers']
+    // const allJobSkillsNames=['choreographers','dentists','nurses','chiropractors','farmers','construction_managers',
+    //                       'firefighters','geographers','embalmers','pipelayers']
+
+    const allJobSkillsName=["Choreographers",
+      "Dentists","Nurses","Chiropractors","Farmers","Construction_Managers","Firefighters","Geographers","Embalmers","Piplayers","Podiatrists",
+      "Fabric_Patternmakers","Clergy","Makeup_Artists","Family_Therapists","CEOs","Art_Directors","Interrior_Designers","Craft_Artists","Event_Planners","Veterinarians","Writers",
+      "Political_Scientists","Ship_Engineers","Paramedics","Mathematicians","Florists","Travel_Guides","News_Analysts","Musicians","Fitness_Trainers","Graphic_Designers","Childcare_Workers",
+      "Police_Officers","Hairdressers","Journalists","Air_Traffic_Controllers","Dancers","Optometrists","Physician_Assistants","Electricians","Ambulance_Drivers","Athletes","Skincare_Specialists",
+      "Private_Cooks","Funeral_Attendants","Actors","Judges","Economists","historians","Dental_Assistants","Cobblers","Massage_Therapists","Millwrights","Librarians","Maids","Bartenders",
+      "Dishwashers","Fast_Food_Cooks","Barbers","Real_Estate_Agents","Proofreaders"]
 
     devAndTruckerSkills.forEach(skill=>{
       skill.difference = Math.abs(+skill.devs- +skill.truckers)
@@ -56,6 +135,9 @@ export default function loadDevsAndTruckersSkills(){
       })
     })
 
+
+    // Calculating xCoord offset for stacked bar chart, Devs and Truckes
+
     let i;
     let xSum=0;
     let stackPadding=1;
@@ -64,6 +146,9 @@ export default function loadDevsAndTruckersSkills(){
       devAndTruckerSkills[i]['xCoordStacked']=xSum
       xSum+=devAndTruckerSkills[i]['difference'] + stackPadding
     }
+
+
+// Calculating xCoord offset for stacked bar chart, for all jobs
 
     allJobSkillsRaw.forEach(jobAndTruckerSkills=>{
       let i;
@@ -74,6 +159,8 @@ export default function loadDevsAndTruckersSkills(){
         xSum+= +jobAndTruckerSkills[i]['difference'] + stackPadding
       }
     })
+
+    console.log(allJobSkillsRaw);
 
     const chartSvg = d3.select('svg.scatter')
 
@@ -117,6 +204,7 @@ export default function loadDevsAndTruckersSkills(){
   		.domain([0,100])
   		.range([0, (xMaxScaleValue-xPadding)]);
 // original
+
     const skillSections = chartSvg.selectAll('g.skill-section').data(devAndTruckerSkills).enter().append('g.skill-section')
 
     const skillSectionsAllJobs = chartSvg.selectAll('g.all-skills')
@@ -149,18 +237,19 @@ export default function loadDevsAndTruckersSkills(){
       .st('fill','#EB5757')
 
 // Adding original text labels
-    const skillSectionsText = skillSections
+  skillSections
       .at('transform', (d,i)=>{
-        return 'translate(50,'+ (YBUMP+(i*YINTERVAL)) +')'
-      })
-      .append("text")
+        return 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (ALL_JOBS_STARTING_Y_LOCATION+(i*ALL_JOBS_STARTING_Y_LOCATION)) +')'
+      });
+
+    const skillSectionsText= skillSections.append("text.job-name")
       .text(d=>d.skills)
       .st('text-anchor','right')
 
     const skillSectionsTextAllJobs = skillSectionsAllJobs
-      .append("text")
-      .at('transform','translate(250,0)')
-      .text(d=>d.key)
+      .append("text.job-name")
+      .at('transform','translate('+JOB_LABEL_MARGIN_LEFT+',0)')
+      .text(d=>d.key.replace(/_/g,' '))
       .st('text-anchor','right')
 
 
@@ -179,7 +268,14 @@ export default function loadDevsAndTruckersSkills(){
 
 // Adding difference rectangles for devs and truckers
     axisDifferenceRects
-    .at('x', d=>xScale(d.truckers))
+    .at('x', d=>{
+      if (+d.devs>=+d.truckers){
+        return xScale(+d.truckers)
+      }
+      else{
+        return xScale(+d.devs)
+      }
+      })
     .at('width',d=>{
       return xScaleRectangle(d.difference);
     })
@@ -192,11 +288,6 @@ export default function loadDevsAndTruckersSkills(){
 // Adding difference retangles for all other jobs
 
 
-    // BUTTON_Skill_Difference.on('click',()=>{
-    //    axisDifferenceRects
-    //     .transition()
-    //     .st('opacity',1)
-    // })
     // showing skill difference
     const sceneShowDifferences = new ScrollMagic.Scene({triggerElement: ".two-jobs-skills-difference",offset:  0,duration: 1,triggerHook: 0})
     .on("enter", (e)=>{
@@ -209,116 +300,89 @@ export default function loadDevsAndTruckersSkills(){
       else{}})
     .addTo(controllerSkills)
 
-
-
-
-    const xScaleEucledian = d3.scaleLinear()
+    const xCoordsArray = []
+    const xOffsetsForHorizontalBars = allJobSkillsFlat.map(d=> d.xCoordStacked)
+    const maxSumBarWidth = d3.max(xOffsetsForHorizontalBars);
+    const maxPartBarWidth= maxSumBarWidth/68;
+    const xScaleEuclidean = d3.scaleLinear()
   		.domain([0,100])
-  		.range([0, 15]);
-
-
-// BUTTON_Stack_SkillDifference.on('click',()=>{
-//   axisDifferenceRects
-//   .at('x',d=> xScaleEucledian(d.xCoordStacked))
-//   .at('width',d=> xScaleEucledian(d.difference))
-//   .on('mouseenter',d=>console.log(d.skills))
-//
-//   skillSections
-//     .transition()
-//     .at('transform','translate(250,10)')
-//
-//   axisLines
-//     .st('opacity',0)
-//
-//   skillSectionsText
-//     .st('opacity',0)
-//     .text((d,i)=> {
-//       if (i===devAndTruckerSkills.length-1){return 'Developers'}
-//       else return ''
-//     })
-//     .transition()
-//     .st('opacity',1)
-//
-//   devCircles
-//     .st('opacity',0)
-//
-//   truckerCircles
-//     .st('opacity',0)
-//   })
+  		.range([0, maxPartBarWidth]);
 
 
 
   const sceneStackDifferences = new ScrollMagic.Scene({triggerElement: ".two-jobs-stack-difference",offset:  0,duration: 1,triggerHook: 0})
   .on("enter", (e)=>{
-    axisDifferenceRects
-    .at('x',d=> xScaleEucledian(d.xCoordStacked))
-    .at('width',d=> xScaleEucledian(d.difference))
-    .on('mouseenter',d=>console.log(d.skills))
-
-    skillSections
-      .transition()
-      .at('transform','translate(250,10)')
 
     axisLines
+      .transition()
       .st('opacity',0)
 
     skillSectionsText
+      .transition()
       .st('opacity',0)
       .text((d,i)=> {
         if (i===devAndTruckerSkills.length-1){return 'Developers'}
         else return ''
       })
+      .at('transform','translate('+JOB_LABEL_MARGIN_LEFT+ ',0)')
       .transition()
       .st('opacity',1)
 
     devCircles
+      .transition()
       .st('opacity',0)
 
     truckerCircles
+      .transition()
       .st('opacity',0)
-  })
-  .on("leave", (e)=>{
-    if(e.target.controller().info("scrollDirection") == "REVERSE"){}
-    else{}})
-  .addTo(controllerSkills)
+
+
+    axisDifferenceRects
+    .transition()
+    .delay(1000)
+    .at('x',d=> xScaleEuclidean(d.xCoordStacked))
+    .at('width',d=> xScaleEuclidean(d.difference))
+    .at('transform',(d,i)=>{
+      return 'translate('+XBUMP+',0)'
+    })
 
 
 
+    skillSections
+      .transition()
+        .delay(2000)
+        .duration(500)
+        .at('transform',()=> 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (viewportHeight/2) +')')
 
-// BUTTON_Stack_AllJobs_Skills.on('click',()=>{
-//
-//   axisDifferenceRectsAllJobs
-//   .at('x',d=> xScaleEucledian(d.xCoordStacked))
-//   .at('width',d=> xScaleEucledian(d.difference))
-//   .at('height',3)
-//   .st('fill','#E530BE')
-//   .at('transform',(d,i)=>{
-//     return 'translate(250,0)'
-//   })
-//   .on('mouseenter',d=>console.log(d.skills))
-//
-//   skillSectionsAllJobs.at('transform',(d,i)=>{
-//     return 'translate(0,'+(i*20+20)+')'
-//   })
-//
-// })
+  axisDifferenceRects
+    .on('mouseenter',d=>console.log(d.skills))})
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      else{}})
+    .addTo(controllerSkills)
+
+
+
 
 
 const sceneStackAllSkills = new ScrollMagic.Scene({triggerElement: ".many-jobs-stack-difference",offset:  0,duration: 1,triggerHook: 0})
 .on("enter", (e)=>{
 
+
+    skillSections.at('transform',()=> 'translate('+0+','+ 2*ALL_JOBS_STARTING_Y_LOCATION +')')
+
     axisDifferenceRectsAllJobs
-    .at('x',d=> xScaleEucledian(d.xCoordStacked))
-    .at('width',d=> xScaleEucledian(d.difference))
+    .at('x',d=> xScaleEuclidean(d.xCoordStacked))
+    .at('width',d=> xScaleEuclidean(d.difference))
     .at('height',3)
     .st('fill','#E530BE')
     .at('transform',(d,i)=>{
-      return 'translate(250,0)'
+      return 'translate('+XBUMP+',0)'
     })
     .on('mouseenter',d=>console.log(d.skills))
 
     skillSectionsAllJobs.at('transform',(d,i)=>{
-      return 'translate(0,'+(i*20+20)+')'
+      return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
     })
 })
 .on("leave", (e)=>{

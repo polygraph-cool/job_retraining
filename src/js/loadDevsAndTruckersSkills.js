@@ -151,36 +151,36 @@ export default function loadDevsAndTruckersSkills(){
 // Calculating xCoord offset for stacked bar chart, for all jobs
 
     allJobSkillsRaw.forEach(jobAndTruckerSkills=>{
-      let i;
-      let xSum=0;
-      let stackPadding=1;
+      xSum=0;
+      stackPadding=1;
       for (i=0; i<jobAndTruckerSkills.length; i++){
         jobAndTruckerSkills[i]['xCoordStacked']=xSum
         xSum+= +jobAndTruckerSkills[i]['difference'] + stackPadding
       }
     })
 
-    console.log(allJobSkillsRaw);
-
     const chartSvg = d3.select('svg.scatter')
 
-    chartSvg.selectAll('circle.truckers-devs-circles').st('opacity',0);
+    // Removing previously visible content
+    const truckerDeveloperCircles = chartSvg.selectAll('circle.truckers-devs-circles');
+    const truckerDeveloperYAxis = chartSvg.select('g.intro-y-axis');
+    const truckerDeveloperXAxis = chartSvg.select('g.intro-x-axis');
+    const truckerDeveloperSkillValues = chartSvg.selectAll('text.two-job-skill-value');
 
-    chartSvg.select('g.intro-y-axis').st('opacity',0);
+    truckerDeveloperCircles.st('opacity',0)
+    truckerDeveloperYAxis.st('opacity',0);
+    truckerDeveloperXAxis.st('opacity',0);
+    truckerDeveloperSkillValues.st('opacity',0);
 
-    chartSvg.select('g.intro-x-axis').st('opacity',0);
+    // Concatenating all the CSVS for previously loaded jobs and making a new array
+    // of objects from them, w/ each job name used as a key.
 
-    chartSvg.selectAll('text.two-job-skill-value').st('opacity',0)
-
-    let allJobSkillsFlat = [].concat.apply([], allJobSkillsRaw);
-
-    let allJobSkillsGrouped = d3.nest()
+    const allJobSkillsFlat = [].concat.apply([], allJobSkillsRaw);
+    const allJobSkillsGrouped = d3.nest()
       .key(d=>d.job_compared_name)
       .entries(allJobSkillsFlat)
 
-
-
-
+    // Setting scales
     const svgWidth = chartSvg.at('width')
     const svgHeight = chartSvg.at('height')
 
@@ -193,19 +193,20 @@ export default function loadDevsAndTruckersSkills(){
     const xPadding = (1-widthPercentage)*svgWidth;
     const yPadding = (1-heightPercentage)*svgHeight;
 
-
-
     const xScale = d3.scaleLinear()
   		.domain([0,100])
   		.range([xPadding, xMaxScaleValue]);
 
-
     const xScaleRectangle = d3.scaleLinear()
   		.domain([0,100])
   		.range([0, (xMaxScaleValue-xPadding)]);
-// original
 
-    const skillSections = chartSvg.selectAll('g.skill-section').data(devAndTruckerSkills).enter().append('g.skill-section')
+
+    // Creating group elements for each skill, both for developers and for other jobs
+    const skillSections = chartSvg.selectAll('g.skill-section')
+      .data(devAndTruckerSkills)
+      .enter()
+      .append('g.skill-section')
 
     const skillSectionsAllJobs = chartSvg.selectAll('g.all-skills')
       .data(allJobSkillsGrouped)
@@ -226,40 +227,71 @@ export default function loadDevsAndTruckersSkills(){
     const devCircles = skillSections.append('circle.devs-skill-circle')
     const truckerCircles = skillSections.append('circle.truckers-skill-circle')
 
-    devCircles.at('cx',(d)=> xScale(d.devs))
-      .at('r',5)
-      .st('fill','#0B24FB')
-      .on('mouseenter')
-
-
-    truckerCircles.at('cx',(d)=>xScale(d.truckers))
-      .at('r',5)
-      .st('fill','#EB5757')
-
-// Adding original text labels
-  skillSections
-      .at('transform', (d,i)=>{
-        return 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (ALL_JOBS_STARTING_Y_LOCATION+(i*ALL_JOBS_STARTING_Y_LOCATION)) +')'
-      });
-
     const skillSectionsText= skillSections.append("text.job-name")
-      .text(d=>d.skills)
-      .st('text-anchor','right')
+    const axisLines = skillSections.append('line.skill-axis')
 
     const skillSectionsTextAllJobs = skillSectionsAllJobs
       .append("text.job-name")
-      .at('transform','translate('+JOB_LABEL_MARGIN_LEFT+',0)')
-      .text(d=>d.key.replace(/_/g,' '))
-      .st('text-anchor','right')
+
+    const sceneShowTwoJobsAllSkills = new ScrollMagic.Scene({triggerElement: ".two-jobs-all-skills",offset:  0,duration: 1,triggerHook: 0})
+    .on("enter", (e)=>{
+      devCircles.at('cx',(d)=> xScale(d.devs))
+        .at('r',5)
+        .st('fill','#0B24FB')
+        .on('mouseenter')
+
+      truckerCircles.at('cx',(d)=>xScale(d.truckers))
+        .at('r',5)
+        .st('fill','#EB5757')
+        .st('opacity',1)
+
+      skillSections.st('opacity',1)
+      .at('transform', (d,i)=>{return 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (ALL_JOBS_STARTING_Y_LOCATION+(i*ALL_JOBS_STARTING_Y_LOCATION)) +')'});
+
+      skillSectionsText.text(d=>d.skills)
+        .st('text-anchor','right')
+        .st('opacity',1)
+
+      axisLines.at('x1',()=>xScale(0))
+       .at('y1',0)
+       .at('x2',()=>xScale(100))
+       .at('y2',0)
+       .at('stroke-width', 1)
+       .st('stroke','black')
+       .st('opacity',1)
+
+     skillSectionsTextAllJobs.at('transform','translate('+JOB_LABEL_MARGIN_LEFT+',0)')
+       .text(d=>d.key.replace(/_/g,' '))
+       .st('text-anchor','right')
+    })
+    .on("leave", (e)=>{
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){
+        devCircles.at('cx',(d)=> xScale(d.devs))
+          .at('r',5)
+          .st('fill','#0B24FB')
+
+        truckerCircles.st('opacity',0)
+
+        skillSections.st('opacity',0)
+
+        skillSectionsText.st('opacity',0)
+
+        axisLines.st('opacity',0)
+
+        skillSectionsTextAllJobs.st('opacity',0)
+
+        truckerDeveloperCircles.st('opacity',1);
+        truckerDeveloperYAxis.st('opacity',1);
+        truckerDeveloperXAxis.st('opacity',1);
+        truckerDeveloperSkillValues.st('opacity',1);
+      }
+      else{}})
+    .addTo(controllerSkills)
 
 
-    const axisLines = skillSections.append('line.skill-axis')
-      .at('x1',()=>xScale(0))
-      .at('y1',0)
-      .at('x2',()=>xScale(100))
-      .at('y2',0)
-      .at('stroke-width', 1)
-      .st('stroke','black')
+
+
+
 
 // Original bars signifying different skills
     const axisDifferenceRects = skillSections.append('rect.skill-difference-axis')
@@ -296,7 +328,11 @@ export default function loadDevsAndTruckersSkills(){
        .st('opacity',1)
     })
     .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){
+        axisDifferenceRects
+         .transition()
+         .st('opacity',0)
+      }
       else{}})
     .addTo(controllerSkills)
 

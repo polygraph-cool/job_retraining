@@ -99,7 +99,10 @@ export default function loadtruckerDevIntro(){
   $truckerCircleAutomation.on('click',()=>{
     truckerDeveloperYAxis
       .transition()
-      .st('opacity',1);
+      .st('opacity',d=>{
+        if (d.job == "Truckers"){return 1}
+        else {return 0}
+      });
 
     truckerDeveloperCircles
       .transition()
@@ -121,18 +124,18 @@ export default function loadtruckerDevIntro(){
       .at('cy',d=>yScale(d.automatability));
   })
   .on("leave", (e)=>{
-    if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+    if(e.target.controller().info("scrollDirection") == "REVERSE"){
+
+      truckerDeveloperCircles
+        .transition()
+        .at('cy',d=>yScale(0.5));
+
+      truckerDeveloperYAxis
+        .transition()
+        .st('opacity',0);
+    }
     else{}})
   .addTo(controllerTwoJobs)
-
-
-
-
-  $truckerDevAutomation.on('click',()=>{
-    truckerDeveloperCircles
-      .transition()
-      .st('opacity',1)
-  })
 
 
 
@@ -148,28 +151,20 @@ export default function loadtruckerDevIntro(){
       .st('opacity',1)
   })
   .on("leave", (e)=>{
-    if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+    if(e.target.controller().info("scrollDirection") == "REVERSE"){
+      truckerDeveloperCircles
+        .transition()
+        .st('opacity',d=>{
+          if (d.job == "Truckers"){return 1}
+          else {return 0}
+        });
+    }
     else{}})
   .addTo(controllerTwoJobs)
 
 
 
 
-  $truckerSkill.on('click',()=>{
-    truckerDeveloperXAxis
-      .transition()
-      .st('opacity',1)
-
-    truckerDeveloperYAxis
-    .transition()
-    .st('opacity',0)
-
-    truckerDeveloperCircles
-      .transition()
-      .at('cy',()=>yScale(0.5))
-      .transition()
-      .at('cx',d=> xScale(d.skillTruckerScore))
-  })
   // main-job-example-skill
   const sceneJob3 = new ScrollMagic.Scene({
     triggerElement: ".main-job-example-skill",
@@ -195,10 +190,27 @@ export default function loadtruckerDevIntro(){
     truckerDeveloperSkillValues
       .at('x',d=> xScale(d.skillTruckerScore))
       .at('y',()=>yScale(0.5))
+      .st('opacity',1)
       .st('text-anchor','middle')
   })
   .on("leave", (e)=>{
-    if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+    if(e.target.controller().info("scrollDirection") == "REVERSE"){
+      truckerDeveloperXAxis
+        .transition()
+        .st('opacity',0)
+
+      truckerDeveloperYAxis
+      .transition()
+      .st('opacity',1)
+
+      truckerDeveloperCircles
+        .transition()
+        .at('cy',d=>yScale(d.automatability))
+        .at('cx', introCircleXLocation);
+
+      truckerDeveloperSkillValues
+        .st('opacity',0)
+    }
     else{}})
   .addTo(controllerTwoJobs)
 
@@ -225,40 +237,21 @@ const sceneJob4 = new ScrollMagic.Scene({
     .at('y',()=>yScale(0.5))
 })
 .on("leave", (e)=>{
-  if(e.target.controller().info("scrollDirection") == "REVERSE"){}
-  else{}})
-.addTo(controllerTwoJobs)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  $devSkill.on('click',()=>{
+  if(e.target.controller().info("scrollDirection") == "REVERSE"){
     truckerDeveloperCircles
       .transition()
       .at('cy',()=>yScale(0.5))
       .transition()
-      .at('cx',d=> xScale(d.skillDeveloperScore))
-  })
+      .at('cx',d=> xScale(d.skillTruckerScore))
+
+    truckerDeveloperSkillValues
+      .transition()
+      .text(d=>d.skillTruckerScore)
+      .st('text-anchor','middle')
+      .at('x',d=> xScale(d.skillTruckerScore))
+      .at('y',()=>yScale(0.5))
+  }
+  else{}})
+.addTo(controllerTwoJobs)
+
 }

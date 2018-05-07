@@ -1,121 +1,69 @@
 job_compared,job_selected,skills,difference,job_compared_name
-6.0,3,Programming,3.0,firefighters
-44.0,32,Computers and Electronics,13.0,firefighters
-40.0,19,Engineering and Technology,23.0,firefighters
-42.5,25,Systems Analysis,20.5,firefighters
-23.5,0,Science,27.5,firefighters
-42.5,28,Systems Evaluation,19.5,firefighters
-33.0,15,Design,24.0,firefighters
-17.0,22,Operations Analysis,12.0,firefighters
-53.0,31,Fluency of Ideas,30.0,firefighters
-19.0,16,Technology Design,12.0,firefighters
-31.5,28,Mathematical Reasoning,13.5,firefighters
-51.0,39,Mathematics,23.0,firefighters
-50.0,31,Originality,31.0,firefighters
-62.5,50,Inductive Reasoning,25.5,firefighters
-59.5,47,Judgment and Decision Making,26.5,firefighters
-34.5,25,Mathematics.1,24.5,firefighters
-69.0,53,Deductive Reasoning,32.0,firefighters
-72.0,47,Oral Expression,42.0,firefighters
-28.0,31,Number Facility,21.0,firefighters
-55.0,47,Complex Problem Solving,27.0,firefighters
-45.5,28,Management of Personnel Resources,37.5,firefighters
-48.5,28,Persuasion,41.5,firefighters
-56.0,53,Information Ordering,25.0,firefighters
-66.0,50,Critical Thinking,39.0,firefighters
-51.5,50,Category Flexibility,25.5,firefighters
-58.0,47,Written Comprehension,36.0,firefighters
-42.5,25,Memorization,43.5,firefighters
-47.0,31,Negotiation,43.0,firefighters
-51.5,38,Learning Strategies,41.5,firefighters
-75.0,63,Problem Sensitivity,41.0,firefighters
-61.0,44,Flexibility of Closure,47.0,firefighters
-56.5,44,Written Expression,43.5,firefighters
-48.5,35,Speed of Closure,45.5,firefighters
-58.0,38,Instructing,53.0,firefighters
-69.0,62,English Language,41.0,firefighters
-61.5,38,Telecommunications,58.5,firefighters
-73.5,50,Oral Comprehension,59.5,firefighters
-64.5,47,Speech Recognition,54.5,firefighters
-65.5,50,Speaking,53.5,firefighters
-72.0,47,Active Listening,64.0,firefighters
-51.5,44,Active Learning,47.5,firefighters
-53.0,44,Writing,50.0,firefighters
-47.0,41,Quality Control Analysis,48.0,firefighters
-61.0,50,Speech Clarity,54.0,firefighters
-58.0,50,Reading Comprehension,52.0,firefighters
-67.5,47,Coordination,65.5,firefighters
-66.0,44,Service Orientation,68.0,firefighters
-54.5,44,Social Perceptiveness,57.5,firefighters
-1.5,16,Installation,62.5,firefighters
-59.5,53,Selective Attention,55.5,firefighters
-58.0,47,Perceptual Speed,61.0,firefighters
-48.0,29,Communications and Media,70.0,firefighters
-69.0,50,Monitoring,71.0,firefighters
-16.0,25,Management of Financial Resources,62.0,firefighters
-25.0,25,Management of Material Resources,54.0,firefighters
-71.0,39,Administration and Management,87.0,firefighters
-3.5,1,Fine Arts,58.5,firefighters
-67.5,72,Near Vision,61.5,firefighters
-45.5,50,Troubleshooting,62.5,firefighters
-55.0,24,Personnel and Human Resources,90.0,firefighters
-20.5,5,History and Archeology,75.5,firefighters
-17.5,6,Philosophy and Theology,72.5,firefighters
-44.5,19,Physics,87.5,firefighters
-37.5,7,Therapy and Counseling,93.5,firefighters
-56.5,53,Time Management,67.5,firefighters
-24.0,11,Sociology and Anthropology,78.0,firefighters
-14.0,25,Sales and Marketing,77.0,firefighters
-30.0,18,Economics and Accounting,79.0,firefighters
-38.0,9,Biology,97.0,firefighters
-59.5,50,Visualization,78.5,firefighters
-58.0,47,Finger Dexterity,81.0,firefighters
-58.0,47,Time Sharing,82.0,firefighters
-44.0,31,Equipment Selection,85.0,firefighters
-11.5,10,Dynamic Flexibility,74.5,firefighters
-17.0,15,Foreign Language,76.0,firefighters
-28.5,13,Explosive Strength,90.5,firefighters
-29.0,22,Production and Processing,83.0,firefighters
-66.5,15,Building and Construction,128.5,firefighters
-52.5,14,Medicine and Dentistry,116.5,firefighters
-74.5,67,Customer and Personal Service,86.5,firefighters
-16.5,16,Food Production,80.5,firefighters
-73.5,46,Education and Training,108.5,firefighters
-47.5,27,Chemistry,102.5,firefighters
-56.5,47,Visual Color Discrimination,92.5,firefighters
-50.5,30,Psychology,104.5,firefighters
-56.0,47,Auditory Attention,94.0,firefighters
-46.0,32,Clerical,100.0,firefighters
-58.5,39,Law and Government,106.5,firefighters
-51.5,50,Hearing Sensitivity,89.5,firefighters
-67.5,69,Operation Monitoring,90.5,firefighters
-67.5,53,Arm-Hand Steadiness,104.5,firefighters
-70.5,53,Manual Dexterity,108.5,firefighters
-41.0,41,Wrist-Finger Speed,92.0,firefighters
-62.5,47,Trunk Strength,108.5,firefighters
-61.0,49,Geography,106.0,firefighters
-60.0,44,Dynamic Strength,111.0,firefighters
-56.0,41,Gross Body Equilibrium,111.0,firefighters
-67.5,41,Stamina,123.5,firefighters
-47.0,47,Equipment Maintenance,98.0,firefighters
-61.0,75,Far Vision,113.0,firefighters
-56.5,44,Extent Flexibility,112.5,firefighters
-53.0,44,Gross Body Coordination,110.0,firefighters
-37.5,44,Sound Localization,108.5,firefighters
-53.0,44,Speed of Limb Movement,112.0,firefighters
-42.5,47,Repairing,108.5,firefighters
-48.5,47,Glare Sensitivity,106.5,firefighters
-66.0,72,Operation and Control,112.0,firefighters
-67.5,75,Control Precision,114.5,firefighters
-63.0,69,Depth Perception,114.0,firefighters
-44.0,50,Night Vision,115.0,firefighters
-47.0,50,Peripheral Vision,113.0,firefighters
-73.5,50,Static Strength,134.5,firefighters
-68.0,55,Mechanical,125.0,firefighters
-82.0,68,Public Safety and Security,127.0,firefighters
-59.5,75,Transportation,129.5,firefighters
-61.5,69,Rate Control,122.5,firefighters
-56.0,69,Spatial Orientation,129.0,firefighters
-70.5,72,Multilimb Coordination,118.5,firefighters
-69.0,72,Reaction Time,121.0,firefighters
-66.0,72,Response Orientation,125.0,firefighters
+6.0,3,Programming,3.0,Firefighters
+44.0,32,Computers and Electronics,13.0,Firefighters
+40.0,19,Engineering and Technology,23.0,Firefighters
+42.5,25,Systems Analysis,20.5,Firefighters
+23.5,0,Science,27.5,Firefighters
+42.5,28,Systems Evaluation,19.5,Firefighters
+33.0,15,Design,24.0,Firefighters
+17.0,22,Operations Analysis,12.0,Firefighters
+19.0,16,Technology Design,11.0,Firefighters
+51.0,39,Mathematics,21.0,Firefighters
+59.5,47,Judgment and Decision Making,22.5,Firefighters
+34.5,25,Mathematics.1,20.5,Firefighters
+55.0,47,Complex Problem Solving,20.0,Firefighters
+45.5,28,Management of Personnel Resources,30.5,Firefighters
+48.5,28,Persuasion,34.5,Firefighters
+66.0,50,Critical Thinking,31.0,Firefighters
+47.0,31,Negotiation,32.0,Firefighters
+51.5,38,Learning Strategies,30.5,Firefighters
+58.0,38,Instructing,38.0,Firefighters
+69.0,62,English Language,26.0,Firefighters
+61.5,38,Telecommunications,43.5,Firefighters
+65.5,50,Speaking,36.5,Firefighters
+72.0,47,Active Listening,47.0,Firefighters
+51.5,44,Active Learning,30.5,Firefighters
+53.0,44,Writing,33.0,Firefighters
+47.0,41,Quality Control Analysis,31.0,Firefighters
+58.0,50,Reading Comprehension,34.0,Firefighters
+67.5,47,Coordination,47.5,Firefighters
+66.0,44,Service Orientation,50.0,Firefighters
+54.5,44,Social Perceptiveness,39.5,Firefighters
+1.5,16,Installation,44.5,Firefighters
+48.0,29,Communications and Media,50.0,Firefighters
+69.0,50,Monitoring,51.0,Firefighters
+16.0,25,Management of Financial Resources,42.0,Firefighters
+25.0,25,Management of Material Resources,34.0,Firefighters
+71.0,39,Administration and Management,67.0,Firefighters
+3.5,1,Fine Arts,38.5,Firefighters
+45.5,50,Troubleshooting,41.5,Firefighters
+55.0,24,Personnel and Human Resources,69.0,Firefighters
+20.5,5,History and Archeology,54.5,Firefighters
+17.5,6,Philosophy and Theology,51.5,Firefighters
+44.5,19,Physics,66.5,Firefighters
+37.5,7,Therapy and Counseling,72.5,Firefighters
+56.5,53,Time Management,46.5,Firefighters
+24.0,11,Sociology and Anthropology,57.0,Firefighters
+14.0,25,Sales and Marketing,56.0,Firefighters
+30.0,18,Economics and Accounting,58.0,Firefighters
+38.0,9,Biology,76.0,Firefighters
+44.0,31,Equipment Selection,61.0,Firefighters
+17.0,15,Foreign Language,51.0,Firefighters
+29.0,22,Production and Processing,57.0,Firefighters
+66.5,15,Building and Construction,102.5,Firefighters
+52.5,14,Medicine and Dentistry,90.5,Firefighters
+74.5,67,Customer and Personal Service,60.5,Firefighters
+16.5,16,Food Production,54.5,Firefighters
+73.5,46,Education and Training,82.5,Firefighters
+47.5,27,Chemistry,76.5,Firefighters
+50.5,30,Psychology,77.5,Firefighters
+46.0,32,Clerical,72.0,Firefighters
+58.5,39,Law and Government,78.5,Firefighters
+67.5,69,Operation Monitoring,61.5,Firefighters
+61.0,49,Geography,73.0,Firefighters
+47.0,47,Equipment Maintenance,62.0,Firefighters
+42.5,47,Repairing,67.5,Firefighters
+66.0,72,Operation and Control,70.0,Firefighters
+68.0,55,Mechanical,78.0,Firefighters
+82.0,68,Public Safety and Security,80.0,Firefighters
+59.5,75,Transportation,82.5,Firefighters

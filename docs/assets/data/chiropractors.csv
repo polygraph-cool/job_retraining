@@ -1,121 +1,69 @@
 job_compared,job_selected,skills,difference,job_compared_name
-13,3,Programming,10,chiropractors
-55,32,Computers and Electronics,24,chiropractors
-30,19,Engineering and Technology,13,chiropractors
-53,25,Systems Analysis,31,chiropractors
-60,0,Science,64,chiropractors
-53,28,Systems Evaluation,30,chiropractors
-21,15,Design,12,chiropractors
-28,22,Operations Analysis,13,chiropractors
-50,31,Fluency of Ideas,27,chiropractors
-19,16,Technology Design,12,chiropractors
-38,28,Mathematical Reasoning,20,chiropractors
-41,39,Mathematics,13,chiropractors
-47,31,Originality,28,chiropractors
-75,50,Inductive Reasoning,38,chiropractors
-63,47,Judgment and Decision Making,30,chiropractors
-35,25,Mathematics.1,25,chiropractors
-75,53,Deductive Reasoning,38,chiropractors
-75,47,Oral Expression,45,chiropractors
-31,31,Number Facility,18,chiropractors
-66,47,Complex Problem Solving,38,chiropractors
-47,28,Management of Personnel Resources,39,chiropractors
-50,28,Persuasion,43,chiropractors
-69,53,Information Ordering,38,chiropractors
-72,50,Critical Thinking,45,chiropractors
-53,50,Category Flexibility,27,chiropractors
-75,47,Written Comprehension,53,chiropractors
-44,25,Memorization,45,chiropractors
-41,31,Negotiation,37,chiropractors
-47,38,Learning Strategies,37,chiropractors
-75,63,Problem Sensitivity,41,chiropractors
-53,44,Flexibility of Closure,39,chiropractors
-72,44,Written Expression,59,chiropractors
-47,35,Speed of Closure,44,chiropractors
-47,38,Instructing,42,chiropractors
-78,62,English Language,50,chiropractors
-23,38,Telecommunications,50,chiropractors
-75,50,Oral Comprehension,61,chiropractors
-66,47,Speech Recognition,56,chiropractors
-72,50,Speaking,60,chiropractors
-75,47,Active Listening,67,chiropractors
-60,44,Active Learning,56,chiropractors
-69,44,Writing,66,chiropractors
-25,41,Quality Control Analysis,58,chiropractors
-69,50,Speech Clarity,62,chiropractors
-72,50,Reading Comprehension,66,chiropractors
-53,47,Coordination,51,chiropractors
-63,44,Service Orientation,65,chiropractors
-69,44,Social Perceptiveness,72,chiropractors
-0,16,Installation,64,chiropractors
-50,53,Selective Attention,52,chiropractors
-47,47,Perceptual Speed,50,chiropractors
-34,29,Communications and Media,56,chiropractors
-53,50,Monitoring,55,chiropractors
-22,25,Management of Financial Resources,56,chiropractors
-22,25,Management of Material Resources,57,chiropractors
-69,39,Administration and Management,85,chiropractors
-4,1,Fine Arts,59,chiropractors
-66,72,Near Vision,63,chiropractors
-10,50,Troubleshooting,98,chiropractors
-62,24,Personnel and Human Resources,97,chiropractors
-15,5,History and Archeology,70,chiropractors
-38,6,Philosophy and Theology,93,chiropractors
-25,19,Physics,68,chiropractors
-61,7,Therapy and Counseling,117,chiropractors
-56,53,Time Management,67,chiropractors
-49,11,Sociology and Anthropology,103,chiropractors
-59,25,Sales and Marketing,100,chiropractors
-49,18,Economics and Accounting,98,chiropractors
-74,9,Biology,133,chiropractors
-47,50,Visualization,72,chiropractors
-50,47,Finger Dexterity,73,chiropractors
-44,47,Time Sharing,74,chiropractors
-0,31,Equipment Selection,103,chiropractors
-0,10,Dynamic Flexibility,83,chiropractors
-20,15,Foreign Language,79,chiropractors
-10,13,Explosive Strength,78,chiropractors
-30,22,Production and Processing,84,chiropractors
-4,15,Building and Construction,88,chiropractors
-84,14,Medicine and Dentistry,148,chiropractors
-77,67,Customer and Personal Service,89,chiropractors
-4,16,Food Production,92,chiropractors
-61,46,Education and Training,96,chiropractors
-33,27,Chemistry,88,chiropractors
-19,47,Visual Color Discrimination,111,chiropractors
-71,30,Psychology,125,chiropractors
-22,47,Auditory Attention,110,chiropractors
-62,32,Clerical,116,chiropractors
-43,39,Law and Government,91,chiropractors
-22,50,Hearing Sensitivity,116,chiropractors
-22,69,Operation Monitoring,136,chiropractors
-53,53,Arm-Hand Steadiness,90,chiropractors
-47,53,Manual Dexterity,97,chiropractors
-28,41,Wrist-Finger Speed,105,chiropractors
-60,47,Trunk Strength,106,chiropractors
-15,49,Geography,128,chiropractors
-38,44,Dynamic Strength,101,chiropractors
-22,41,Gross Body Equilibrium,115,chiropractors
-28,41,Stamina,110,chiropractors
-0,47,Equipment Maintenance,145,chiropractors
-31,75,Far Vision,143,chiropractors
-41,44,Extent Flexibility,103,chiropractors
-31,44,Gross Body Coordination,114,chiropractors
-0,44,Sound Localization,146,chiropractors
-19,44,Speed of Limb Movement,128,chiropractors
-0,47,Repairing,151,chiropractors
-0,47,Glare Sensitivity,152,chiropractors
-22,72,Operation and Control,156,chiropractors
-44,75,Control Precision,138,chiropractors
-25,69,Depth Perception,152,chiropractors
-0,50,Night Vision,159,chiropractors
-0,50,Peripheral Vision,160,chiropractors
-47,50,Static Strength,114,chiropractors
-26,55,Mechanical,141,chiropractors
-38,68,Public Safety and Security,143,chiropractors
-7,75,Transportation,182,chiropractors
-19,69,Rate Control,165,chiropractors
-0,69,Spatial Orientation,185,chiropractors
-53,72,Multilimb Coordination,136,chiropractors
-25,72,Reaction Time,165,chiropractors
-25,72,Response Orientation,166,chiropractors
+13,3,Programming,10,Chiropractors
+55,32,Computers and Electronics,24,Chiropractors
+30,19,Engineering and Technology,13,Chiropractors
+53,25,Systems Analysis,31,Chiropractors
+60,0,Science,64,Chiropractors
+53,28,Systems Evaluation,30,Chiropractors
+21,15,Design,12,Chiropractors
+28,22,Operations Analysis,13,Chiropractors
+19,16,Technology Design,11,Chiropractors
+41,39,Mathematics,11,Chiropractors
+63,47,Judgment and Decision Making,26,Chiropractors
+35,25,Mathematics.1,21,Chiropractors
+66,47,Complex Problem Solving,31,Chiropractors
+47,28,Management of Personnel Resources,32,Chiropractors
+50,28,Persuasion,36,Chiropractors
+72,50,Critical Thinking,37,Chiropractors
+41,31,Negotiation,26,Chiropractors
+47,38,Learning Strategies,26,Chiropractors
+47,38,Instructing,27,Chiropractors
+78,62,English Language,35,Chiropractors
+23,38,Telecommunications,35,Chiropractors
+72,50,Speaking,43,Chiropractors
+75,47,Active Listening,50,Chiropractors
+60,44,Active Learning,39,Chiropractors
+69,44,Writing,49,Chiropractors
+25,41,Quality Control Analysis,41,Chiropractors
+72,50,Reading Comprehension,48,Chiropractors
+53,47,Coordination,33,Chiropractors
+63,44,Service Orientation,47,Chiropractors
+69,44,Social Perceptiveness,54,Chiropractors
+0,16,Installation,46,Chiropractors
+34,29,Communications and Media,36,Chiropractors
+53,50,Monitoring,35,Chiropractors
+22,25,Management of Financial Resources,36,Chiropractors
+22,25,Management of Material Resources,37,Chiropractors
+69,39,Administration and Management,65,Chiropractors
+4,1,Fine Arts,39,Chiropractors
+10,50,Troubleshooting,77,Chiropractors
+62,24,Personnel and Human Resources,76,Chiropractors
+15,5,History and Archeology,49,Chiropractors
+38,6,Philosophy and Theology,72,Chiropractors
+25,19,Physics,47,Chiropractors
+61,7,Therapy and Counseling,96,Chiropractors
+56,53,Time Management,46,Chiropractors
+49,11,Sociology and Anthropology,82,Chiropractors
+59,25,Sales and Marketing,79,Chiropractors
+49,18,Economics and Accounting,77,Chiropractors
+74,9,Biology,112,Chiropractors
+0,31,Equipment Selection,79,Chiropractors
+20,15,Foreign Language,54,Chiropractors
+30,22,Production and Processing,58,Chiropractors
+4,15,Building and Construction,62,Chiropractors
+84,14,Medicine and Dentistry,122,Chiropractors
+77,67,Customer and Personal Service,63,Chiropractors
+4,16,Food Production,66,Chiropractors
+61,46,Education and Training,70,Chiropractors
+33,27,Chemistry,62,Chiropractors
+71,30,Psychology,98,Chiropractors
+62,32,Clerical,88,Chiropractors
+43,39,Law and Government,63,Chiropractors
+22,69,Operation Monitoring,107,Chiropractors
+15,49,Geography,95,Chiropractors
+0,47,Equipment Maintenance,109,Chiropractors
+0,47,Repairing,110,Chiropractors
+22,72,Operation and Control,114,Chiropractors
+26,55,Mechanical,94,Chiropractors
+38,68,Public Safety and Security,96,Chiropractors
+7,75,Transportation,135,Chiropractors

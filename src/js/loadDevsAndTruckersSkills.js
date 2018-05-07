@@ -220,9 +220,7 @@ export default function loadDevsAndTruckersSkills(){
       .append('g')
       .at('class',d=>'skill-item-'+d.skills.replace(/ /g,'_'))
 
-    const YBUMP = 20;
     const XBUMP = 250;
-    const YINTERVAL = 15;
 
     const devCircles = skillSections.append('circle.devs-skill-circle')
     const truckerCircles = skillSections.append('circle.truckers-skill-circle')

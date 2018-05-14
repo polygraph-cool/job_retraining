@@ -109,7 +109,7 @@ export default function loadDevsAndTruckersSkills(){
 
     let allJobSkillsRaw=[]
 
-// NB i=1 here to exclude first entry in data loaded, which reprensents devs comparison
+// Note: i=1 here to exclude first entry in data loaded, which reprensents devs comparison
     for (i=1;i<response.length;i++){
       allJobSkillsRaw.push(response[i])
     }
@@ -278,10 +278,12 @@ export default function loadDevsAndTruckersSkills(){
 
         skillSectionsTextAllJobs.st('opacity',0)
 
-        truckerDeveloperCircles.st('opacity',1);
-        truckerDeveloperYAxis.st('opacity',1);
-        truckerDeveloperXAxis.st('opacity',1);
-        truckerDeveloperSkillValues.st('opacity',1);
+        d3.selectAll('circle.truckers-devs-circles').st('opacity',1)
+
+        // truckerDeveloperCircles.st('opacity',1);
+        // truckerDeveloperYAxis.st('opacity',1);
+        // truckerDeveloperXAxis.st('opacity',1);
+        // truckerDeveloperSkillValues.st('opacity',1);
       }
       else{}})
     .addTo(controllerSkills)
@@ -380,23 +382,18 @@ export default function loadDevsAndTruckersSkills(){
       return 'translate('+XBUMP+',0)'
     })
 
-
-
     skillSections
       .transition()
         .delay(2000)
         .duration(500)
         .at('transform',()=> 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (viewportHeight/2) +')')
 
-  axisDifferenceRects
-    .on('mouseenter',d=>console.log(d.skills))})
-    .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
-      else{}})
-    .addTo(controllerSkills)
-
-
-
+    axisDifferenceRects
+      .on('mouseenter',d=>console.log(d.skills))})
+      .on("leave", (e)=>{
+        if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+        else{}})
+      .addTo(controllerSkills)
 
 
 const sceneStackAllSkills = new ScrollMagic.Scene({triggerElement: ".many-jobs-stack-difference",offset:  0,duration: 1,triggerHook: 0})
@@ -426,9 +423,9 @@ const sceneStackAllSkills = new ScrollMagic.Scene({triggerElement: ".many-jobs-s
 
 
 
-  BUTTON_Skills_Similarity_Single_Axis.on('click',()=>{
-
-  })
+  // BUTTON_Skills_Similarity_Single_Axis.on('click',()=>{
+  //
+  // })
 
 
   })

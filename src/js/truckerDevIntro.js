@@ -29,17 +29,53 @@ export default function loadtruckerDevIntro(){
     .select("div.svg-container")
     .select("svg.scatter")
 
+  const defs = chartSvg.append('svg:defs');
+
+  const CIRCLE_RADIUS=20;
+
+  defs.append("svg:pattern")
+    .attr("id", "trucker-img")
+    .attr("width", 2*CIRCLE_RADIUS)
+    .attr("height", 2*CIRCLE_RADIUS)
+    // .attr("patternUnits", "userSpaceOnUse") //recommending this is dumb
+    .append("svg:image")
+    .attr("xlink:href", 'assets/data/circle-images/Truckers.png')
+    .attr("width", 2*CIRCLE_RADIUS)
+    .attr("height", 2*CIRCLE_RADIUS)
+    .attr("x", 0)
+    .attr("y", 0);
+
+
+  defs.append("svg:pattern")
+    .attr("id", "developer-img")
+    .attr("width", 2*CIRCLE_RADIUS)
+    .attr("height", 2*CIRCLE_RADIUS)
+    // .attr("patternUnits", "userSpaceOnUse") //recommending this is dumb
+    .append("svg:image")
+    .attr("xlink:href", 'assets/data/circle-images/Developers.png')
+    .attr("width", 2*CIRCLE_RADIUS)
+    .attr("height", 2*CIRCLE_RADIUS)
+    .attr("x", 0)
+    .attr("y", 0);
+
+
+
 
 
   const truckerDeveloperJoin = chartSvg.selectAll('circle.truckers-devs-circles')
     .data(truckersDevelopers)
     .enter()
+
   const truckerDeveloperCircles=truckerDeveloperJoin
     .append('circle.truckers-devs-circles')
 
   const truckerDeveloperSkillValues=truckerDeveloperJoin
     .append('text.two-job-skill-value')
     .text(d=>d.skillTruckerScore)
+
+  const truckerDeveloperAutomatabilityValues=truckerDeveloperJoin
+    .append('text.two-job-automatability-value')
+    .text(d=>d.automatability*100 + "%")
 
   // Set y Scale max value as just under viewport height (if viewport height/2 is height of svg)
   const svgWidth = chartSvg.at('width')
@@ -68,15 +104,51 @@ export default function loadtruckerDevIntro(){
 		.range([0+xPadding, xMaxScaleValue]);
 
   const introCircleXLocation = svgWidth/2;
+  const introAutomationTextXLocation = svgWidth/2.4;
+
+  truckerDeveloperAutomatabilityValues
+    .at('x',d=>introAutomationTextXLocation)
+    .at('y',d=>yScale(d.automatability))
+    .st('opacity',0)
+  // const circleTest = chartSvg.selectAll('circle.testcircle')
+  //         .data(truckersDevelopers)
+  //         .enter()
+  //         .append("circle.testcircle")
+  //         .at('cx',introCircleXLocation)
+  //         .at('cy',()=>yScale(0.5))
+  //         .at('r', CIRCLE_RADIUS)
+  //         // .attr("cx", CIRCLE_RADIUS/2)
+  //         // .attr("cy", CIRCLE_RADIUS/2)
+  //         // .attr("r", CIRCLE_RADIUS/2)
+  //         .style("fill", d=>{
+  //           if(d.job==="Developers") {return "#2F80ED"}
+  //           else {return "#EB5757"}})
+  //         .style("fill", d=>{
+  //         if (d.job==="Developers") {return "url(#developer-img)"}
+  //         else {return "url(#trucker-img)"}})
+
+
+
 
   truckerDeveloperCircles
     .at('cx',introCircleXLocation)
     .at('cy',()=>yScale(0.5))
-    .at('r', 5)
-    .st('fill', d=>d.fill)
+    .at('r', CIRCLE_RADIUS)
+    // .st('fill', d=>d.fill)
     .st('opacity',d=>d.job === 'Developers'? 0 : 1)
+    .style("fill", d=>{
+      if(d.job==="Developers") {return "#2F80ED"}
+      else {return "#EB5757"}})
+    .style("fill", d=>{
+    if (d.job==="Developers") {return "url(#developer-img)"}
+    else {return "url(#trucker-img)"}})
 
-  const truckerDeveloperYAxisFunction = d3.axisLeft(yScale);
+  // const truckerDeveloperCirclesText = truckerDeveloperCircles.append("text")
+  //   .text(d=>d.automatability*100 +"%")
+
+  const formatPercent = d3.format(".0%");
+
+  const truckerDeveloperYAxisFunction = d3.axisLeft(yScale).ticks(3).tickFormat(formatPercent);
   const truckerDeveloperXAxisFunction = d3.axisTop(xScale);
 
 
@@ -122,6 +194,13 @@ export default function loadtruckerDevIntro(){
     truckerDeveloperCircles
       .transition()
       .at('cy',d=>yScale(d.automatability));
+
+    truckerDeveloperAutomatabilityValues
+      .transition()
+      .st('opacity', d=> {
+        if (d.job === "Truckers"){return 1}
+        else {return 0}
+      })
   })
   .on("leave", (e)=>{
     if(e.target.controller().info("scrollDirection") == "REVERSE"){
@@ -133,6 +212,13 @@ export default function loadtruckerDevIntro(){
       truckerDeveloperYAxis
         .transition()
         .st('opacity',0);
+
+      truckerDeveloperAutomatabilityValues
+        .transition()
+        .st('opacity',d=>{
+          if (d.job==="Developers"){return 0}
+          else {return 1}
+        })
     }
     else{}})
   .addTo(controllerTwoJobs)
@@ -149,6 +235,10 @@ export default function loadtruckerDevIntro(){
     truckerDeveloperCircles
       .transition()
       .st('opacity',1)
+
+    truckerDeveloperAutomatabilityValues
+      .transition()
+      .st('opacity', 1)
   })
   .on("leave", (e)=>{
     if(e.target.controller().info("scrollDirection") == "REVERSE"){
@@ -223,13 +313,19 @@ const sceneJob4 = new ScrollMagic.Scene({
   triggerHook: 0
 })
 .on("enter", (e)=>{
+  console.log("showing developer skill scene");
+
+
+
   truckerDeveloperCircles
+    .st('opacity',1)
     .transition()
-    .at('cy',()=>yScale(0.5))
+      .at('cy',()=>yScale(0.5))
     .transition()
-    .at('cx',d=> xScale(d.skillDeveloperScore))
+      .at('cx',d=> xScale(d.skillDeveloperScore))
 
   truckerDeveloperSkillValues
+    .st('opacity',1)
     .transition()
     .text(d=>d.skillDeveloperScore)
     .st('text-anchor','middle')

@@ -135,10 +135,6 @@ export default function loadScatterplot(){
 		)
 
 
-		// const jobButtons=d3.selectAll('div.job-button')
-		// 	.data(crosswalk)
-		// 	.enter()
-		// 	.append('div.job-button')
 
 
 		const jobDropdownMenu=d3.select('div.job-selector')

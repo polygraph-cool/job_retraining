@@ -10,17 +10,53 @@ svg.scatter
   display block
   overflow hidden
 
+.automatability-label
+  text-transform uppercase
+  font-weight 600
+  text-anchor end
+  font-family 'Atlas Grotesk Web'
+  // transform-origin top left
+  transform rotate(-90deg)
+
+.trucker-developer-groups
+  font-family 'Atlas Grotesk Web'
+
 .heavy-prose
   font-weight 600
 
+.heavy-prose-blue-text
+  font-weight 600
+  color #2F80ED
+
+.heavy-prose-red-text
+  font-weight 600
+  color #EB5757
+
 .two-job-automatability-value
   font-family 'Atlas Grotesk Web'
+  // text-anchor right
   font-weight 600
 
-
 .intro-y-axis
+  font-family 'Atlas Grotesk Web'
+  .tick
+    text
+      fill #8e8d87
+    line
+      stroke #8e8d87
   path
-    stroke 0.5
+    stroke-width 0.5
+    stroke #8e8d87
+
+.y-axis-label
+  font-family 'Atlas Grotesk Web'
+  font-weight 600
+  .min
+    text
+      fill #2F80ED
+  .max
+    text
+      fill #EB5757
 
 .jobTooltip
   position absolute
@@ -55,6 +91,12 @@ svg.scatter
 
 .scene
   margin-top 100vh
+
+.all-automation
+  margin-top 0vh
+
+.two-jobs-automation
+  margin-top 20vh
 
 
 .job-name

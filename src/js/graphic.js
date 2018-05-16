@@ -36,9 +36,9 @@ function init() {
     .select("div.svg-container")
     .select("svg.scatter")
 
+  const viewPortRatio = 0.9
 
-
-  chartSvg.at('height', ()=> viewportHeight*0.9)
+  chartSvg.at('height', ()=> viewportHeight)
     .at('width', ()=>viewportWidth* 0.8)
     .st('fill','#00000')
 

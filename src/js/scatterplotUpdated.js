@@ -4,14 +4,24 @@ function numberWithCommas(x){
 }
 
 function selectJobData(data, selectedJobID){
-	const selectedJobData = data.filter(item=> item.id_selected === selectedJobID)
+
+	const selectedJobDataAllJobs = data.filter(item=> item.id_selected === selectedJobID)
+  const selectedJobData = selectedJobDataAllJobs.filter(item=> item.id_compared != item.id_selected)
 	return selectedJobData
+
 }
 
 function setupXScale(selectedJobData){
+
+  const chartSvg = d3.select("svg.scatter")
+  const svgWidth = chartSvg.at('width')
+  const widthPercentage = 0.9;
+  const xMaxScaleValue = svgWidth * widthPercentage;
+  const xPadding = (1-widthPercentage)*svgWidth;
+
 	const xScale = d3.scaleLinear()
 		.domain(d3.extent(selectedJobData, d=> d.similarity))
-		.range([0, 800]);
+		.range([0+xPadding, xMaxScaleValue]);
 	return xScale;
 }
 
@@ -23,6 +33,22 @@ function compare(a,b) {
   return 0;
 }
 
+
+function findLeastSimilarJob(selectedJobData){
+  const leastSimilarJobValue = d3.min(selectedJobData, d=> d.similarity);
+
+  const leastSimilarJob = selectedJobData.filter(job=>job.similarity===leastSimilarJobValue)
+
+  return leastSimilarJob;
+}
+
+function findMostSimilarJob(selectedJobData){
+  const mostSimilarJobValue = d3.max(selectedJobData, d=> d.similarity);
+
+  const mostSimilarJob = selectedJobData.filter(job=>job.similarity===mostSimilarJobValue)
+
+  return mostSimilarJob;
+}
 
 function changeDropDown(d,i,n){
 
@@ -83,6 +109,13 @@ export default function loadScatterplotUpdated(){
 		})
 
 		allData = similarity;
+    let selectedJobID = 415;
+    let selectedJobData =	selectJobData(similarity, selectedJobID);
+
+    const leastSimilarJob = findLeastSimilarJob(selectedJobData)
+    const mostSimilarJob = findMostSimilarJob(selectedJobData)
+
+    // console.log(leastSimilarJob);
 
 		const jobSelector = d3.select("body")
 			.append("div.job-selector")
@@ -93,13 +126,24 @@ export default function loadScatterplotUpdated(){
 		const jobSelectedNumber = d3.select("body")
 			.append("div.job-selected-number")
 
-		const chartSvg = d3.select("svg.scatter")
 
-		let selectedJobData =	selectJobData(similarity, 415);
+    const chartSvg = d3.select("svg.scatter")
+
+    const svgWidth = chartSvg.at('width')
+    const widthPercentage = 0.9;
+    const xMaxScaleValue = svgWidth * widthPercentage;
+    const xPadding = (1-widthPercentage)*svgWidth;
+
+    const svgHeight = chartSvg.at('height')
+    const heightPercentage = 0.9;
+    const yMaxScaleValue = svgHeight * heightPercentage;
+    const yPadding = (1-heightPercentage)*svgHeight;
+
+    const introYAxisLocation = svgHeight/2;
 
 		const yScale = d3.scaleLinear()
 			.domain([MIN_AUTO,MAX_AUTO])
-			.range([0, 600]);
+			.range([0+yPadding, yMaxScaleValue]);
 
 		let xScale = setupXScale(selectedJobData)
 
@@ -136,6 +180,9 @@ export default function loadScatterplotUpdated(){
     d3.selectAll('g.all-skills')
       .st('opacity',0)
 
+    d3.selectAll('g.skill-section')
+      .st('opacity',0)
+
 // Creating job dropdown menu
 		const jobDropdownMenu=d3.select('div.job-selector')
 			.append('select.scatter-dropdown-menu')
@@ -170,7 +217,7 @@ export default function loadScatterplotUpdated(){
 
 				jobCircles
 					.at('cx', d=>{return xScale(d.similarity)})
-          .at('cy', 50)
+          .at('cy', introYAxisLocation)
           .st('fill', 'white')
 					.st('stroke', 'black')
           .at('r','3')
@@ -248,10 +295,97 @@ export default function loadScatterplotUpdated(){
 
       jobCircles
         .at('cx', d=>{return xScale(d.similarity)})
-        .at('cy', 50)
+        .at('cy', introYAxisLocation)
         .st('fill', 'white')
         .st('stroke', 'black')
         .at('r','3')
+
+    // Creating annotations elements
+
+    const leastSimilarJob_ANNOTATION = chartSvg.append('g.least-similar-annotation')
+    const mostSimilarJob_ANNOTATION = chartSvg.append('g.most-similar-annotation')
+
+    const leastSimilarJob_LINE = leastSimilarJob_ANNOTATION.append('line')
+    const mostSimilarJob_LINE = mostSimilarJob_ANNOTATION.append('line')
+
+    const leastSimilarJob_TEXT = leastSimilarJob_ANNOTATION.append('text')
+    const mostSimilarJob_TEXT = mostSimilarJob_ANNOTATION.append('text')
+
+
+
+    // Setting text to read the right annotations
+
+    leastSimilarJob_TEXT.text(keyObjectJobName[(leastSimilarJob[0].id_compared)])
+    mostSimilarJob_TEXT.text(keyObjectJobName[(mostSimilarJob[0].id_compared)])
+      .st('text-anchor', 'end')
+    // Positioning annotation elements
+    const verticalLabelPositioningShorter =introYAxisLocation*0.8;
+    const verticalLabelPositioningTaller =introYAxisLocation*0.6;
+
+    const lineHeightLeastSimilarJob = introYAxisLocation - verticalLabelPositioningShorter
+    const lineHeightMostSimilarJob = introYAxisLocation - verticalLabelPositioningTaller
+
+    leastSimilarJob_ANNOTATION
+      .at('transform', d=>{
+        const xTranslate = xScale(leastSimilarJob[0]['similarity']);
+        return 'translate('+xTranslate+','+verticalLabelPositioningShorter +')'
+      })
+
+    mostSimilarJob_ANNOTATION
+      .at('transform', d=>{
+        const xTranslate = xScale(mostSimilarJob[0]['similarity']);
+        return 'translate('+xTranslate+','+verticalLabelPositioningTaller +')'
+      })
+
+    leastSimilarJob_LINE
+      .at('x1',0)
+      .at('y1',0)
+      .at('x2',0)
+      .at('y2',lineHeightLeastSimilarJob)
+      .st('stroke-width',1)
+      .st('stroke','black')
+
+    mostSimilarJob_LINE
+      .at('x1',0)
+      .at('y1',0)
+      .at('x2',0)
+      .at('y2',lineHeightMostSimilarJob)
+      .st('stroke-width',1)
+      .st('stroke','black')
+
+    // Adding an x axis label to the chart
+
+    const xAxisLabel = chartSvg.append('text.axis-label similarity')
+    const xAxisLabelHeight = introYAxisLocation * 1.1
+    // const svgWidth = chartSvg.at('width')
+
+
+    xAxisLabel
+      .at('x', svgWidth/2 )
+      .at('y',xAxisLabelHeight)
+      .text('SKILL SIMILARITY TO TRUCKERS')
+      .st('text-anchor','middle')
+
+    // Adding max and min similarity axis labels
+    const maxSimilarityLabel = chartSvg.append('text.axis-label max-similarity')
+    const minSimilarityLabel = chartSvg.append('text.axis-label min-similarity')
+
+    const xAxisMaxMinLabelHeight = introYAxisLocation * 1.05
+
+
+
+
+    maxSimilarityLabel
+      .at('x', xMaxScaleValue )
+      .at('y',xAxisMaxMinLabelHeight)
+      .text('SIMILAR')
+      .st('text-anchor','middle')
+
+    minSimilarityLabel
+      .at('x', xPadding )
+      .at('y',xAxisMaxMinLabelHeight)
+      .text('DIFFERENT')
+      .st('text-anchor','middle')
 
 		const jobTooltip = d3.select("div.svg-container").append("div.jobTooltip")
 
@@ -356,6 +490,18 @@ export default function loadScatterplotUpdated(){
       triggerHook: 0
     })
     .on("enter", (e)=>{
+
+      chartSvg.select('g.least-similar-annotation')
+        .st('opacity',0)
+
+      chartSvg.select('g.most-similar-annotation')
+        .st('opacity',0)
+
+      const yAxisAnnotationsHeight =yMaxScaleValue*1.05
+      
+      chartSvg.selectAll('text.axis-label')
+        .at('y',yAxisAnnotationsHeight)
+
       jobCircles
         .transition()
       	.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})

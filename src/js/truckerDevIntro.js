@@ -341,40 +341,40 @@ const sceneTruckerOnly = new ScrollMagic.Scene({triggerElement: ".main-job-circl
 
 
 
-  const sceneJob2 = new ScrollMagic.Scene({
-    triggerElement: ".two-jobs-automation",
-    offset:  0,
-    duration: 1,
-    triggerHook: 0
-  })
-  .on("enter", (e)=>{
-    jobsCircles
-      .transition()
-      .st('opacity',1)
-
-    truckerDeveloperAutomatabilityValues
-      .transition()
-      .st('opacity', 1)
-  })
-  .on("leave", (e)=>{
-    if(e.target.controller().info("scrollDirection") == "REVERSE"){
-
-      jobsCircles
-        .transition()
-        .st('opacity',d=>{
-          if (d.job === "Truckers"){return 1}
-          else {return 0}
-        });
-
-      truckerDeveloperAutomatabilityValues
-        .transition()
-        .st('opacity', d=>{
-          if (d.job==="Truckers"){return 1}
-          else {return 0}
-        })
-    }
-    else{}})
-  .addTo(controllerTwoJobs)
+  // const sceneJob2 = new ScrollMagic.Scene({
+  //   triggerElement: ".two-jobs-automation",
+  //   offset:  0,
+  //   duration: 1,
+  //   triggerHook: 0
+  // })
+  // .on("enter", (e)=>{
+  //   jobsCircles
+  //     .transition()
+  //     .st('opacity',1)
+  //
+  //   truckerDeveloperAutomatabilityValues
+  //     .transition()
+  //     .st('opacity', 1)
+  // })
+  // .on("leave", (e)=>{
+  //   if(e.target.controller().info("scrollDirection") == "REVERSE"){
+  //
+  //     jobsCircles
+  //       .transition()
+  //       .st('opacity',d=>{
+  //         if (d.job === "Truckers"){return 1}
+  //         else {return 0}
+  //       });
+  //
+  //     truckerDeveloperAutomatabilityValues
+  //       .transition()
+  //       .st('opacity', d=>{
+  //         if (d.job==="Truckers"){return 1}
+  //         else {return 0}
+  //       })
+  //   }
+  //   else{}})
+  // .addTo(controllerTwoJobs)
 
 
 
@@ -447,24 +447,30 @@ const sceneJob4 = new ScrollMagic.Scene({
   triggerHook: 0
 })
 .on("enter", (e)=>{
-  console.log("showing developer skill scene");
+
+// Temporarily commenting out, but will return later
+  // jobsCircles
+  //   .st('opacity',1)
+  //   .transition()
+  //     .at('cy',()=>yScale(0.5))
+  //   .transition()
+  //     .at('cx',d=> xScale(d.skillDeveloperScore))
+  //
+  // truckerDeveloperSkillValues
+  //   .st('opacity',1)
+  //   .transition()
+  //   .text(d=>d.skillDeveloperScore)
+  //   .st('text-anchor','middle')
+  //   .at('x',d=> xScale(d.skillDeveloperScore))
+  //   .at('y',()=>yScale(0.5))
+
+d3.selectAll('.y-axis-label').st('opacity',0)
+d3.selectAll('.intro-y-axis').st('opacity',0)
+d3.selectAll('.intro-jobs-circles').st('opacity',0)
+d3.selectAll('.intro-job-names').st('opacity',0)
+d3.selectAll('.intro-automatability-values').st('opacity',0)
 
 
-
-  jobsCircles
-    .st('opacity',1)
-    .transition()
-      .at('cy',()=>yScale(0.5))
-    .transition()
-      .at('cx',d=> xScale(d.skillDeveloperScore))
-
-  truckerDeveloperSkillValues
-    .st('opacity',1)
-    .transition()
-    .text(d=>d.skillDeveloperScore)
-    .st('text-anchor','middle')
-    .at('x',d=> xScale(d.skillDeveloperScore))
-    .at('y',()=>yScale(0.5))
 })
 .on("leave", (e)=>{
   if(e.target.controller().info("scrollDirection") == "REVERSE"){

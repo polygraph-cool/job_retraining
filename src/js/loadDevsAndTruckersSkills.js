@@ -33,7 +33,7 @@ export default function loadDevsAndTruckersSkills(){
     "Family_Therapists",
     "CEOs",
     "Art_Directors",
-    "Interrior_Designers",
+    "Interior_Designers",
     "Craft_Artists",
     "Event_Planners",
     "Veterinarians",
@@ -119,7 +119,7 @@ export default function loadDevsAndTruckersSkills(){
 
     const allJobSkillsName=["Choreographers",
       "Dentists","Nurses","Chiropractors","Farmers","Construction_Managers","Firefighters","Geographers","Embalmers","Piplayers","Podiatrists",
-      "Fabric_Patternmakers","Clergy","Makeup_Artists","Family_Therapists","CEOs","Art_Directors","Interrior_Designers","Craft_Artists","Event_Planners","Veterinarians","Writers",
+      "Fabric_Patternmakers","Clergy","Makeup_Artists","Family_Therapists","CEOs","Art_Directors","Interior_Designers","Craft_Artists","Event_Planners","Veterinarians","Writers",
       "Political_Scientists","Ship_Engineers","Paramedics","Mathematicians","Florists","Travel_Guides","News_Analysts","Musicians","Fitness_Trainers","Graphic_Designers","Childcare_Workers",
       "Police_Officers","Hairdressers","Journalists","Air_Traffic_Controllers","Dancers","Optometrists","Physician_Assistants","Electricians","Ambulance_Drivers","Athletes","Skincare_Specialists",
       "Private_Cooks","Funeral_Attendants","Actors","Judges","Economists","historians","Dental_Assistants","Cobblers","Massage_Therapists","Millwrights","Librarians","Maids","Bartenders",
@@ -278,12 +278,12 @@ export default function loadDevsAndTruckersSkills(){
 
         skillSectionsTextAllJobs.st('opacity',0)
 
-        d3.selectAll('circle.truckers-devs-circles').st('opacity',1)
+        // d3.selectAll('circle.truckers-devs-circles').st('opacity',1)
 
-        // truckerDeveloperCircles.st('opacity',1);
-        // truckerDeveloperYAxis.st('opacity',1);
-        // truckerDeveloperXAxis.st('opacity',1);
-        // truckerDeveloperSkillValues.st('opacity',1);
+        truckerDeveloperCircles.st('opacity',1);
+        truckerDeveloperYAxis.st('opacity',1);
+        truckerDeveloperXAxis.st('opacity',1);
+        truckerDeveloperSkillValues.st('opacity',1);
       }
       else{}})
     .addTo(controllerSkills)

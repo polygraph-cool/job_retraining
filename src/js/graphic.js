@@ -27,11 +27,6 @@ function getHeight(idSelector){
 function resize() {}
 
 function init() {
-
-
-
-
-
   const chartSvg = d3.select("body")
     .select("div.svg-container")
     .select("svg.scatter")

@@ -4,15 +4,12 @@ function numberWithCommas(x){
 }
 
 function selectJobData(data, selectedJobID){
-
 	const selectedJobDataAllJobs = data.filter(item=> item.id_selected === selectedJobID)
   const selectedJobData = selectedJobDataAllJobs.filter(item=> item.id_compared != item.id_selected)
 	return selectedJobData
-
 }
 
 function setupXScale(selectedJobData){
-
   const chartSvg = d3.select("svg.scatter")
   const svgWidth = chartSvg.at('width')
   const widthPercentage = 0.9;
@@ -36,17 +33,13 @@ function compare(a,b) {
 
 function findLeastSimilarJob(selectedJobData){
   const leastSimilarJobValue = d3.min(selectedJobData, d=> d.similarity);
-
   const leastSimilarJob = selectedJobData.filter(job=>job.similarity===leastSimilarJobValue)
-
   return leastSimilarJob;
 }
 
 function findMostSimilarJob(selectedJobData){
   const mostSimilarJobValue = d3.max(selectedJobData, d=> d.similarity);
-
   const mostSimilarJob = selectedJobData.filter(job=>job.similarity===mostSimilarJobValue)
-
   return mostSimilarJob;
 }
 
@@ -117,8 +110,10 @@ export default function loadScatterplotUpdated(){
 
     // console.log(leastSimilarJob);
 
-		const jobSelector = d3.select("body")
-			.append("div.job-selector")
+		// const jobSelector = d3.select("body")
+		// 	.append("div.job-selector")
+
+    // const jobSelector=d3.select('.job-selector-div')
 
 		const currentJobName = d3.select("body")
 			.append("div.job-selected-name")
@@ -129,6 +124,17 @@ export default function loadScatterplotUpdated(){
 
     const chartSvg = d3.select("svg.scatter")
 
+
+    const VIEWPORT_RATIO_HEIGHT = 0.875
+    const miscChartSections = d3.select('.misc-chart-elements-container')
+    const miscChartSectionTitle = miscChartSections.select("div.chart-title-div")
+
+
+    // Changing svg height to account for the now added 12.75% vH addition
+    const svgHeight_PREUPDATE = chartSvg.at('height')
+    chartSvg.at('height', (0.875*svgHeight_PREUPDATE))
+
+
     const svgWidth = chartSvg.at('width')
     const widthPercentage = 0.9;
     const xMaxScaleValue = svgWidth * widthPercentage;
@@ -137,7 +143,38 @@ export default function loadScatterplotUpdated(){
     const svgHeight = chartSvg.at('height')
     const heightPercentage = 0.9;
     const yMaxScaleValue = svgHeight * heightPercentage;
-    const yPadding = (1-heightPercentage)*svgHeight;
+    // const yPadding = (1-heightPercentage)*svgHeight;
+    const yPadding = (0.02)*svgHeight;
+
+
+// Misc section setup
+    miscChartSections
+      .st('height', ()=> (1-VIEWPORT_RATIO_HEIGHT) * svgHeight + 'px')
+
+    // miscChartSectionTitle
+    //   .text('Which jobs should truckers transition to?')
+
+    miscChartSectionTitle.select('.chart-title-pt1')
+      .text('Which jobs should')
+
+    miscChartSectionTitle.select('.chart-title-pt2')
+      .text('1,789,094')
+
+    miscChartSectionTitle.select('.chart-title-pt3')
+      .text('truckers')
+
+    miscChartSectionTitle.select('.chart-title-pt4')
+      .text('earning')
+
+    miscChartSectionTitle.select('.chart-title-pt5')
+      .text('$82,000')
+
+    miscChartSectionTitle.select('.chart-title-pt6')
+      .text('yearly, transition to?')
+
+
+
+
 
     const introYAxisLocation = svgHeight/2;
 
@@ -154,6 +191,7 @@ export default function loadScatterplotUpdated(){
 		const radiusScale = d3.scaleSqrt()
 			.domain([0,d3.max(crosswalk, (d)=>{return d.wage})])
 			.range([0,6])
+
 
 		// Setting up transition object
 		crosswalk.forEach(job=>{
@@ -184,18 +222,30 @@ export default function loadScatterplotUpdated(){
       .st('opacity',0)
 
 // Creating job dropdown menu
-		const jobDropdownMenu=d3.select('div.job-selector')
-			.append('select.scatter-dropdown-menu')
+		const jobDropdownMenu=d3.select('div.job-selector-div')
+			.append('select')
+      .at('class', 'scatter-dropdown-menu')
+      .st('visibility','hidden')
+
+// Setting appropriate values for jobDropDown menu, in line with bootstrap picker
+    // jobDropdownMenu
+    //   .at('data-show-subtext', true)
+    //   .at('data-live-search', true)
+
 
 		const jobButtons = jobDropdownMenu.selectAll('option.job-button')
 			.data(crosswalk)
 			.enter()
 			.append('option.job-button')
 			.at('value', d=>d.id)
+      .at('data-subtext', d=> d.auto * 100+"%" )
 
 		jobButtons.text((d)=>{
 				return d.job_name;
 			})
+
+
+
 
 		jobDropdownMenu
 			.on('change',(d,i,n)=>{
@@ -205,6 +255,24 @@ export default function loadScatterplotUpdated(){
 				console.log(selectedJobID);
 				const updatedData = selectJobData(allData, selectedJobID);
 				const xScale = setupXScale(updatedData);
+
+        const currentJobId=updatedData[0].id_selected;
+
+        miscChartSectionTitle.select('.chart-title-pt2')
+          .text(numberWithCommas(keyObjectJobNumber[currentJobId]))
+
+        miscChartSectionTitle.select('.chart-title-pt3')
+          .text(keyObjectJobName[currentJobId])
+
+        miscChartSectionTitle.select('.chart-title-pt4')
+          .text('earning')
+
+        miscChartSectionTitle.select('.chart-title-pt5')
+          .text('$'+numberWithCommas(keyObjectJobWage[currentJobId]))
+
+        yScale.domain([0,keyObjectJobAuto[currentJobId]])
+
+        // console.log(keyObjectJobAuto[updatedData[0].id_selected]);
 
 				d3.selectAll('circle.job').remove()
 
@@ -217,10 +285,25 @@ export default function loadScatterplotUpdated(){
 
 				jobCircles
 					.at('cx', d=>{return xScale(d.similarity)})
-          .at('cy', introYAxisLocation)
-          .st('fill', 'white')
+          .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+          .st('fill', d=>{
+            const jobSelectedWage = keyObjectJobWage[d.id_selected]
+            const jobComparedWage = keyObjectJobWage[d.id_compared]
+            const wageChange = jobSelectedWage/jobComparedWage;
+            return colorScale(wageChange)
+          })
+          .st('opacity',d=>{
+            if (+keyObjectJobAuto[d.id_compared]>keyObjectJobAuto[d.id_selected]){return 0}
+            else {return 1}
+          })
 					.st('stroke', 'black')
-          .at('r','3')
+          .at('r', d=>{
+    				const wage=keyObjectJobNumber[d.id_compared];
+    				return radiusScale(wage)
+    			})
+
+
+
 
 					jobCircles.on('mouseenter',(d,i,n)=>{
 
@@ -300,6 +383,20 @@ export default function loadScatterplotUpdated(){
         .st('stroke', 'black')
         .at('r','3')
 
+
+
+    // Creating titles
+    // const chartTitle = chartSvg.append('text.chart-title')
+    //
+    // chartTitle
+    //   .at('x',svgWidth/2)
+    //   .at('y',yPadding/2)
+    //   .st('text-anchor','middle')
+    //   .text('Which careers should truckers transition to?')
+
+    // Note: adding titles in via div
+
+
     // Creating annotations elements
 
     const leastSimilarJob_ANNOTATION = chartSvg.append('g.least-similar-annotation')
@@ -366,14 +463,11 @@ export default function loadScatterplotUpdated(){
       .text('SKILL SIMILARITY TO TRUCKERS')
       .st('text-anchor','middle')
 
-    // Adding max and min similarity axis labels
+    // Adding max and min similarity/ y-axis labels
     const maxSimilarityLabel = chartSvg.append('text.axis-label max-similarity')
     const minSimilarityLabel = chartSvg.append('text.axis-label min-similarity')
 
     const xAxisMaxMinLabelHeight = introYAxisLocation * 1.05
-
-
-
 
     maxSimilarityLabel
       .at('x', xMaxScaleValue )
@@ -386,6 +480,27 @@ export default function loadScatterplotUpdated(){
       .at('y',xAxisMaxMinLabelHeight)
       .text('DIFFERENT')
       .st('text-anchor','middle')
+
+    // Adding automatability/x-axis, and max and min automatability labels
+    const formatPercent = d3.format(".0%");
+
+    const yAxisLabel = d3.axisLeft(yScale).ticks(1).tickFormat(formatPercent);
+
+    const yAxisGroup = chartSvg.append("g.scatter-y-axis")
+      .attr("transform", "translate("+xPadding+",0)")
+      .call(yAxisLabel)
+      .st('opacity',0)
+
+    const automatability_LABEL = chartSvg.append('text.scatter-label-y-axis')
+
+    automatability_LABEL
+      .at('transform',`translate(${xPadding},${introYAxisLocation}) rotate(270)`)
+      .st('text-anchor','middle')
+      .st('opacity',0)
+      .text('AUTOMATABILITY LIKELIHOOD')
+
+
+
 
 		const jobTooltip = d3.select("div.svg-container").append("div.jobTooltip")
 
@@ -423,15 +538,15 @@ export default function loadScatterplotUpdated(){
 			jobTooltip.st("left", (xCoord+"px") )
 				.st("top", (yCoord+"px") )
 
-			const jobSelectedName = d3.select("div.job-selected-name");
-			jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
-
+			// const jobSelectedName = d3.select("div.job-selected-name");
+			// jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
+      //
 			const jobComparedName = d3.select("div.job-compared-name");
 			jobComparedName.text("Compared job: "+keyObjectJobName[d.id_compared])
 
-			const jobSelectedNumber = d3.select("div.job-selected-number");
-			jobSelectedNumber.text("Main job quantity: "+numberWithCommas(keyObjectJobNumber[d.id_selected]))
-
+			// const jobSelectedNumber = d3.select("div.job-selected-number");
+			// jobSelectedNumber.text("Main job quantity: "+numberWithCommas(keyObjectJobNumber[d.id_selected]))
+      //
 			const jobComparedNumber = d3.select("div.job-compared-number");
 			jobComparedNumber.text("Compared job quantity: "+numberWithCommas(keyObjectJobNumber[d.id_compared]))
 
@@ -471,10 +586,10 @@ export default function loadScatterplotUpdated(){
 
 
     // BUTTONS
-    const $single_XAxis_Similarity_All_Jobs =d3.select('div.transition-button.only-similarity-axis')
-    const $show_XY_Axes_Similarity_All_Jobs =d3.select('div.transition-button.automation-similarity-axis')
-    const $show_Earnings_Comparison =d3.select('div.transition-button.earnings')
-    const $show_Number_Jobs_Available =d3.select('div.transition-button.jobs-available')
+    // const $single_XAxis_Similarity_All_Jobs =d3.select('div.transition-button.only-similarity-axis')
+    // const $show_XY_Axes_Similarity_All_Jobs =d3.select('div.transition-button.automation-similarity-axis')
+    // const $show_Earnings_Comparison =d3.select('div.transition-button.earnings')
+    // const $show_Number_Jobs_Available =d3.select('div.transition-button.jobs-available')
 
     // Adding in Y axis to scatterplot
     // $show_XY_Axes_Similarity_All_Jobs.on('click',()=>{
@@ -491,6 +606,38 @@ export default function loadScatterplotUpdated(){
     })
     .on("enter", (e)=>{
 
+
+
+      let automatabilityBisectingGroup;
+      let automatabilityBisectingLine;
+      let automatabilityBisectingLabel;
+
+      let automatabilityBisectingGroupCheck = $(".bisecting-automation-group");
+
+      if(automatabilityBisectingGroupCheck.length===0){
+
+        automatabilityBisectingGroup = chartSvg.append('g.bisecting-automation-group')
+
+        automatabilityBisectingGroup
+            .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
+
+        automatabilityBisectingLine = automatabilityBisectingGroup.append('line.bisecting-line')
+          .at('x1',xPadding)
+          .at('y1',0)
+          .at('x2',xMaxScaleValue)
+          .at('y2',0)
+
+        automatabilityBisectingLabel=automatabilityBisectingGroup.append('text.bisecting-line-label')
+
+        automatabilityBisectingLabel.text('TRUCKERS')
+
+
+          }
+      else{}
+
+
+
+
       chartSvg.select('g.least-similar-annotation')
         .st('opacity',0)
 
@@ -498,16 +645,71 @@ export default function loadScatterplotUpdated(){
         .st('opacity',0)
 
       const yAxisAnnotationsHeight =yMaxScaleValue*1.05
-      
+
+      yAxisGroup.st('opacity',1)
+      automatability_LABEL.st('opacity',1)
+
+
       chartSvg.selectAll('text.axis-label')
         .at('y',yAxisAnnotationsHeight)
 
       jobCircles
         .transition()
       	.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+
+
+
+
+      yScale.domain([0,0.79])
+      const scene1Delay = 2000
+
+      automatabilityBisectingGroup
+          .transition()
+          .delay(scene1Delay)
+          .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
+          .st('opacity',0)
+
+      jobCircles
+      .st('opacity',d=>{
+        if (+keyObjectJobAuto[d.id_compared]>keyObjectJobAuto[d.id_selected]){return 0}
+        else {return 1}
+      })
+      .transition()
+      .delay(scene1Delay)
+      .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+
+
+
+
     })
     .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){
+
+        yScale.domain([0,1]);
+        const scene1Delay = 2000;
+
+        automatabilityBisectingGroup
+          .transition()
+          .st('opacity', 1)
+          .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
+
+        jobCircles
+        .transition()
+        .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+        .transition()
+        .delay(scene1Delay)
+        .st('opacity',d=>{     return 1
+          // if (+keyObjectJobAuto[d.id_compared]>keyObjectJobAuto[d.id_selected]){return 0}
+          // else {return 1}
+        })
+
+        // leastSimilarJob_ANNOTATION
+        // mostSimilarJob_ANNOTATION
+        // leastSimilarJob_LINE
+        // mostSimilarJob_LINE
+        // leastSimilarJob_TEXT
+        // mostSimilarJob_TEXT
+      }
       else{}})
     .addTo(controllerScatter)
 
@@ -539,22 +741,30 @@ export default function loadScatterplotUpdated(){
       		const wageChange = jobSelectedWage/jobComparedWage;
       		return colorScale(wageChange)
       	})
+        .transition()
+        .delay(1000)
+        .st('opacity', d=>{
+          if (
+              (keyObjectJobWage[d.id_selected]<keyObjectJobWage[d.id_compared] )
+              &&
+              (keyObjectJobAuto[d.id_selected]>keyObjectJobAuto[d.id_compared])
+          ){return 1}
+          else {return 0}
+        })
+
     })
     .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){
+
+        jobCircles
+        .st('opacity', 1)
+        .transition()
+        .delay(1000)
+        .st('fill', '#FFF')
+      }
       else{}})
     .addTo(controllerScatter)
 
-    // Adding in radius to scatterplot
-    $show_Number_Jobs_Available.on('click',()=>{
-      jobCircles
-        .transition()
-  			.at('r', d=>{
-  				const wage=keyObjectJobNumber[d.id_compared];
-  				return radiusScale(wage)
-  			})
-
-    })
 
 
 
@@ -562,19 +772,33 @@ export default function loadScatterplotUpdated(){
           triggerElement: ".show-similarity-auto-wage-number",
           offset:  0,
           duration: 1,
-          triggerHook: 0
+          triggerHook: 0.5
         })
         .on("enter", (e)=>{
+          jobDropdownMenu
+          .st('visibility','visible')
+
           jobCircles
             .transition()
       			.at('r', d=>{
       				const wage=keyObjectJobNumber[d.id_compared];
       				return radiusScale(wage)
       			})
+
         })
         .on("leave", (e)=>{
-          if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+          if(e.target.controller().info("scrollDirection") == "REVERSE"){
+
+            jobDropdownMenu
+            .st('visibility','hidden')
+
+            jobCircles
+              .transition()
+        			.at('r', 3)
+
+          }
           else{}})
+          .addIndicators({name: "finalIndicator"})
         .addTo(controllerScatter)
 
 

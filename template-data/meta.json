@@ -1,16 +1,16 @@
 {
-	"title": "Title Case Headline Goes Here",
+	"title": "Automation, retraining, and the false promise of the tech sector",
 	"description":
-		"Your dek goes here. It is probably one or two sentences that succinctly describe more explicitly what the story will be about.",
+		"5% of America’s employees may be replaced by robots, and transitioning them to become software developers seems to be the safest solution. Here’s why it’s wrong.",
 	"url": "https://pudding.cool/year/month/name/",
-	"keywords": "tk",
+	"keywords": "automation retraining truckers developers reskilling",
 	"imgFacebook":
 		"https://pudding.cool/year/month/name/assets/social/social-facebook.jpg",
 	"imgTwitter":
 		"https://pudding.cool/year/month/name/assets/social/social-twitter.jpg",
 	"author": {
-		"name": "Author Name",
+		"name": "Jordan Dworking",
 		"url": "https://twitter.com/puddingviz",
-		"twitterHandle": "@puddingviz"
+		"twitterHandle": "@jddwor"
 	}
 }

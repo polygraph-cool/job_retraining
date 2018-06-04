@@ -27,18 +27,24 @@ function getHeight(idSelector){
 function resize() {}
 
 function init() {
+
+
+  const VIEWPORT_RATIO_HEIGHT = 1
+  const VIEWPORT_RATIO_WIDTH = 0.9
+
   const chartSvg = d3.select("body")
     .select("div.svg-container")
     .select("svg.scatter")
 
-  const viewPortRatio = 0.9
-
-  chartSvg.at('height', ()=> viewportHeight)
-    .at('width', ()=>viewportWidth* 0.8)
+  chartSvg.at('height', ()=> viewportHeight * VIEWPORT_RATIO_HEIGHT)
+    .at('width', ()=>viewportWidth * VIEWPORT_RATIO_WIDTH)
     .st('fill','#00000')
 
-  const mainSectionHeight = getHeight('#content')
+  // const miscChartSections = d3.select('.misc-chart-elements-container')
+  // miscChartSections.st('height', ()=> (1-VIEWPORT_RATIO_HEIGHT) * viewportHeight + 'px')
 
+
+  const mainSectionHeight = getHeight('#content')
 
   const sceneStick = new ScrollMagic.Scene({
     triggerElement: ".svg-container",

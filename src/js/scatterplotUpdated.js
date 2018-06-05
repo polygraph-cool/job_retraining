@@ -727,7 +727,7 @@ export default function loadScatterplotUpdated(){
 			const jobSkillsValues= jobSkillsContainer.selectAll("div.job-bar-value")
 				.data(selectedJobSkills)
 
-			const xScaleSkillMultiplier= 0;
+			const xScaleSkillMultiplier= 1;
 
 			jobSkillsBars.st('height','4px')
 				.st('width', skill=> {

@@ -144,7 +144,10 @@ export default function loadScatterplotUpdated(){
     const heightPercentage = 0.9;
     const yMaxScaleValue = svgHeight * heightPercentage;
     // const yPadding = (1-heightPercentage)*svgHeight;
-    const yPadding = (0.02)*svgHeight;
+    // const yPadding = (0.02)*svgHeight;
+    const yPadding = (0.15)*svgHeight;
+
+
 
 
 // Misc section setup
@@ -184,13 +187,162 @@ export default function loadScatterplotUpdated(){
 
 		let xScale = setupXScale(selectedJobData)
 
+
+
+
+
+
+
+
+
+
+    const jobNumberLabelArray = [
+      {'size':10000, 'label':'10K'},
+      {'size':100000, 'label':'500K'},
+      {'size':1000000, 'label':'1M'}
+    ]
+
+
+    const wageRatioArray = [0.2,0.5, 0.75, 0.9,1.1, 1.25, 2, 5]
+    const wageRatioIncreaseArray = [
+      {'value':1.1, 'label':'+10%'},
+      {'value':1.25, 'label':'25%'},
+      {'value':2, 'label':'100%'},
+      {'value':5, 'label':'400%'}
+    ]
+
 		const colorScale = d3.scaleLinear()
-			.domain([5, 2, 1.25, 1.1, 0.9,.75, 0.5, 0.2])
+			.domain(wageRatioArray)
 			.range(['#a50026','#d73027','#f46d43','#fee090','#e0f3f8','#74add1','#4575b4','#313695'])
 
 		const radiusScale = d3.scaleSqrt()
 			.domain([0,d3.max(crosswalk, (d)=>{return d.wage})])
-			.range([0,6])
+			.range([2,8])
+
+
+
+
+
+
+// LEGENDS
+// Wages legend
+    const $legend__wages = chartSvg.append('g.legend__wages')
+
+    $legend__wages
+      .at('transform', 'translate('+ svgWidth*0.75 +','+yPadding/6+')')
+
+    const $legend__wages_title= $legend__wages.append('text.wages-title')
+
+    const wageCategories = $legend__wages
+      .selectAll('g.wage-category')
+      .data(wageRatioIncreaseArray)
+      .enter()
+      .append('g.wage-category')
+
+    const $LEGEND__WAGECATEGORIESWIDTH = svgWidth/30;
+    const $LEGEND__RECTANGLEHEIGHT = yPadding/10;
+
+    // Moving each category group
+    wageCategories
+      .at('transform', (d,i)=>{
+        const xTranslate = (i* $LEGEND__WAGECATEGORIESWIDTH) + (i*$LEGEND__WAGECATEGORIESWIDTH/2);
+        const yTranslate = radiusScale(1000000)
+        return 'translate('+xTranslate+','+yTranslate+')'
+      })
+
+    const wageCategoriesRectangles = wageCategories
+          .append('rect.wage-legend-rectangle')
+
+    wageCategoriesRectangles
+      .at('width', $LEGEND__WAGECATEGORIESWIDTH)
+      .at('height', yPadding/10)
+      .st('fill', d=> colorScale(d.value))
+      .st('stroke', '#C6C6C6')
+
+    const wageCategoriesText= wageCategories
+      .append('text.wage-text-annotation')
+
+    wageCategoriesText
+      .text(d=>d.label)
+      .at('y', $LEGEND__RECTANGLEHEIGHT*3)
+      // .st('text-anchor', 'middle')
+
+    const wageLabelLocation = wageRatioIncreaseArray.length/2 *$LEGEND__WAGECATEGORIESWIDTH + $LEGEND__WAGECATEGORIESWIDTH;
+
+    $legend__wages_title
+      .text('SALARY INCREASE')
+      .at('x', wageLabelLocation)
+      // .at('text-anchor', 'start')
+
+
+// LEGENDS
+// job number
+
+
+    const $legend__jobNumber = chartSvg.append('g.legend__job-number')
+
+    $legend__jobNumber
+      .at('transform', 'translate('+ xPadding +','+yPadding/6+')')
+
+
+
+    const jobNumberCategories = $legend__jobNumber
+      .selectAll('g.job-number-category')
+      .data(jobNumberLabelArray)
+      .enter()
+      .append('g.job-number-category')
+
+    const $RADIUS_MULTIPLIER = 4
+
+    jobNumberCategories
+      .at('transform', (d,i)=>{
+        const xTranslate = $RADIUS_MULTIPLIER*i*radiusScale(1000000)
+        const yTranslate = radiusScale(1000000);
+          return 'translate('+xTranslate+','+yTranslate+')'
+      })
+
+    const jobNumberCategoriesCircles = jobNumberCategories
+      .append('circle.job-number-legend-circle')
+
+    jobNumberCategoriesCircles
+      .at('r', d=> radiusScale(d.size))
+      // .at('cx', d=>radiusScale(d.size))
+      .st('fill', '#FFF')
+      .st('stroke', '#C6C6C6')
+
+    const jobNumberCategoriesText = jobNumberCategories
+      .append('text.job-number-legend-text')
+
+    jobNumberCategoriesText
+      .text(d=>d.label)
+      .at('y', ($RADIUS_MULTIPLIER/2) *radiusScale(1000000))
+
+
+    const jobNumberLabelLocation = $RADIUS_MULTIPLIER * Math.round((jobNumberLabelArray.length-1) /2 )  *radiusScale(1000000)
+
+    const $legend__jobNumber_title_background= $legend__jobNumber.append('text.job-number-title-background')
+    const $legend__jobNumber_title= $legend__jobNumber.append('text.job-number-title')
+
+    $legend__jobNumber_title_background
+      .text('JOBS IN 2026')
+      .at('x', jobNumberLabelLocation)
+      .st('stroke', '#FFF')
+      .st('stroke-width', '1px')
+
+    $legend__jobNumber_title
+      .text('JOBS IN 2026')
+      .at('x', jobNumberLabelLocation)
+
+
+
+
+
+      $legend__jobNumber
+        .st('visibility','hidden')
+
+      $legend__wages
+        .st('visibility','hidden')
+
 
 
 		// Setting up transition object
@@ -213,6 +365,8 @@ export default function loadScatterplotUpdated(){
 		crosswalkSkills.forEach(skill=>
 			keyObjectSkillName[skill.skill_id]=skill.skill
 		)
+
+
 
 // Removing skill rectangles from visibility
     d3.selectAll('g.all-skills')
@@ -272,7 +426,7 @@ export default function loadScatterplotUpdated(){
 
         yScale.domain([0,keyObjectJobAuto[currentJobId]])
 
-        // console.log(keyObjectJobAuto[updatedData[0].id_selected]);
+        console.log(keyObjectJobAuto[updatedData[0].id_selected]);
 
 				d3.selectAll('circle.job').remove()
 
@@ -289,7 +443,7 @@ export default function loadScatterplotUpdated(){
           .st('fill', d=>{
             const jobSelectedWage = keyObjectJobWage[d.id_selected]
             const jobComparedWage = keyObjectJobWage[d.id_compared]
-            const wageChange = jobSelectedWage/jobComparedWage;
+            const wageChange = jobComparedWage/jobSelectedWage;
             return colorScale(wageChange)
           })
           .st('opacity',d=>{
@@ -327,13 +481,13 @@ export default function loadScatterplotUpdated(){
 						jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
 
 						const jobComparedName = d3.select("div.job-compared-name");
-						jobComparedName.text("Compared job: "+keyObjectJobName[d.id_compared])
+						jobComparedName.text(keyObjectJobName[d.id_compared])
 
 						const jobSelectedNumber = d3.select("div.job-selected-number");
 						jobSelectedNumber.text("Main job quantity: "+ numberWithCommas(keyObjectJobNumber[d.id_selected]))
 
 						const jobComparedNumber = d3.select("div.job-compared-number");
-						jobComparedNumber.text("Compared job quantity: "+ numberWithCommas(keyObjectJobNumber[d.id_compared]))
+						jobComparedNumber.text(numberWithCommas(keyObjectJobNumber[d.id_compared]))
 
 						const jobSkillsContainer = jobTooltip.select('div.job-skills-container')
 
@@ -495,7 +649,6 @@ export default function loadScatterplotUpdated(){
 
     automatability_LABEL
       .at('transform',`translate(${xPadding},${introYAxisLocation}) rotate(270)`)
-      .st('text-anchor','middle')
       .st('opacity',0)
       .text('AUTOMATABILITY LIKELIHOOD')
 
@@ -506,10 +659,15 @@ export default function loadScatterplotUpdated(){
 
 		const jobSelectedName = d3.select("div.job-selected-name")
 
+    const jobComparedNumber = jobTooltip.append("div.job-compared-number")
 		const jobComparedName = jobTooltip.append("div.job-compared-name")
 		// const jobSelectedNumber = d3.select("div.job-selected-number")
-		const jobComparedNumber = jobTooltip.append("div.job-compared-number")
+
 		const jobSkillsContainer =jobTooltip.append("div.job-skills-container")
+
+    const jobSkillsSectionNames =jobSkillsContainer.append('div.tooltip-section-names')
+    const jobSkillsSectionNamesSkill = jobSkillsSectionNames.append('div.section-name-skills').text('SKILL')
+    const jobSkillsSectionNamesImportance = jobSkillsSectionNames.append('div.section-name-importance').text('IMPORTANCE')
 
 		const jobSkillsBarRow = jobSkillsContainer.selectAll('div.job-bar-container')
 			.data(selectedJobSkills)
@@ -517,8 +675,13 @@ export default function loadScatterplotUpdated(){
 			.append('div.bar-container')
 
 		const jobSkillsNames = jobSkillsBarRow.append("div.job-bar-name").data(selectedJobSkills).enter()
-		const jobSkillsBars  = jobSkillsBarRow.append("div.job-bar").data(selectedJobSkills).enter()
-		const jobSkillsValues= jobSkillsBarRow.append("div.job-bar-value").data(selectedJobSkills).enter()
+
+    const jobDataContainer = jobSkillsBarRow.append('div.job-data-container')
+
+    const jobSkillsBarsContainers  = jobDataContainer.append("div.job-bar-box")
+
+		const jobSkillsBars  = jobSkillsBarsContainers.append("div.job-bar").data(selectedJobSkills).enter()
+		const jobSkillsValues= jobDataContainer.append("div.job-bar-value").data(selectedJobSkills).enter()
 
 		jobCircles.on('mouseenter',(d,i,n)=>{
 
@@ -542,13 +705,13 @@ export default function loadScatterplotUpdated(){
 			// jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
       //
 			const jobComparedName = d3.select("div.job-compared-name");
-			jobComparedName.text("Compared job: "+keyObjectJobName[d.id_compared])
+			jobComparedName.text(keyObjectJobName[d.id_compared])
 
 			// const jobSelectedNumber = d3.select("div.job-selected-number");
 			// jobSelectedNumber.text("Main job quantity: "+numberWithCommas(keyObjectJobNumber[d.id_selected]))
       //
 			const jobComparedNumber = d3.select("div.job-compared-number");
-			jobComparedNumber.text("Compared job quantity: "+numberWithCommas(keyObjectJobNumber[d.id_compared]))
+			jobComparedNumber.text(numberWithCommas(keyObjectJobNumber[d.id_compared])+' jobs in 2026')
 
 
 			const jobSkillsContainer = jobTooltip.select('div.job-skills-container')
@@ -564,32 +727,32 @@ export default function loadScatterplotUpdated(){
 			const jobSkillsValues= jobSkillsContainer.selectAll("div.job-bar-value")
 				.data(selectedJobSkills)
 
-			console.log(selectedJobSkills);
+			const xScaleSkillMultiplier= 0;
 
-			jobSkillsBars.st('height','20px')
+			jobSkillsBars.st('height','4px')
 				.st('width', skill=> {
-					return skill.imp+'px'
+					return xScaleSkillMultiplier * skill.imp+'px'
 				})
-				.st('background','black')
+				.st('background','#D928BC')
 
-			jobSkillsNames.text(skill=>{
-				return keyObjectSkillName[skill.skill_id]
+			jobSkillsNames.text((skill,i)=>{
+				return (i+1)+'. '+keyObjectSkillName[skill.skill_id]
 			})
 
 			jobSkillsValues.text(skill=>{
-				return skill.imp;
+				return skill.imp+'%';
 			})
 		})
 		.on('mouseleave', ()=>{
-			jobTooltip.st('visibility','hidden')
+			// jobTooltip.st('visibility','hidden')
 		})
 
 
     // BUTTONS
-    // const $single_XAxis_Similarity_All_Jobs =d3.select('div.transition-button.only-similarity-axis')
-    // const $show_XY_Axes_Similarity_All_Jobs =d3.select('div.transition-button.automation-similarity-axis')
-    // const $show_Earnings_Comparison =d3.select('div.transition-button.earnings')
-    // const $show_Number_Jobs_Available =d3.select('div.transition-button.jobs-available')
+    const $single_XAxis_Similarity_All_Jobs =d3.select('div.transition-button.only-similarity-axis')
+    const $show_XY_Axes_Similarity_All_Jobs =d3.select('div.transition-button.automation-similarity-axis')
+    const $show_Earnings_Comparison =d3.select('div.transition-button.earnings')
+    const $show_Number_Jobs_Available =d3.select('div.transition-button.jobs-available')
 
     // Adding in Y axis to scatterplot
     // $show_XY_Axes_Similarity_All_Jobs.on('click',()=>{
@@ -661,21 +824,23 @@ export default function loadScatterplotUpdated(){
 
 
       yScale.domain([0,0.79])
-      const scene1Delay = 2000
 
       automatabilityBisectingGroup
           .transition()
-          .delay(scene1Delay)
+          .delay(2000)
           .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
           .st('opacity',0)
 
       jobCircles
       .st('opacity',d=>{
+
+        console.log(keyObjectJobAuto[d.id_compared]);
+
         if (+keyObjectJobAuto[d.id_compared]>keyObjectJobAuto[d.id_selected]){return 0}
         else {return 1}
       })
       .transition()
-      .delay(scene1Delay)
+      .delay(2000)
       .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
 
 
@@ -683,33 +848,7 @@ export default function loadScatterplotUpdated(){
 
     })
     .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){
-
-        yScale.domain([0,1]);
-        const scene1Delay = 2000;
-
-        automatabilityBisectingGroup
-          .transition()
-          .st('opacity', 1)
-          .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
-
-        jobCircles
-        .transition()
-        .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
-        .transition()
-        .delay(scene1Delay)
-        .st('opacity',d=>{     return 1
-          // if (+keyObjectJobAuto[d.id_compared]>keyObjectJobAuto[d.id_selected]){return 0}
-          // else {return 1}
-        })
-
-        // leastSimilarJob_ANNOTATION
-        // mostSimilarJob_ANNOTATION
-        // leastSimilarJob_LINE
-        // mostSimilarJob_LINE
-        // leastSimilarJob_TEXT
-        // mostSimilarJob_TEXT
-      }
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
       else{}})
     .addTo(controllerScatter)
 
@@ -720,7 +859,7 @@ export default function loadScatterplotUpdated(){
       	.st('fill', d=>{
       		const jobSelectedWage = keyObjectJobWage[d.id_selected]
       		const jobComparedWage = keyObjectJobWage[d.id_compared]
-      		const wageChange = jobSelectedWage/jobComparedWage;
+      		const wageChange = jobComparedWage/jobSelectedWage;
       		return colorScale(wageChange)
       	})
     })
@@ -733,12 +872,19 @@ export default function loadScatterplotUpdated(){
       triggerHook: 0
     })
     .on("enter", (e)=>{
+
+
+      $legend__wages
+        .st('visibility','visible')
+
       jobCircles
         .transition()
       	.st('fill', d=>{
+
       		const jobSelectedWage = keyObjectJobWage[d.id_selected]
       		const jobComparedWage = keyObjectJobWage[d.id_compared]
-      		const wageChange = jobSelectedWage/jobComparedWage;
+      		const wageChange = jobComparedWage/jobSelectedWage;
+
       		return colorScale(wageChange)
       	})
         .transition()
@@ -752,16 +898,11 @@ export default function loadScatterplotUpdated(){
           else {return 0}
         })
 
+
+
     })
     .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){
-
-        jobCircles
-        .st('opacity', 1)
-        .transition()
-        .delay(1000)
-        .st('fill', '#FFF')
-      }
+      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
       else{}})
     .addTo(controllerScatter)
 
@@ -777,6 +918,9 @@ export default function loadScatterplotUpdated(){
         .on("enter", (e)=>{
           jobDropdownMenu
           .st('visibility','visible')
+
+          $legend__jobNumber
+            .st('visibility','visible')
 
           jobCircles
             .transition()

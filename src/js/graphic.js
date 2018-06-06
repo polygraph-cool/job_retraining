@@ -1,20 +1,13 @@
-import loadIntro from './truckerDevIntro';
-import loadScatterplot from './scatterplotUpdated';
-import loadDevsAndTruckersSkills from './loadDevsAndTruckersSkills';
-
+// import loadIntro from './truckerDevIntro';
+import scatter from './scatter';
 const controller = new ScrollMagic.Controller();
+
+// import loadDevsAndTruckersSkills from './loadDevsAndTruckersSkills';
 // import loadSingleAxisSimilarity from './singleAxisSimilarity';
-
-
-
-
 let mobile = false;
 let viewportWidth = window.innerWidth;
 let viewportHeight = window.innerHeight;
 let isMobile = viewportWidth < 700? true : false;
-
-
-console.log(Math.max(document.documentElement.clientHeight));
 
 function getHeight(idSelector){
   var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
@@ -27,7 +20,8 @@ function getHeight(idSelector){
 function resize() {}
 
 function init() {
-
+  
+  scatter.init()
 
   const VIEWPORT_RATIO_HEIGHT = 1
   const VIEWPORT_RATIO_WIDTH = 0.9
@@ -40,10 +34,6 @@ function init() {
     .at('width', ()=>viewportWidth * VIEWPORT_RATIO_WIDTH)
     .st('fill','#00000')
 
-  // const miscChartSections = d3.select('.misc-chart-elements-container')
-  // miscChartSections.st('height', ()=> (1-VIEWPORT_RATIO_HEIGHT) * viewportHeight + 'px')
-
-
   const mainSectionHeight = getHeight('#content')
 
   const sceneStick = new ScrollMagic.Scene({
@@ -54,7 +44,7 @@ function init() {
     })
     .setPin(".svg-container",{pushFollowers: false})
     .on("enter", (e)=>{
-        loadIntro();
+
     })
     .on("leave", (e)=>{
       if(e.target.controller().info("scrollDirection") == "REVERSE"){
@@ -79,36 +69,36 @@ function init() {
     // .addTo(controller)
 
 
-    const sceneLoadSkillComparison = new ScrollMagic.Scene({
-      triggerElement: ".two-jobs-all-skills",
-      offset:  0,
-      duration: 1,
-      triggerHook: 0
-    })
-    // .addIndicators({name: ""})
-    .on("enter", (e)=>{
-      loadDevsAndTruckersSkills()
-    })
-    .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
-      else{}})
-    .addTo(controller)
+    // const sceneLoadSkillComparison = new ScrollMagic.Scene({
+    //   triggerElement: ".two-jobs-all-skills",
+    //   offset:  0,
+    //   duration: 1,
+    //   triggerHook: 0
+    // })
+    // // .addIndicators({name: ""})
+    // .on("enter", (e)=>{
+    //   loadDevsAndTruckersSkills()
+    // })
+    // .on("leave", (e)=>{
+    //   if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+    //   else{}})
+    // .addTo(controller)
 
 
-    const sceneLoadScatter = new ScrollMagic.Scene({
-      triggerElement: ".x-axis-scatter",
-      offset:  0,
-      duration: 1,
-      triggerHook: 0
-    })
-    // .addIndicators({name: ""})
-    .on("enter", (e)=>{
-      loadScatterplot()
-    })
-    .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){}
-      else{}})
-    .addTo(controller)
+    // const sceneLoadScatter = new ScrollMagic.Scene({
+    //   triggerElement: ".x-axis-scatter",
+    //   offset:  0,
+    //   duration: 1,
+    //   triggerHook: 0
+    // })
+    // // .addIndicators({name: ""})
+    // .on("enter", (e)=>{
+    //   loadScatterplot()
+    // })
+    // .on("leave", (e)=>{
+    //   if(e.target.controller().info("scrollDirection") == "REVERSE"){}
+    //   else{}})
+    // .addTo(controller)
 
 
 

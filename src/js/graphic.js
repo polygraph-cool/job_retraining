@@ -1,6 +1,7 @@
 // import loadIntro from './truckerDevIntro';
+import enterView from 'enter-view'
 import scatter from './scatter';
-const controller = new ScrollMagic.Controller();
+// const controller = new ScrollMagic.Controller();
 
 // import loadDevsAndTruckersSkills from './loadDevsAndTruckersSkills';
 // import loadSingleAxisSimilarity from './singleAxisSimilarity';
@@ -17,41 +18,82 @@ function getHeight(idSelector){
   return elementHeight.getBoundingClientRect().height - h/2;
 }
 
+function getCurrentStep(index){
+  const sel = d3.select(`[data-index='${index}']`);
+	const step = sel.attr('data-step');
+	// stepSel.classed('is-active', (d, i) => i === index);
+  // console.log(step);
+  scatter.updateStep(step)
+}
+
+
+function setupScrollTriggers(){
+  enterView({
+    selector: '.section__scene',
+    offset: 0.25,
+    enter: el => {
+      const index = +d3.select(el).attr('data-index');
+      getCurrentStep(index);
+    },
+  exit: el => {
+    let index = +d3.select(el).attr('data-index');
+    index = Math.max(0, index - 1);
+    getCurrentStep(index);
+  }
+});
+
+}
+
 function resize() {}
 
 function init() {
-  
-  scatter.init()
+
+  scatter
+    .init()
+    .then( () =>{
+      // set up scroll triggers
+      setupScrollTriggers()
+    })
+    .catch((err)=>{console.log(err);})
 
   const VIEWPORT_RATIO_HEIGHT = 1
   const VIEWPORT_RATIO_WIDTH = 0.9
 
   const chartSvg = d3.select("body")
-    .select("div.svg-container")
+    .select("figure.svg-container")
     .select("svg.scatter")
 
   chartSvg.at('height', ()=> viewportHeight * VIEWPORT_RATIO_HEIGHT)
     .at('width', ()=>viewportWidth * VIEWPORT_RATIO_WIDTH)
     .st('fill','#00000')
 
-  const mainSectionHeight = getHeight('#content')
+  // const mainSectionHeight = getHeight('#content')
+  loadDevsAndTruckersSkills()
 
-  const sceneStick = new ScrollMagic.Scene({
-    triggerElement: ".svg-container",
-    	offset: 0,
-    	duration: mainSectionHeight,
-    	triggerHook: 0
-    })
-    .setPin(".svg-container",{pushFollowers: false})
-    .on("enter", (e)=>{
 
-    })
-    .on("leave", (e)=>{
-      if(e.target.controller().info("scrollDirection") == "REVERSE"){
-          }
-      else{}})
-    .addIndicators({name: "indicatorScatter"})
-    .addTo(controller)
+
+
+  // const sceneStick = new ScrollMagic.Scene({
+  //   triggerElement: ".svg-container",
+  //   	offset: 0,
+  //   	duration: mainSectionHeight,
+  //   	triggerHook: 0
+  //   })
+  //   .setPin(".svg-container",{pushFollowers: false})
+  //   .on("enter", (e)=>{
+  //
+  //   })
+  //   .on("leave", (e)=>{
+  //     if(e.target.controller().info("scrollDirection") == "REVERSE"){
+  //         }
+  //     else{}})
+  //   .addIndicators({name: "indicatorScatter"})
+  //   .addTo(controller)
+
+
+
+
+
 
     // const sceneLoadIntro = new ScrollMagic.Scene({
     //   triggerElement: ".svg-container",

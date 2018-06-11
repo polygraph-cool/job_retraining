@@ -1,7 +1,7 @@
 <section class='section--scatter section'>
 
   {{#each copy.scatter}}
-    <div class='section__scene' data-step='{{{step}}}'>
+    <div class='section__scene' data-step='{{{step}}}' data-index='{{@index}}'>
 		<p class='prose'>{{{text}}}</p>
     </div>
 	{{/each}}

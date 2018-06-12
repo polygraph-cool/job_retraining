@@ -71,6 +71,7 @@ svg.scatter
 .jobTooltip
   position absolute
   background #FFF
+  visibility hidden
 
 .job-bar
   height 20px
@@ -147,8 +148,9 @@ svg.scatter
 .max-similarity
   font-size 12px
 
-.most-similar-annotation
+.similarity-annotation
   font-family 'Atlas Grotesk Web'
+  font-size: 14px
 
 .scatter-y-axis
   path.domain
@@ -174,10 +176,11 @@ svg.scatter
   font-size 24px
   text-align center
   padding-top 2vh
+  @media (max-width: 500px)
+    font-size 16px
 
 .chart-title-pt1
   font-family 'Alfa Slab One', cursive
-  font-size 24px
   text-align center
 
 .bisecting-line
@@ -208,10 +211,14 @@ svg.scatter
   font-size 14px
   font-weight 600
   text-anchor middle
+  @media (max-width: 500px)
+    font-size 10px
 
 .legend-wages__text-annotation
   font-size 12px
   font-family 'Atlas Grotesk Web'
+    @media (max-width: 500px)
+      font-size 8px
 
 .job-selector__container
   text-align center

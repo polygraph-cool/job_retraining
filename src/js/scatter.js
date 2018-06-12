@@ -39,6 +39,16 @@ let jobSkillsContainer = null;
 let $jobDropdownMenu = null;
 
 
+const defaultSceneSetting = {'cx':'',
+														 'cy':'',
+													 	 'r':'',
+													 	 'fill':'',
+													 	 'yScale':'',
+													 	 'opacityCircles':'',
+														 'opacityAnnotations':''
+													 	 }
+
+
 
 // Key objects for displaying values based on job id
 const keyObjectJobName = {}
@@ -64,9 +74,6 @@ fileNames.forEach((category)=>{
 const $chartContainer = d3.select('figure.svg-container')
 const $chartSvg = $chartContainer.select('svg.scatter')
 
-
-const $miscChartSections = d3.select('.misc-chart-elements-container')
-const $miscChartSectionTitle = $miscChartSections.select("div.chart-title-div")
 
 let xScale = null;
 
@@ -318,7 +325,8 @@ function setupLegends(radiusScale, colorScale){
     .at('x', JOB_NUMBER_LABEL_LOCATION)
 
   $legendjobNumber
-    .st('visibility','hidden')
+		.st('opacity',0)
+    // .st('visibility','hidden')
 
   $legendWages
     .st('visibility','hidden')
@@ -331,8 +339,8 @@ function resize(){
   const REDUCED_VIEWPORT_HEIGHT_PERCENTAGE = 0.875
   const REMAINING_VIEWPORT_HEIGHT_PERCENTAGE = 1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE
 
-  $miscChartSections
-    .st('height', (1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE) * fullSVGHeight + 'px')
+  // $miscChartSections
+  //   .st('height', (1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE) * fullSVGHeight + 'px')
 
   $chartSvg.at('height', (REDUCED_VIEWPORT_HEIGHT_PERCENTAGE*fullSVGHeight))
 
@@ -376,9 +384,16 @@ function dropDownChange(d,i,n, colorScale){
 		const updatedData = selectJobData(similarity, selectedJobID);
     const currentJobId=updatedData[0].id_selected;
 
+		console.log('selected job id: '+ selectedJobID);
+		console.log('updated data ' +updatedData);
+		console.log('current job '+currentJobId);
+
     // Updating xScale with new data
 		const xScale = setupXScale(updatedData);
 
+
+		const $miscChartSections = d3.select('.misc-chart-elements-container')
+		const $miscChartSectionTitle = $miscChartSections.select("div.chart-title-div")
     // Updating main label text
     $miscChartSectionTitle.select('.chart-title-pt2').text(numberWithCommas(keyObjectJobNumber[currentJobId]))
     $miscChartSectionTitle.select('.chart-title-pt3').text(keyObjectJobName[currentJobId])
@@ -490,7 +505,8 @@ function createDropdown(){
 	$jobDropdownMenu=d3.select('div.job-selector__container')
 		.append('select')
     .at('class', 'job-selector__dropdown')
-    .st('visibility','hidden')
+		.st('opacity',0)
+    // .st('visibility','hidden')
 
 	const $jobButtons = $jobDropdownMenu.selectAll('option.job-selector__job-button')
 		.data(crosswalk)
@@ -545,8 +561,8 @@ function setupTooltip(){
 function setupDOMElements(leastSimilarJob,mostSimilarJob){
 
   // Creating annotations elements for similarity-only views
-  const leastSimilarJob_ANNOTATION = $chartSvg.append('g.least-similar-annotation')
-  const mostSimilarJob_ANNOTATION = $chartSvg.append('g.most-similar-annotation')
+  const leastSimilarJob_ANNOTATION = $chartSvg.append('g.least-similar-annotation similarity-annotation')
+  const mostSimilarJob_ANNOTATION = $chartSvg.append('g.most-similar-annotation similarity-annotation')
 
   const leastSimilarJob_LINE = leastSimilarJob_ANNOTATION.append('line')
   const mostSimilarJob_LINE = mostSimilarJob_ANNOTATION.append('line')
@@ -663,26 +679,64 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
   $automatabilityBisectingLabel.text('TRUCKERS')
 
   $automatabilityBisectingGroup
-    .st('visibility','hidden')
+    // .st('visibility','hidden')
+		.st('opacity',0)
 
 
 }
 
 function updateStep(step){
-  // if(step==='x-axis-scatter'){
-  // }
-  // else 
-  if(step==='x-axis-scatter'){
-    $chartSvg.select('g.least-similar-annotation')
-      .st('opacity',0)
+  if(step==='x-axis-base'){
 
-    $chartSvg.select('g.most-similar-annotation')
+		defaultSceneSetting.cy = function(){return INTRO_Y_AXIS_LOCATION}
+		// defaultSceneSetting.cy = function(d){return yScale(keyObjectJobAuto[d.id_compared])}
+		defaultSceneSetting.r = function(){return 3}
+		defaultSceneSetting.fill = function(){return '#FFF'}
+		defaultSceneSetting.yScale = function(){yScale.domain([0,1])}
+		defaultSceneSetting.opacityCircles = function(){return 1}
+		defaultSceneSetting.opacityAnnotations = function(){return 0}
+
+		defaultSceneSetting.yScale()
+
+		$jobCircles
+			.transition()
+			.at('cy', defaultSceneSetting.cy)
+			.at('r', defaultSceneSetting.r)
+			.st('fill', defaultSceneSetting.fill)
+			.st('opacity',defaultSceneSetting.opacityCircles)
+
+		$chartSvg.selectAll('g.similarity-annotation')
+			.transition()
+			.st('opacity',defaultSceneSetting.opacityCircles)
+
+		yAxisGroup
+			.st('opacity',defaultSceneSetting.opacityAnnotations)
+
+		$automatability_LABEL
+			.transition()
+			.st('opacity',defaultSceneSetting.opacityAnnotations)
+
+		$automatabilityBisectingGroup
+			.transition()
+			.st('opacity',defaultSceneSetting.opacityAnnotations)
+
+  }
+  else if(step==='xy-axis-scatter'){
+
+		yScale.domain([0,1])
+
+    $chartSvg.selectAll('g.similarity-annotation')
       .st('opacity',0)
 
     const Y_AXIS_ANNOTATION_HEIGHT =yMaxScaleValue*1.05
 
-    yAxisGroup.st('opacity',1)
-    $automatability_LABEL.st('opacity',1)
+    yAxisGroup
+			.transition()
+			.st('opacity',1)
+
+    $automatability_LABEL
+			.transition()
+			.st('opacity',1)
 
     $chartSvg.selectAll('text.axis-label')
       .at('y',Y_AXIS_ANNOTATION_HEIGHT)
@@ -690,14 +744,16 @@ function updateStep(step){
     $jobCircles
       .transition()
       .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+			.st('opacity',1)
+
 
     $automatabilityBisectingGroup
-      .st('visibility', 'visible')
+      // .st('visibility', 'visible')
+			.transition()
+			.st('opacity', defaultSceneSetting.opacityCircles)
       .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
-
-    console.log("nice!");
   }
-  else if(step==='xy-axes-scatter-filtered'){
+  else if(step==='xy-axes-scatter'){
 
     yScale.domain([0,0.79])
 
@@ -709,6 +765,7 @@ function updateStep(step){
         else {return 1}
       })
 
+
     $automatabilityBisectingGroup
         .transition()
         .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
@@ -718,13 +775,29 @@ function updateStep(step){
     .st('opacity',d=> +keyObjectJobAuto[d.id_compared]>+keyObjectJobAuto[d.id_selected]? 0 : 1)
     .transition()
     .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
+		.st('fill','#FFF')
+		.at('r', 3)
+
+		$legendWages
+			.st('visibility','hidden')
   }
-  else if(step==='show-similarity-auto-wage'){
-    $legendWages
+  else if(step==='xy-axes-scatter-filtered'){
+
+
+    $legendjobNumber
+			.transition()
+			.st('opacity',0)
+      // .st('visibility','hidden')
+
+		$legendWages
+			.transition()
       .st('visibility','visible')
+
+
 
     $jobCircles
       .transition()
+			.at('r', 3)
       .st('fill', d=>{
         const jobSelectedWage = keyObjectJobWage[d.id_selected]
         const jobComparedWage = keyObjectJobWage[d.id_compared]
@@ -743,12 +816,18 @@ function updateStep(step){
       })
 
   }
-  else if(step==='show-similarity-auto-wage-number'){
-    $jobDropdownMenu
-      .st('visibility','visible')
+  else if(step==='show-similarity-auto-wage'){
+    // $jobDropdownMenu
+    //   .st('visibility','visible')
+
+			$jobDropdownMenu
+				.transition()
+				.st('opacity',0)
 
       $legendjobNumber
-        .st('visibility','visible')
+				.transition()
+				.st('opacity', 1)
+        // .st('visibility','visible')
 
       $jobCircles
         .transition()
@@ -757,6 +836,12 @@ function updateStep(step){
   				return scalesObject.radiusScale(wage)
   			})
   }
+		else if(step==='show-similarity-auto-wage-number'){
+			$jobDropdownMenu
+				.transition()
+				.st('opacity',1)
+				// .st('visibility','visible')
+		}
 }
 
 function init(){

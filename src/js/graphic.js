@@ -22,7 +22,7 @@ function getCurrentStep(index){
   const sel = d3.select(`[data-index='${index}']`);
 	const step = sel.attr('data-step');
 	// stepSel.classed('is-active', (d, i) => i === index);
-  // console.log(step);
+  console.log({step});
   scatter.updateStep(step)
 }
 
@@ -68,7 +68,7 @@ function init() {
     .st('fill','#00000')
 
   // const mainSectionHeight = getHeight('#content')
-  loadDevsAndTruckersSkills()
+  // loadDevsAndTruckersSkills()
 
 
 

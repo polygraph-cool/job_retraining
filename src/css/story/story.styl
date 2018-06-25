@@ -175,9 +175,10 @@ svg.scatter
   font-family 'Alfa Slab One', cursive
   font-size 24px
   text-align center
-  padding-top 2vh
+  padding-top 5vh
   @media (max-width: 500px)
     font-size 16px
+    padding-top 5vh
 
 .chart-title-pt1
   font-family 'Alfa Slab One', cursive
@@ -217,12 +218,28 @@ svg.scatter
 .legend-wages__text-annotation
   font-size 12px
   font-family 'Atlas Grotesk Web'
-    @media (max-width: 500px)
+  @media (max-width: 500px)
       font-size 8px
 
 .job-selector__container
   text-align center
 
+.job-selector__dropdown
+  position fixed
+  top 0px
+  left 50px
+  -webkit-backface-visibility hidden
+    option
+      width 75vw
+
 .section__scene
   padding-bottom 100vh
 /* @end */
+
+.misc-elements
+  visibility hidden
+
+.img-static
+  visibility hidden
+  margin 0 auto
+  

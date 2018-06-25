@@ -13,6 +13,8 @@ let svgWidth = null;
 let xMaxScaleValue = null;
 let xPadding = null;
 
+let isMobile = false;
+
 let yScale = null;
 let yMaxScaleValue = null;
 let yPadding = null;
@@ -335,6 +337,8 @@ function setupLegends(radiusScale, colorScale){
 
 function resize(){
 
+
+
   const fullSVGHeight = $chartSvg.at('height')
   const REDUCED_VIEWPORT_HEIGHT_PERCENTAGE = 0.875
   const REMAINING_VIEWPORT_HEIGHT_PERCENTAGE = 1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE
@@ -375,12 +379,16 @@ function resize(){
   LINE_HEIGHT_LEAST_SIMILAR_JOB = INTRO_Y_AXIS_LOCATION - VERTICAL_LABEL_POSITION_SHORTER
   LINE_HEIGHT_MOST_SIMILAR_JOB = INTRO_Y_AXIS_LOCATION - VERTICAL_LABEL_POSITION_TALLER
 
+// Mobile check
+
+	isMobile = svgWidth <700 ? true : false
 
 }
 
-function dropDownChange(d,i,n, colorScale){
-    // selecting relevant job ID and its associated job data
-		const selectedJobID=d3.select(n[i]).property('value')
+function dropDownChange(){
+
+		const selectedJobID = $chartContainer.select('.job-selector__dropdown').property('value')
+
 		const updatedData = selectJobData(similarity, selectedJobID);
     const currentJobId=updatedData[0].id_selected;
 
@@ -392,8 +400,8 @@ function dropDownChange(d,i,n, colorScale){
 		const xScale = setupXScale(updatedData);
 
 
-		const $miscChartSections = d3.select('.misc-chart-elements-container')
-		const $miscChartSectionTitle = $miscChartSections.select("div.chart-title-div")
+		// const $miscChartSections = $chartSvg.select('.misc-chart-elements-container')
+		const $miscChartSectionTitle = $chartContainer.select("div.chart-title-div")
     // Updating main label text
     $miscChartSectionTitle.select('.chart-title-pt2').text(numberWithCommas(keyObjectJobNumber[currentJobId]))
     $miscChartSectionTitle.select('.chart-title-pt3').text(keyObjectJobName[currentJobId])
@@ -504,8 +512,13 @@ function createDropdown(){
 // Creating job dropdown menu
 	$jobDropdownMenu=d3.select('div.job-selector__container')
 		.append('select')
-    .at('class', 'job-selector__dropdown')
+
+
+	$jobDropdownMenu
+		.at('class', 'job-selector__dropdown')
 		.st('opacity',0)
+		// .at('data-placeholder', 'Select another job')
+
     // .st('visibility','hidden')
 
 	const $jobButtons = $jobDropdownMenu.selectAll('option.job-selector__job-button')
@@ -514,12 +527,24 @@ function createDropdown(){
 		.append('option.job-selector__job-button')
 		.at('value', d=>d.id)
 
+	$jobDropdownMenu
+		.insert("option",":first-child")
+		.at('selected','selected')
+		.text('Pick another job')
+
+
 	$jobButtons.text((d)=>{
 			return d.job_name;
 		})
 
-  $jobDropdownMenu
-		.on('change', dropDownChange)
+  // $jobDropdownMenu
+	// 	.on('change', dropDownChange)
+	$(".job-selector__dropdown")
+		.chosen({
+			placeholder_text_single:'Select another job'
+		})
+		.on('change',dropDownChange)
+
 }
 
 
@@ -536,7 +561,10 @@ function createCircles(){
       .at('cy', INTRO_Y_AXIS_LOCATION)
       .st('fill', 'white')
       .st('stroke', 'black')
+			.st('opacity', 0)
       .at('r','3')
+			.on('mouseenter', showTooltip)
+			.on('mouseleave', hideTooltip)
 
   console.log('function createCircles()');
 }
@@ -633,6 +661,20 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
     .text('DIFFERENT')
     .st('text-anchor','middle')
 
+	leastSimilarJob_ANNOTATION
+		.st('opacity',0)
+
+	mostSimilarJob_ANNOTATION
+		.st('opacity',0)
+
+	maxSimilarityLabel
+		.st('opacity',0)
+
+	minSimilarityLabel
+		.st('opacity',0)
+
+	$xAxisLabel
+		.st('opacity',0)
   // Adding automatability/x-axis, and max and min automatability labels
   const formatPercent = d3.format(".0%");
 
@@ -687,6 +729,20 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
 
 function updateStep(step){
   if(step==='x-axis-base'){
+
+		$chartContainer.selectAll('.misc-elements')
+			.st('visibility','visible')
+
+		$chartContainer.selectAll('.job-selector__container')
+			.st('visibility','hidden')
+
+		const $staticImageDiv = $chartContainer
+		 .select('img.images-many-jobs-many-skills')
+
+		 $staticImageDiv
+		 .st('display','none')
+
+		$chartSvg.st('display', 'block')
 
 		defaultSceneSetting.cy = function(){return INTRO_Y_AXIS_LOCATION}
 		// defaultSceneSetting.cy = function(d){return yScale(keyObjectJobAuto[d.id_compared])}
@@ -820,9 +876,9 @@ function updateStep(step){
     // $jobDropdownMenu
     //   .st('visibility','visible')
 
-			$jobDropdownMenu
-				.transition()
-				.st('opacity',0)
+		$jobDropdownMenu
+			.transition()
+			.st('opacity',0)
 
       $legendjobNumber
 				.transition()
@@ -837,6 +893,10 @@ function updateStep(step){
   			})
   }
 		else if(step==='show-similarity-auto-wage-number'){
+
+			$chartContainer.selectAll('.job-selector__container')
+				.st('visibility','visible')
+
 			$jobDropdownMenu
 				.transition()
 				.st('opacity',1)
@@ -889,338 +949,3 @@ function init(){
 
 
 export default {init, updateStep}
-
-
-
-    // selecting job data for trucker job comparisons
-
-    // let selectedJobID = 415; //trucker ID
-
-
-    // Container setup
-
-
-    // setup of  container for chart title and job selector
-
-
-    // Changing svg height to account for the 12.75% vH that chart title and job selector take up
-
-
-
-    // Setting up radius scale
-
-
-
-
-
-		// Setting up key objects to yield each job's name, number, automation, wages, and skills, by id
-
-
-// Removing skill rectangles from visibility -
-    // d3.selectAll('g.all-skills')
-    //   .st('opacity',0)
-    //
-    // d3.selectAll('g.skill-section')
-    //   .st('opacity',0)
-
-
-
-
-
-
-
-    // Creating titles
-    // const chartTitle = $chartSvg.append('text.chart-title')
-    //
-    // chartTitle
-    //   .at('x',svgWidth/2)
-    //   .at('y',yPadding/2)
-    //   .st('text-anchor','middle')
-    //   .text('Which careers should truckers transition to?')
-
-    // Note: adding titles in via div
-
-
-    // Setting text to read correct annotations data
-
-
-
-
-// UPDATE JOB CIRCLES FUNCTION
-		// $jobCircles.on('mouseenter',(d,i,n)=>{
-    //
-			// selectedJobSkills = selectJobData(skills, d.id_compared);
-			// selectedJobSkills = selectedJobSkills.sort(compare);
-      //
-			// const jobTooltip = d3.select("div.jobTooltip")
-      //
-			// jobTooltip.st('visibility','visible')
-      //
-			// const xCoord = d3.select(n[i])
-			// 	.at("cx")
-      //
-			// const yCoord = d3.select(n[i])
-			// 	.at("cy")
-      //
-			// jobTooltip.st("left", (xCoord+"px") )
-			// 	.st("top", (yCoord+"px") )
-      //
-			// // const jobSelectedName = d3.select("div.job-selected-name");
-			// // jobSelectedName.text("Main job: "+keyObjectJobName[d.id_selected])
-      // //
-			// const jobComparedName = d3.select("div.job-compared-name");
-			// jobComparedName.text(keyObjectJobName[d.id_compared])
-      //
-			// // const jobSelectedNumber = d3.select("div.job-selected-number");
-			// // jobSelectedNumber.text("Main job quantity: "+numberWithCommas(keyObjectJobNumber[d.id_selected]))
-      // //
-			// const jobComparedNumber = d3.select("div.job-compared-number");
-			// jobComparedNumber.text(numberWithCommas(keyObjectJobNumber[d.id_compared])+' jobs in 2026')
-      //
-      //
-			// const jobSkillsContainer = jobTooltip.select('div.job-skills-container')
-      //
-			// const jobSkillsBarRow = jobSkillsContainer.selectAll('div.bar-container')
-      //
-			// const jobSkillsNames = jobSkillsContainer.selectAll("div.job-bar-name")
-			// 	.data(selectedJobSkills)
-      //
-			// const jobSkillsBars  = jobSkillsContainer.selectAll("div.job-bar")
-			// 	.data(selectedJobSkills)
-      //
-			// const jobSkillsValues= jobSkillsContainer.selectAll("div.job-bar-value")
-			// 	.data(selectedJobSkills)
-      //
-			// const xScaleSkillMultiplier= 1;
-      //
-			// jobSkillsBars.st('height','4px')
-			// 	.st('width', skill=> {
-			// 		return xScaleSkillMultiplier * skill.imp+'px'
-			// 	})
-			// 	.st('background','#D928BC')
-      //
-			// jobSkillsNames.text((skill,i)=>{
-			// 	return (i+1)+'. '+keyObjectSkillName[skill.skill_id]
-			// })
-      //
-			// jobSkillsValues.text(skill=>{
-			// 	return skill.imp+'%';
-			// })
-		// })
-		// .on('mouseleave', ()=>{
-		// 	jobTooltip.st('visibility','hidden')
-		// })
-
-
-
-
-
-
-
-
-
-    // BUTTONS
-    // const $single_XAxis_Similarity_All_Jobs =d3.select('div.transition-button.only-similarity-axis')
-    // const $show_XY_Axes_Similarity_All_Jobs =d3.select('div.transition-button.automation-similarity-axis')
-    // const $show_Earnings_Comparison =d3.select('div.transition-button.earnings')
-    // const $show_Number_Jobs_Available =d3.select('div.transition-button.jobs-available')
-
-    // Adding in Y axis to scatterplot
-    // $show_XY_Axes_Similarity_All_Jobs.on('click',()=>{
-    //   jobCircles
-    //     .transition()
-    //   	.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
-    // })
-
-
-
-
-
-    // const sceneJob1 = new ScrollMagic.Scene({
-    //   triggerElement: ".xy-axes-scatter",
-    //   offset:  0,
-    //   duration: 1,
-    //   triggerHook: 0
-    // })
-    // .on("enter", (e)=>{
-    //
-    //
-    //
-    //   let automatabilityBisectingGroup;
-    //   let automatabilityBisectingLine;
-    //   let automatabilityBisectingLabel;
-    //
-    //   let automatabilityBisectingGroupCheck = $(".bisecting-automation-group");
-    //
-    //   if(automatabilityBisectingGroupCheck.length===0){
-    //
-    //     automatabilityBisectingGroup = $chartSvg.append('g.bisecting-automation-group')
-    //
-    //     automatabilityBisectingGroup
-    //         .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
-    //
-    //     automatabilityBisectingLine = automatabilityBisectingGroup.append('line.bisecting-line')
-    //       .at('x1',xPadding)
-    //       .at('y1',0)
-    //       .at('x2',xMaxScaleValue)
-    //       .at('y2',0)
-    //
-    //     automatabilityBisectingLabel=automatabilityBisectingGroup.append('text.bisecting-line-label')
-    //
-    //     automatabilityBisectingLabel.text('TRUCKERS')
-    //
-    //
-    //       }
-    //   else{}
-    //
-    //
-    //
-    //
-    //   $chartSvg.select('g.least-similar-annotation')
-    //     .st('opacity',0)
-    //
-    //   $chartSvg.select('g.most-similar-annotation')
-    //     .st('opacity',0)
-    //
-    //   const Y_AXIS_ANNOTATION_HEIGHT =yMaxScaleValue*1.05
-    //
-    //   yAxisGroup.st('opacity',1)
-    //   $automatability_LABEL.st('opacity',1)
-    //
-    //
-    //   $chartSvg.selectAll('text.axis-label')
-    //     .at('y',Y_AXIS_ANNOTATION_HEIGHT)
-    //
-    //   $jobCircles
-    //     .transition()
-    //   	.at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
-    //
-    //
-    //
-    //
-    //   yScale.domain([0,0.79])
-    //
-    //   automatabilityBisectingGroup
-    //       .transition()
-    //       .delay(2000)
-    //       .at('transform', 'translate(0,'+yScale(keyObjectJobAuto[selectedJobID])+')')
-    //       .st('opacity',0)
-    //
-    //   $jobCircles
-    //   .st('opacity',d=>{
-    //
-    //     console.log(keyObjectJobAuto[d.id_compared]);
-    //
-    //     if (+keyObjectJobAuto[d.id_compared]>keyObjectJobAuto[d.id_selected]){return 0}
-    //     else {return 1}
-    //   })
-    //   .transition()
-    //   .delay(2000)
-    //   .at('cy', d=>{return yScale(keyObjectJobAuto[d.id_compared])})
-    //
-    //
-    //
-    //
-    // })
-    // .on("leave", (e)=>{
-    //   if(e.target.controller().info("scrollDirection") == "REVERSE"){}
-    //   else{}})
-    // .addTo(controllerScatter)
-    //
-    // // Adding in color to scatterplot
-    // $show_Earnings_Comparison.on('click',()=>{
-    //   $jobCircles
-    //     .transition()
-    //   	.st('fill', d=>{
-    //   		const jobSelectedWage = keyObjectJobWage[d.id_selected]
-    //   		const jobComparedWage = keyObjectJobWage[d.id_compared]
-    //   		const wageChange = jobComparedWage/jobSelectedWage;
-    //   		return colorScale(wageChange)
-    //   	})
-    // })
-    //
-    //
-    // const sceneJob2 = new ScrollMagic.Scene({
-    //   triggerElement: ".show-similarity-auto-wage",
-    //   offset:  0,
-    //   duration: 1,
-    //   triggerHook: 0
-    // })
-    // .on("enter", (e)=>{
-    //
-      //
-      // $legendWages
-      //   .st('visibility','visible')
-      //
-      // $jobCircles
-      //   .transition()
-      // 	.st('fill', d=>{
-      //
-      // 		const jobSelectedWage = keyObjectJobWage[d.id_selected]
-      // 		const jobComparedWage = keyObjectJobWage[d.id_compared]
-      // 		const wageChange = jobComparedWage/jobSelectedWage;
-      //
-      // 		return colorScale(wageChange)
-      // 	})
-      //   .transition()
-      //   .delay(1000)
-      //   .st('opacity', d=>{
-      //     if (
-      //         (keyObjectJobWage[d.id_selected]<keyObjectJobWage[d.id_compared] )
-      //         &&
-      //         (keyObjectJobAuto[d.id_selected]>keyObjectJobAuto[d.id_compared])
-      //     ){return 1}
-      //     else {return 0}
-      //   })
-      //
-    //
-    //
-    // })
-    // .on("leave", (e)=>{
-    //   if(e.target.controller().info("scrollDirection") == "REVERSE"){}
-    //   else{}})
-    // .addTo(controllerScatter)
-    //
-    //
-    //
-    //
-    //     const sceneJob3 = new ScrollMagic.Scene({
-    //       triggerElement: ".show-similarity-auto-wage-number",
-    //       offset:  0,
-    //       duration: 1,
-    //       triggerHook: 0.5
-    //     })
-    //     .on("enter", (e)=>{
-    //       $jobDropdownMenu
-    //       .st('visibility','visible')
-    //
-    //       $legendjobNumber
-    //         .st('visibility','visible')
-    //
-    //       $jobCircles
-    //         .transition()
-    //   			.at('r', d=>{
-    //   				const wage=keyObjectJobNumber[d.id_compared];
-    //   				return radiusScale(wage)
-    //   			})
-    //
-    //     })
-    //     .on("leave", (e)=>{
-    //       if(e.target.controller().info("scrollDirection") == "REVERSE"){
-    //
-    //         $jobDropdownMenu
-    //         .st('visibility','hidden')
-    //
-    //         $jobCircles
-    //           .transition()
-    //     			.at('r', 3)
-    //
-    //       }
-    //       else{}})
-    //       .addIndicators({name: "finalIndicator"})
-    //     .addTo(controllerScatter)
-
-
-
-//   })
-// }

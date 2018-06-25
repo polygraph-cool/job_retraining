@@ -1,5 +1,18 @@
 <!-- <div class='two-jobs__copy'>
 </div> -->
+
+<section class='section--twojobs section'>
+
+  {{#each copy.twojobs}}
+    <div class='section__scene' data-step='{{{step}}}' data-index='{{@index}}'>
+		<p class='prose'>{{{text}}}</p>
+    </div>
+	{{/each}}
+
+</section>
+
+
+<!--
 <div class='all-automation scene'>
 	{{#each copy.all-automation}}
 		<p class='prose'>{{{value}}}</p>
@@ -38,4 +51,4 @@
 	{{#each copy.comparison-job-example-skill}}
 		<p class='prose'>{{{value}}}</p>
 	{{/each}}
-</div>
+</div> -->

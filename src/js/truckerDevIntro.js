@@ -250,11 +250,23 @@ function updateStep(step){
       jobsGroups
         .transition()
         .st('opacity', d=>d.job==='Truckers' || d.job==='Developers'? 0 : 1)
+
+      $chartSvg.select('g.intro-y-axis')
+        .selectAll('g.tick')
+        .selectAll('text')
+        .transition()
+        .st('opacity', '0')
   }
   else if(step==='main-job-circle'){
       jobsGroups
         .transition()
         .st('opacity', d=>d.job==='Truckers'? 1 : 0)
+
+      $chartSvg.select('g.intro-y-axis')
+        .selectAll('g.tick')
+        .selectAll('text')
+        .transition()
+        .st('opacity', '1')
   }
   else if(step==='main-job-automation'){
 
@@ -271,11 +283,8 @@ function updateStep(step){
   }
   else if(step==='images-two-jobs-two-skills'){
       $chartSvg.st('display', 'none')
-
       jobsGroups.st('opacity',0)
-
       truckerDeveloperYAxis.st('opacity',0)
-
       yAxisLabelMin.st('opacity',0)
 
       $chartContainer
@@ -322,6 +331,13 @@ function updateStep(step){
         .st('visibility','visible')
   }
   else if(step==='images-many-jobs-many-skills'){
+
+      $chartSvg.selectAll('circle.job')
+        .classed('invisible', true)
+
+      $chartSvg.selectAll('g.similarity-annotation')
+        .classed('invisible', true)
+
       $chartContainer
         .select('img.images-two-jobs-stacked-skills')
         .st('display','none')
@@ -332,6 +348,10 @@ function updateStep(step){
       $staticImageDiv
         .st('display','block')
         .st('visibility','visible')
+
+      $chartSvg
+    		.selectAll('.axis-label')
+        .st('opacity',0)
   }
 }
 

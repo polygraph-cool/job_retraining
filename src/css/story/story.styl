@@ -1,10 +1,16 @@
 /* CUSTOM STORY STYLE */
 
-// .svg-container
-//   margin 0 auto
-//   position relative
-//   width 100%
+.prose
+  position relative
+  background white
+  padding 20px
+  border 1px solid rgba(152,169,179,.38039)
+  box-shadow 0 0 8px rgba(0,0,0,.1)
+  opacity 0.9
 
+.intro-prose
+  max-width 40 rem
+  margin 0 auto
 
 
 figure.sticky
@@ -52,6 +58,7 @@ svg.scatter
   .tick
     text
       fill #8e8d87
+      opacity 0
     line
       stroke #8e8d87
   path
@@ -188,6 +195,11 @@ svg.scatter
   stroke #000
   stroke-dasharray 3,3
 
+.bisecting-line-label
+  font-size 14px
+  text-anchor start
+  font-family 'Atlas Grotesk Web'
+
 .job-number-title
   font-family 'Atlas Grotesk Web'
   font-size 14px
@@ -218,6 +230,14 @@ svg.scatter
 .legend-wages__text-annotation
   font-size 12px
   font-family 'Atlas Grotesk Web'
+  text-anchor middle
+  @media (max-width: 500px)
+      font-size 8px
+
+.legend-wages__zero
+  font-size 12px
+  font-family 'Atlas Grotesk Web'
+  text-anchor middle
   @media (max-width: 500px)
       font-size 8px
 
@@ -242,4 +262,6 @@ svg.scatter
 .img-static
   visibility hidden
   margin 0 auto
-  
+
+.invisible
+  display none

@@ -44,6 +44,7 @@ const $chartSvg = $chartContainer
 const MIN_AUTOMATION = 0
 const MAX_AUTOMATION = 1
 const CIRCLE_RADIUS = 20;
+const INIT_X_AXIS_PLACEMENT = 50;
 
 let viewportWidth =  null;
 let viewportHeight = null;
@@ -62,6 +63,7 @@ let yPadding = null;
 let $jobCircles = null;
 let jobsGroups = null;
 let $automatability_LABEL = null;
+let $truckerDeveloperXAxis = null;
 
 function setupCirclePatterns(data){
 
@@ -97,9 +99,9 @@ function resize(){
   svgWidth = $chartSvg.at('width')
   svgHeight = $chartSvg.at('height')
 
-  console.log($chartSvg.at('width'));
+  // console.log($chartSvg.at('width'));
 
-  console.log($('figure').height());
+  // console.log($('figure').height());
 
   viewportWidth =window.innerWidth;
   viewportHeight=window.innerHeight;
@@ -111,7 +113,11 @@ function resize(){
 }
 
 function setupScales(){
-  yMaxScaleValue = svgHeight * heightPercentage;
+
+  const heightMiscElDiv = document.getElementById('misc-chart-elements-container').offsetHeight;
+  const svgMaxSize = viewportHeight-heightMiscElDiv;
+
+  yMaxScaleValue = svgMaxSize * heightPercentage;
   xMaxScaleValue = svgWidth * widthPercentage;
 
   xPadding = (1-widthPercentage)*svgWidth;
@@ -129,7 +135,7 @@ function setupScales(){
 
 }
 
-function setupAxisLabels(){
+function setupAxes(){
   yAxisLabelMin = $chartSvg.append('text.y-axis-label.min')
     .at('x',introYAxisLocation)
     .at('y',yPadding/2)
@@ -143,11 +149,30 @@ function setupAxisLabels(){
     .st('fill', '#EB5757')
     .st('text-anchor','middle')
     .text('🤖 WILL TAKE THESE JOBS')
+
+  const formatPercent = d3.format(".0%");
+  const formatPercentv2 = d3.format("d");
+
+  const truckerDeveloperYAxisFunction = d3.axisLeft(scalesObject.yScale).ticks(1).tickFormat(formatPercent);
+  const truckerDeveloperXAxisFunction = d3.axisTop(scalesObject.xScale).ticks(1).tickFormat(formatPercentv2);
+
+  const HORIZONTAL_BUMP=introYAxisLocation;
+
+  truckerDeveloperYAxis = $chartSvg.append("g.intro-y-axis")
+    .attr("transform", "translate("+HORIZONTAL_BUMP+",0)")
+    .call(truckerDeveloperYAxisFunction)
+    .st('opacity',1)
+
+  $truckerDeveloperXAxis = $chartSvg.append("g.intro-x-axis")
+    .attr("transform", "translate("+0+","+INIT_X_AXIS_PLACEMENT+")")
+    .call(truckerDeveloperXAxisFunction)
+    .st('opacity',0)
+
 }
 
 function setupDOMElements(){
 
-  setupAxisLabels()
+  setupAxes()
 
   const truckerDeveloperJoin = $chartSvg.selectAll('circle.jobs-circles')
     .data(truckersDevelopers)
@@ -221,28 +246,8 @@ function setupDOMElements(){
 
   $automatability_LABEL
     .at('transform','translate('+introYAxisLocation+','+(svgHeight/2)+')')
-    // .at('x',introYAxisLocation)
-    // .at('y',(svgHeight/2))
-    // .at('transform','rotate(-90deg)')
     .st('opacity',1)
 
-  const formatPercent = d3.format(".0%");
-
-  const truckerDeveloperYAxisFunction = d3.axisLeft(scalesObject.yScale).ticks(1).tickFormat(formatPercent);
-  const truckerDeveloperXAxisFunction = d3.axisTop(scalesObject.xScale);
-
-  const HORIZONTAL_BUMP=introYAxisLocation;
-
-  truckerDeveloperYAxis = $chartSvg.append("g.intro-y-axis")
-    .attr("transform", "translate("+HORIZONTAL_BUMP+",0)")
-    .call(truckerDeveloperYAxisFunction)
-    .st('opacity',1)
-
-  const truckerDeveloperXAxis = $chartSvg.append("g.intro-x-axis")
-    .attr("transform", "translate("+0+",50)")
-    .call(truckerDeveloperXAxisFunction)
-    .st('opacity',0)
-    console.log("DOM elements!");
 }
 
 function updateStep(step){
@@ -270,33 +275,152 @@ function updateStep(step){
   }
   else if(step==='main-job-automation'){
 
+
+    $chartSvg
+      .selectAll('text.y-axis-label')
+      .transition()
+      .st('opacity',1)
+
+    $chartSvg
+      .selectAll('.intro-automatability-values')
+      .transition()
+      .st('opacity',1)
+
+    $truckerDeveloperXAxis
+      .transition()
+      .st('opacity',0)
+      .at('transform',()=>{
+        return 'translate(0,'+ INIT_X_AXIS_PLACEMENT+')'
+      })
+
+
       $chartSvg.st('display', 'block')
       truckerDeveloperYAxis.st('opacity',1)
 
       jobsGroups
         .transition()
         .st('opacity', d=>d.job==='Truckers' || d.job==='Developers'? 1 : 0)
+        .at('transform', d=>{
+          return 'translate('+introYAxisLocation+','+
+                             +scalesObject.yScale(d.automatability)+')'
+        })
 
       $chartContainer
         .select('img.images-two-jobs-two-skills')
         .st('display','none')
   }
+  else if(step ==='images-two-jobs-two-skills-developers'){
+
+          $chartSvg
+            .selectAll('.skill-section__two-jobs')
+            .transition()
+            .st('opacity',0)
+
+          const middleCoord = scalesObject.yScale(0.5);
+
+          $chartSvg
+            .selectAll('text.y-axis-label')
+            .transition()
+            .st('opacity',0)
+
+          $chartSvg
+            .selectAll('.intro-automatability-values')
+            .transition()
+            .st('opacity',0)
+
+          $truckerDeveloperXAxis
+            .transition()
+            .st('opacity',1)
+            .at('transform',()=>{
+              return 'translate(0,'+ middleCoord+')'
+            })
+
+          truckerDeveloperYAxis
+          .transition()
+          .st('opacity',0)
+
+          jobsGroups
+          .transition()
+          .at('transform',d=>{
+            return 'translate('+scalesObject.xScale(d.skillTruckerScore)+','+middleCoord +')'
+          })
+          .st('opacity', d=>d.job==='Truckers' || d.job==='Developers'? 1 : 0)
+
+          $chartSvg
+            .selectAll('g.skill-section')
+            .transition()
+            .st('opacity',0)
+
+  }
   else if(step==='images-two-jobs-two-skills'){
-      $chartSvg.st('display', 'none')
-      jobsGroups.st('opacity',0)
-      truckerDeveloperYAxis.st('opacity',0)
-      yAxisLabelMin.st('opacity',0)
 
-      $chartContainer
-        .select('img.images-two-jobs-many-skills')
-        .st('display','none')
+      // $chartSvg.st('display', 'none')
+      // jobsGroups.st('opacity',0)
+      // truckerDeveloperYAxis.st('opacity',0)
+      // yAxisLabelMin.st('opacity',0)
+      //
+      // $chartContainer
+      //   .select('img.images-two-jobs-many-skills')
+      //   .st('display','none')
+      //
+      // const $staticImageDiv = $chartContainer
+      //   .select('img.images-two-jobs-two-skills')
+      //
+      // $staticImageDiv
+      //   .st('display','block')
+      //   .st('visibility','visible')
 
-      const $staticImageDiv = $chartContainer
-        .select('img.images-two-jobs-two-skills')
 
-      $staticImageDiv
-        .st('display','block')
-        .st('visibility','visible')
+      const middleCoord = scalesObject.yScale(0.5);
+
+      $chartSvg
+        .selectAll('text.y-axis-label')
+        .transition()
+        .st('opacity',0)
+
+      $chartSvg
+        .selectAll('.intro-automatability-values')
+        .transition()
+        .st('opacity',0)
+
+
+      $truckerDeveloperXAxis
+        .transition()
+        .st('opacity',1)
+        .at('transform',()=>{
+          return 'translate(0,'+ middleCoord+')'
+        })
+
+      truckerDeveloperYAxis
+      .transition()
+      .st('opacity',0)
+
+
+      jobsGroups
+      .transition()
+      .at('transform',d=>{
+        return 'translate('+scalesObject.xScale(d.skillTruckerScore)+','+middleCoord +')'
+      })
+
+      // .at('y',()=>scalesObject.yScale(0.5))
+      // .transition()
+      // .at('x',d=> scalesObject.xScale(d.skillTruckerScore))
+
+
+
+
+      // $jobCircles
+      //   .transition()
+      //   .at('cy',()=>scalesObject.yScale(0.5))
+      //   .transition()
+      //   .at('cx',d=> scalesObject.xScale(d.skillTruckerScore))
+
+      // truckerDeveloperSkillValues
+      //   .at('x',d=> scalesObject.xScale(d.skillTruckerScore))
+      //   .at('y',()=>scalesObject.yScale(0.5))
+      //   .st('opacity',1)
+      //   .st('text-anchor','middle')
+
   }
   else if(step==='images-two-jobs-many-skills'){
       $chartContainer
@@ -314,45 +438,45 @@ function updateStep(step){
         .st('display','block')
         .st('visibility','visible')
   }
-  else if(step==='images-two-jobs-stacked-skills'){
-      $chartContainer
-        .select('img.images-two-jobs-many-skills')
-        .st('display','none')
-
-      $chartContainer
-        .select('img.images-many-jobs-many-skills')
-        .st('display','none')
-
-       const $staticImageDiv = $chartContainer
-        .select('img.images-two-jobs-stacked-skills')
-
-      $staticImageDiv
-        .st('display','block')
-        .st('visibility','visible')
-  }
-  else if(step==='images-many-jobs-many-skills'){
-
-      $chartSvg.selectAll('circle.job')
-        .classed('invisible', true)
-
-      $chartSvg.selectAll('g.similarity-annotation')
-        .classed('invisible', true)
-
-      $chartContainer
-        .select('img.images-two-jobs-stacked-skills')
-        .st('display','none')
-
-       const $staticImageDiv = $chartContainer
-        .select('img.images-many-jobs-many-skills')
-
-      $staticImageDiv
-        .st('display','block')
-        .st('visibility','visible')
-
-      $chartSvg
-    		.selectAll('.axis-label')
-        .st('opacity',0)
-  }
+  // else if(step==='images-two-jobs-stacked-skills'){
+  //     $chartContainer
+  //       .select('img.images-two-jobs-many-skills')
+  //       .st('display','none')
+  //
+  //     $chartContainer
+  //       .select('img.images-many-jobs-many-skills')
+  //       .st('display','none')
+  //
+  //      const $staticImageDiv = $chartContainer
+  //       .select('img.images-two-jobs-stacked-skills')
+  //
+  //     $staticImageDiv
+  //       .st('display','block')
+  //       .st('visibility','visible')
+  // }
+  // else if(step==='images-many-jobs-many-skills'){
+  //
+  //     $chartSvg.selectAll('circle.job')
+  //       .classed('invisible', true)
+  //
+  //     $chartSvg.selectAll('g.similarity-annotation')
+  //       .classed('invisible', true)
+  //
+  //     $chartContainer
+  //       .select('img.images-two-jobs-stacked-skills')
+  //       .st('display','none')
+  //
+  //      const $staticImageDiv = $chartContainer
+  //       .select('img.images-many-jobs-many-skills')
+  //
+  //     $staticImageDiv
+  //       .st('display','block')
+  //       .st('visibility','visible')
+  //
+  //     $chartSvg
+  //   		.selectAll('.axis-label')
+  //       .st('opacity',0)
+  // }
 }
 
 function init(){

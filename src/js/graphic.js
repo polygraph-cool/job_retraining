@@ -1,6 +1,7 @@
 
-import enterView from 'enter-view'
-import intro from './truckerDevIntro';
+import enterView from 'enter-view';
+import intro from './truckersAndDevs';
+import skillStacking from './skillStacking';
 import scatter from './scatter';
 
 let mobile = false;
@@ -23,6 +24,7 @@ function getCurrentStep(index){
   // console.log(index);
   console.log({step});
   intro.updateStep(step)
+  skillStacking.updateStep(step)
   scatter.updateStep(step)
 }
 
@@ -30,7 +32,7 @@ function getCurrentStep(index){
 function setupScrollTriggers(){
   enterView({
     selector: '.section__scene',
-    offset: 0.25,
+    offset: 0.1,
     enter: el => {
       const index = +d3.select(el).attr('data-index');
       getCurrentStep(index);
@@ -53,10 +55,22 @@ function init() {
     .select("figure.svg-container")
     .select("svg.scatter")
 
-  chartSvg.at('height', (viewportHeight * VIEWPORT_RATIO_HEIGHT))
+  const heightMiscElDiv = document.getElementById('misc-chart-elements-container').offsetHeight;
+  const heightSvg = viewportHeight-heightMiscElDiv;
+
+  console.log("full viewport height: "+viewportHeight);
+  console.log("misc el div height: "+heightMiscElDiv);
+  console.log("svg height (leftovers): "+heightSvg);
+
+  chartSvg
+    // .at('height', (viewportHeight * VIEWPORT_RATIO_HEIGHT))
+    .at('height', heightSvg)
     .at('width', (viewportWidth * VIEWPORT_RATIO_WIDTH))
     .st('fill','#00000')
 
+  const tmpHt = d3.select('svg.scatter').at('height')
+
+  console.log("svg height actual: "+tmpHt);
 
   d3.select('img.images-two-jobs-two-skills')
     .st('width', (viewportWidth * (VIEWPORT_RATIO_WIDTH-0.3)))
@@ -75,6 +89,13 @@ function init() {
 
 
   intro
+    .init()
+    .then( ()=>{
+      setupScrollTriggers()
+    })
+    .catch((err)=>{console.log(err);})
+
+  skillStacking
     .init()
     .then( ()=>{
       setupScrollTriggers()

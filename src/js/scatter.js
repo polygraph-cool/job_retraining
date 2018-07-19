@@ -22,6 +22,7 @@ let isMobile = false;
 let yScale = null;
 let yMaxScaleValue = null;
 let yPadding = null;
+let tooltipXScale = d3.scaleLinear().domain([0,100]);
 
 let yAxisGroup = null;
 
@@ -363,18 +364,15 @@ function resize(){
 
 
 
-  const fullSVGHeight = $chartSvg.at('height')
-  const REDUCED_VIEWPORT_HEIGHT_PERCENTAGE = 0.875
-  const REMAINING_VIEWPORT_HEIGHT_PERCENTAGE = 1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE
-
-  // $miscChartSections
-  //   .st('height', (1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE) * fullSVGHeight + 'px')
-
-  $chartSvg.at('height', (REDUCED_VIEWPORT_HEIGHT_PERCENTAGE*fullSVGHeight))
+  // const fullSVGHeight = $chartSvg.at('height')
+  // const REDUCED_VIEWPORT_HEIGHT_PERCENTAGE = 0.875
+  // const REMAINING_VIEWPORT_HEIGHT_PERCENTAGE = 1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE
+	//
+  // $chartSvg.at('height', (REDUCED_VIEWPORT_HEIGHT_PERCENTAGE*fullSVGHeight))
 
   // Setting up max width and height parameters for x and y scales
   svgWidth = $chartSvg.at('width')
-  const maxWidthPercentage = 0.9;
+  const maxWidthPercentage = 0.95;
   xMaxScaleValue = svgWidth * maxWidthPercentage;
 
   xPadding = (1-maxWidthPercentage)*svgWidth;
@@ -385,7 +383,9 @@ function resize(){
   yMaxScaleValue = svgHeight * maxHeightPercentage;
 
   const Y_PADDING_MULTIPLIER = 1.25
-  yPadding = REMAINING_VIEWPORT_HEIGHT_PERCENTAGE * Y_PADDING_MULTIPLIER * svgHeight;
+
+  // yPadding = REMAINING_VIEWPORT_HEIGHT_PERCENTAGE * Y_PADDING_MULTIPLIER * svgHeight;
+	yPadding = 10
 
   INTRO_Y_AXIS_LOCATION = svgHeight/2;
 
@@ -512,11 +512,15 @@ function showTooltip(d,i,n){
   const jobSkillsValues= jobSkillsContainer.selectAll("div.job-bar-value")
     .data(selectedJobSkills)
 
-  const xScaleSkillMultiplier= 1;
+	const tooltipWidth = $('.jobTooltip').width()
+	const tooltipHeight = $('.jobTooltip').height()
+
+		tooltipXScale
+			.range([0,(tooltipWidth*0.8)])
 
   jobSkillsBars.st('height','4px')
     .st('width', skill=> {
-      return xScaleSkillMultiplier * skill.imp+'px'
+      return tooltipXScale(skill.imp)+'px'
     })
     .st('background','#D928BC')
 
@@ -525,7 +529,7 @@ function showTooltip(d,i,n){
   })
 
   jobSkillsValues.text(skill=>{
-    return skill.imp+'%';
+    return skill.imp.toFixed(0)+'%';
   })
 
 
@@ -537,8 +541,7 @@ function showTooltip(d,i,n){
     .at("cy")
 
 
-  const tooltipWidth = $('.jobTooltip').width()
-	const tooltipHeight = $('.jobTooltip').height()
+
 
 	let tooltipBump_X = null;
 	let tooltipBump_Y = null;
@@ -779,7 +782,6 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
   $automatabilityBisectingLabel.text('TRUCKERS')
 
   $automatabilityBisectingGroup
-    // .st('visibility','hidden')
 		.st('opacity',0)
 
 
@@ -787,6 +789,19 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
 
 function updateStep(step){
   if(step==='x-axis-base'){
+
+		$chartSvg
+      .selectAll('g.skill-section__two-jobs')
+			.transition()
+			.st('opacity',0)
+
+    $chartSvg
+      .selectAll('g.all-skills')
+      .transition()
+      .st('opacity',0)
+
+		$chartSvg.selectAll('g.trucker-developer-groups')
+			.classed('invisible', true)
 
 		$chartSvg.selectAll('circle.job')
 			.classed('invisible', false)

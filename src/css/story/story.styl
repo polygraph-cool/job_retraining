@@ -26,6 +26,18 @@ svg.scatter
   display block
   overflow hidden
 
+.intro-x-axis
+  .tick
+    line
+      stroke #dadada
+  path.domain
+    stroke-dasharray 3,3
+    stroke #dadada
+
+
+.intro-automatability-values
+  text-anchor middle
+
 .automatability-label
   text-transform uppercase
   font-weight 600
@@ -74,6 +86,17 @@ svg.scatter
   .max
     text
       fill #EB5757
+
+.skill-axis
+  stroke-dasharray 3,3
+  stroke-width 0.5
+  stroke #dadada
+
+.devs-skill-circle
+  fill #3080ee
+
+.truckers-skill-circle
+  fill #eb5756
 
 .jobTooltip
   position absolute
@@ -146,7 +169,7 @@ svg.scatter
 
 
 .job-name
-  font-size 12px
+  font-size 11px
 
 
 .min-similarity
@@ -265,3 +288,7 @@ svg.scatter
 
 .invisible
   display none
+
+
+.job-name
+  font-family 'Atlas Grotesk Web'

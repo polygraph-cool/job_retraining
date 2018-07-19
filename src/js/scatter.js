@@ -793,11 +793,14 @@ function updateStep(step){
 		$chartSvg
       .selectAll('g.skill-section__two-jobs')
 			.transition()
+			.at('transform',`translate(0,${INTRO_Y_AXIS_LOCATION})`)
 			.st('opacity',0)
 
     $chartSvg
       .selectAll('g.all-skills')
       .transition()
+			// .delay((d,i)=>{i*100})
+			.at('transform',`translate(0,${INTRO_Y_AXIS_LOCATION})`)
       .st('opacity',0)
 
 		$chartSvg.selectAll('g.trucker-developer-groups')

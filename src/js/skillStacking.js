@@ -374,8 +374,6 @@ function updateStep(step){
       .transition()
       .st('opacity',0)
 
-
-
     $axisDifferenceRects
       .transition()
       // .delay(1000)
@@ -392,8 +390,6 @@ function updateStep(step){
       // .delay(2000)
       // .duration(500)
       .at('transform',()=> 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (viewportHeight/2) +')')
-
-
 
     $axisDifferenceRects
       .on('mouseenter', d=>console.log(d.skills))

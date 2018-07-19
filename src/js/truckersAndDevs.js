@@ -319,6 +319,9 @@ function updateStep(step){
   }
   else if(step ==='images-two-jobs-two-skills-developers'){
 
+    $chartSvg.selectAll('g.trucker-developer-groups')
+      .classed('invisible', false)
+
       jobsName_LABELS
         .at('x',0)
         .at('y',jobCircle_margin_x)

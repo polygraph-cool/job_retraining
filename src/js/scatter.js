@@ -364,15 +364,15 @@ function resize(){
 
 
 
-  // const fullSVGHeight = $chartSvg.at('height')
-  // const REDUCED_VIEWPORT_HEIGHT_PERCENTAGE = 0.875
-  // const REMAINING_VIEWPORT_HEIGHT_PERCENTAGE = 1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE
-	//
+  const fullSVGHeight = $chartSvg.at('height')
+  const REDUCED_VIEWPORT_HEIGHT_PERCENTAGE = 0.875
+  const REMAINING_VIEWPORT_HEIGHT_PERCENTAGE = 1-REDUCED_VIEWPORT_HEIGHT_PERCENTAGE
+
   // $chartSvg.at('height', (REDUCED_VIEWPORT_HEIGHT_PERCENTAGE*fullSVGHeight))
 
   // Setting up max width and height parameters for x and y scales
   svgWidth = $chartSvg.at('width')
-  const maxWidthPercentage = 0.95;
+  const maxWidthPercentage = 0.9;
   xMaxScaleValue = svgWidth * maxWidthPercentage;
 
   xPadding = (1-maxWidthPercentage)*svgWidth;
@@ -383,9 +383,9 @@ function resize(){
   yMaxScaleValue = svgHeight * maxHeightPercentage;
 
   const Y_PADDING_MULTIPLIER = 1.25
+  yPadding = REMAINING_VIEWPORT_HEIGHT_PERCENTAGE * Y_PADDING_MULTIPLIER * svgHeight;
 
-  // yPadding = REMAINING_VIEWPORT_HEIGHT_PERCENTAGE * Y_PADDING_MULTIPLIER * svgHeight;
-	yPadding = 10
+	// const Y_SCALE_MIN = 10
 
   INTRO_Y_AXIS_LOCATION = svgHeight/2;
 

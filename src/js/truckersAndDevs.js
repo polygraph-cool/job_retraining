@@ -64,6 +64,10 @@ let $jobCircles = null;
 let jobsGroups = null;
 let $automatability_LABEL = null;
 let $truckerDeveloperXAxis = null;
+let jobsName_LABELS = null;
+let jobNameLabel_margin_x = null;
+let jobCircle_margin_x = null;
+let jobNameLabel_margin_y = null;
 
 function setupCirclePatterns(data){
 
@@ -183,7 +187,7 @@ function setupDOMElements(){
 
   $jobCircles = jobsGroups.append('circle.intro-jobs-circles')
   const jobsAutomatability_LABELS = jobsGroups.append('text.intro-automatability-values')
-  const jobsName_LABELS = jobsGroups.append('text.intro-job-names')
+  jobsName_LABELS = jobsGroups.append('text.intro-job-names')
   const jobsSkills_LABELS = jobsGroups.append('text.intro-job-skill-values')
 
   $automatability_LABEL = $chartSvg.append('text.automatability-label')
@@ -220,9 +224,9 @@ function setupDOMElements(){
 
   // INITIAL ELEMENT POSITIONING AND OPACITY SETTING
 
-  const jobCircle_margin_x = CIRCLE_RADIUS*2
-  const jobNameLabel_margin_x = CIRCLE_RADIUS*4
-  const jobNameLabel_margin_y = jobCircle_margin_x/10
+  jobCircle_margin_x = CIRCLE_RADIUS*2;
+  jobNameLabel_margin_x = CIRCLE_RADIUS*4;
+  jobNameLabel_margin_y = jobCircle_margin_x/10;
 
   $jobCircles
     .at('cx',jobCircle_margin_x)
@@ -275,6 +279,10 @@ function updateStep(step){
   }
   else if(step==='main-job-automation'){
 
+    jobsName_LABELS
+      .at('x',jobNameLabel_margin_x)
+      .at('y',jobNameLabel_margin_y)
+      .st('text-anchor','right')
 
     $chartSvg
       .selectAll('text.y-axis-label')
@@ -311,45 +319,50 @@ function updateStep(step){
   }
   else if(step ==='images-two-jobs-two-skills-developers'){
 
-          $chartSvg
-            .selectAll('.skill-section__two-jobs')
-            .transition()
-            .st('opacity',0)
+      jobsName_LABELS
+        .at('x',0)
+        .at('y',jobCircle_margin_x)
+        .st('text-anchor','start')
 
-          const middleCoord = scalesObject.yScale(0.5);
+      $chartSvg
+        .selectAll('.skill-section__two-jobs')
+        .transition()
+        .st('opacity',0)
 
-          $chartSvg
-            .selectAll('text.y-axis-label')
-            .transition()
-            .st('opacity',0)
+      const middleCoord = scalesObject.yScale(0.5);
 
-          $chartSvg
-            .selectAll('.intro-automatability-values')
-            .transition()
-            .st('opacity',0)
+      $chartSvg
+        .selectAll('text.y-axis-label')
+        .transition()
+        .st('opacity',0)
 
-          $truckerDeveloperXAxis
-            .transition()
-            .st('opacity',1)
-            .at('transform',()=>{
-              return 'translate(0,'+ middleCoord+')'
-            })
+      $chartSvg
+        .selectAll('.intro-automatability-values')
+        .transition()
+        .st('opacity',0)
 
-          truckerDeveloperYAxis
-          .transition()
-          .st('opacity',0)
+      $truckerDeveloperXAxis
+        .transition()
+        .st('opacity',1)
+        .at('transform',()=>{
+          return 'translate(0,'+ middleCoord+')'
+        })
 
-          jobsGroups
-          .transition()
-          .at('transform',d=>{
-            return 'translate('+scalesObject.xScale(d.skillTruckerScore)+','+middleCoord +')'
-          })
-          .st('opacity', d=>d.job==='Truckers' || d.job==='Developers'? 1 : 0)
+      truckerDeveloperYAxis
+      .transition()
+      .st('opacity',0)
 
-          $chartSvg
-            .selectAll('g.skill-section')
-            .transition()
-            .st('opacity',0)
+      jobsGroups
+      .transition()
+      .at('transform',d=>{
+        return 'translate('+scalesObject.xScale(d.skillTruckerScore)+','+middleCoord +')'
+      })
+      .st('opacity', d=>d.job==='Truckers' || d.job==='Developers'? 1 : 0)
+
+      $chartSvg
+        .selectAll('g.skill-section')
+        .transition()
+        .st('opacity',0)
 
   }
   else if(step==='images-two-jobs-two-skills'){

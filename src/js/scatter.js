@@ -791,6 +791,14 @@ function updateStep(step){
   if(step==='x-axis-base'){
 
 		$chartSvg
+			.selectAll('g.annotation-group-different')
+			.st('visibility','hidden')
+
+		$chartSvg
+			.selectAll('g.annotation-group-similar')
+			.st('visibility','hidden')
+
+		$chartSvg
       .selectAll('g.skill-section__two-jobs')
 			.transition()
 			.at('transform',`translate(0,${INTRO_Y_AXIS_LOCATION})`)

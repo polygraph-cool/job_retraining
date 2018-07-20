@@ -1,5 +1,17 @@
 /* CUSTOM STORY STYLE */
 
+.annotation-note-title
+  font-family 'Atlas Grotesk Web'
+
+.annotation-note-label
+  font-size 15px
+
+.annotation-group-similar
+  visibility hidden
+
+.annotation-group-different
+  visibility hidden
+
 .prose
   position relative
   background white
@@ -71,11 +83,15 @@ svg.scatter
     text
       fill #8e8d87
       opacity 0
+      // text-anchor start
+      font-size 14px
     line
       stroke #8e8d87
+
   path
-    stroke-width 0.5
+    stroke-width 2
     stroke #8e8d87
+    stroke-dasharray 3,3
 
 .y-axis-label
   font-family 'Atlas Grotesk Web'
@@ -93,10 +109,14 @@ svg.scatter
   stroke #dadada
 
 .devs-skill-circle
-  fill #3080ee
+  fill #FFFFFF
+  stroke #3080ee
+  stroke-width 2
 
 .truckers-skill-circle
-  fill #eb5756
+  fill #FFFFFF
+  stroke #eb5756
+  stroke-width 2
 
 .jobTooltip
   position absolute
@@ -170,7 +190,6 @@ svg.scatter
 
 .job-name
   font-size 11px
-
 
 .min-similarity
   font-size 12px

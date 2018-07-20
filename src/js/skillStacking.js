@@ -35,10 +35,6 @@ let $skillSections = null;
 let $skillSectionsAllJobs = null;
 let $skillItemsAllJobs = null;
 
-
-
-
-
 const fileNames = [
   "devs_and_truckers_skills","Choreographers","Dentists","Nurses",
   "Chiropractors","Farmers","Construction_Managers","Firefighters","Geographers","Embalmers",
@@ -138,6 +134,12 @@ function setupData(devAndTruckerSkills,allJobSkillsRaw){
   allJobSkillsGrouped = d3.nest()
     .key(d=>d.job_compared_name)
     .entries(allJobSkillsFlat)
+
+  let jobOrder = 0
+  allJobSkillsGrouped.forEach(jobSkillGroup=>{
+    jobSkillGroup.order = jobOrder;
+    jobOrder+=1;
+  })
 }
 
 
@@ -189,6 +191,7 @@ function setupDOMElements(devAndTruckerSkills) {
     .enter()
     .append('g')
     .at('class',d=> 'all-skills '+d.key)
+    .st('opacity',0)
 
   $skillItemsAllJobs = $skillSectionsAllJobs.selectAll('g.skill-item')
     .data(d=>d.values)
@@ -228,6 +231,22 @@ function setupDOMElements(devAndTruckerSkills) {
   .st('fill','#E530BE')
   .st('opacity',0)
 
+  $axisDifferenceRectsAllJobs
+    .at('x',d=> scalesObject.xScaleEuclidean(d.xCoordStacked))
+    .at('width',d=> scalesObject.xScaleEuclidean(d.difference))
+    .st('fill','#E530BE')
+    .at('transform',(d,i)=>{
+      return 'translate('+XBUMP+',0)'
+    })
+    .at('height', DIFFERENCE_RECT_HEIGHT)
+    .on('mouseenter',d=>console.log(d.skills))
+    // .st('opacity',0)
+
+  $skillSectionsAllJobs
+    .at('transform',(d,i)=>{
+      return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
+  })
+
 
   $devCircles = $skillSections
     .append('circle.devs-skill-circle')
@@ -245,8 +264,86 @@ function setupDOMElements(devAndTruckerSkills) {
     .selectAll('.trucker-developer-groups')
 }
 
+function setupAnnotations(){
+
+  const embalmerCoords = {};
+  const ceosCoords = {};
+  const clergyCoords = {};
+  const ambulanceDriversCoords = {};
+
+  const data_Embalmers = allJobSkillsGrouped.filter(job=>job.key==='Piplayers')
+  const data_CEOs = allJobSkillsGrouped.filter(job=>job.key==='CEOs')
+  const data_Clergy = allJobSkillsGrouped.filter(job=>job.key==='Clergy')
+  const data_AmbulanceDrivers = allJobSkillsGrouped.filter(job=>job.key==='Ambulance_Drivers')
+
+  const tmp =devAndTruckerSkills.filter(skill=>skill.key==='Fine Arts')
+  console.log(devAndTruckerSkills);
+
+  const skillNumber = data_Embalmers[0]['values'].length-1
+  const MARGIN_TOP = 3*ALL_JOBS_STARTING_Y_LOCATION;
+
+  embalmerCoords.xCoord = XBUMP+scalesObject.xScaleEuclidean(data_Embalmers[0]['values'][skillNumber]['xCoordStacked'])
+  ceosCoords.xCoord = XBUMP+scalesObject.xScaleEuclidean(data_CEOs[0]['values'][skillNumber]['xCoordStacked'])
+  clergyCoords.xCoord = XBUMP+scalesObject.xScaleEuclidean(data_Clergy[0]['values'][skillNumber]['xCoordStacked'])
+  ambulanceDriversCoords.xCoord = XBUMP+scalesObject.xScaleEuclidean(data_AmbulanceDrivers[0]['values'][skillNumber]['xCoordStacked'])
+
+  embalmerCoords.yCoord = +data_Embalmers[0].order*ALL_JOBS_STARTING_Y_LOCATION + MARGIN_TOP;
+  ceosCoords.yCoord = +data_CEOs[0].order*ALL_JOBS_STARTING_Y_LOCATION + MARGIN_TOP;
+  clergyCoords.yCoord = +data_Clergy[0].order*ALL_JOBS_STARTING_Y_LOCATION + MARGIN_TOP;
+  ambulanceDriversCoords.yCoord = +data_AmbulanceDrivers[0].order*ALL_JOBS_STARTING_Y_LOCATION + MARGIN_TOP;
+
+  const annoStartingCoord = svgWidth-svgWidth*0.15
+
+  const differentAnnotationYBump = -40;
+  const differentAnnotationXBump = annoStartingCoord-ceosCoords.xCoord;
+  const similarAnnotationYBump = 0
+  const similarAnnotationXBump = annoStartingCoord - ambulanceDriversCoords.xCoord;
+
+  let annoConnector="arrow";
+
+  const mostDifferentJobAnno = [
+    {
+		  note: {label:'CEOs and truck drivers have the greatest gap between their skills',title:'Highly different',wrap:150,align:"middle",},
+			// connector:{end:annoConnector},
+    			x:ceosCoords.xCoord,y:ceosCoords.yCoord,dx:differentAnnotationXBump,dy:differentAnnotationYBump
+  		}
+    ];
+
+  const mostSimilarJobAnno = [
+    {
+		  note: {label:'The largest skill overlap for truck drivers occurs with ambulance drivers',title:'Highly similar',wrap:150,align:"middle",},
+			// connector:{end:annoConnector},
+    			x:ambulanceDriversCoords.xCoord,y:ambulanceDriversCoords.yCoord,dx:similarAnnotationXBump,dy:similarAnnotationYBump
+  		}
+    ];
+
+  const makeMostDifferentJobAnno = d3.annotation()
+  			.type(d3.annotationCalloutElbow)
+  			.annotations(mostDifferentJobAnno)
+  			// .editMode(true)
+
+
+  const makeMostSimilarJobAnno = d3.annotation()
+  			.type(d3.annotationLabel)
+  			.annotations(mostSimilarJobAnno)
+  			// .editMode(true)
+
+  $chartSvg.append("g")
+  			.attr("transform","translate("+0+","+0+")")
+  			.attr("class","annotation-group-different")
+  			.call(makeMostDifferentJobAnno)
+
+  $chartSvg.append("g")
+  			.attr("transform","translate("+0+","+0+")")
+  			.attr("class","annotation-group-similar")
+  			.call(makeMostSimilarJobAnno)
+
+}
+
 function updateStep(step){
   if(step==='images-two-jobs-all-skills'){
+
+
 
     $axisDifferenceRects
       .transition()
@@ -282,6 +379,10 @@ function updateStep(step){
 
     $skillSectionsText.text(d=>d.skills)
       .st('text-anchor','right')
+      .st('opacity',(d,i)=>{
+        if(i%5===0){return 1}
+        else{return 0.3}
+      })
 
     $axisLines.at('x1',()=>scalesObject.xScale(0))
       .at('y1',0)
@@ -347,6 +448,14 @@ function updateStep(step){
   }
   else if(step==='images-two-jobs-stacked-skills'){
 
+    $chartSvg
+      .selectAll('g.annotation-group-different')
+      .st('visibility','hidden')
+
+    $chartSvg
+      .selectAll('g.annotation-group-similar')
+      .st('visibility','hidden')
+
     $skillSectionsAllJobs
       .transition()
       .st('opacity',0)
@@ -383,13 +492,18 @@ function updateStep(step){
       .at('transform',(d,i)=>{
         return 'translate('+XBUMP+',0)'
       })
+      .at('height',DIFFERENCE_RECT_HEIGHT)
+
+    // $skillSections
+    //   .transition()
+    //   .duration(TRANSITION_DURATION_SKILLS_DIFFERENCE)
+    //   .at('transform',()=> 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (viewportHeight/2) +')')
 
     $skillSections
       .transition()
-      .duration(TRANSITION_DURATION_SKILLS_DIFFERENCE)
-      // .delay(2000)
-      // .duration(500)
-      .at('transform',()=> 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (viewportHeight/2) +')')
+      .delay((d,i)=>i*JOB_STACKED_SKILL_DELAY)
+      .st('opacity',1)
+      .at('transform',()=> 'translate('+0+','+ 2*ALL_JOBS_STARTING_Y_LOCATION +')')
 
     $axisDifferenceRects
       .on('mouseenter', d=>console.log(d.skills))
@@ -399,6 +513,14 @@ function updateStep(step){
       .st('opacity',0)
   }
   else if(step==='images-many-jobs-stacked-skills'){
+
+    $chartSvg
+      .selectAll('g.annotation-group-different')
+      .st('visibility','visible')
+
+    $chartSvg
+      .selectAll('g.annotation-group-similar')
+      .st('visibility','visible')
 
     $chartSvg
       .selectAll('g.similarity-annotation')
@@ -411,41 +533,48 @@ function updateStep(step){
     $chartSvg
       .selectAll('circle.job')
       .st('opacity',0)
+      .on('mouseenter',()=>{})
 
     d3.selectAll('.misc-elements')
       .st('visibility','hidden')
 
-    $skillSections
+    $axisDifferenceRects
       .transition()
-      .delay((d,i)=>i*JOB_STACKED_SKILL_DELAY)
-      .st('opacity',1)
+      .at('height', DIFFERENCE_RECT_HEIGHT)
 
-    $chartSvg
-      .selectAll('g.all-skills')
+    $skillSectionsAllJobs
       .transition()
+      .duration((d,i)=>i*50)
       .st('opacity',1)
+      .at('transform',(d,i)=>{
+        return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
+    })
 
-    $skillSections
-      .at('transform',()=> 'translate('+0+','+ 2*ALL_JOBS_STARTING_Y_LOCATION +')')
+
+    // $skillSections
+    //   .transition()
+    //   .delay((d,i)=>i*JOB_STACKED_SKILL_DELAY)
+    //   .st('opacity',1)
+    //   .at('transform',()=> 'translate('+0+','+ 2*ALL_JOBS_STARTING_Y_LOCATION +')')
 
     $skillSectionsTextAllJobs
       .transition()
       .st('opacity',1)
 
-    $axisDifferenceRectsAllJobs
-      .at('x',d=> scalesObject.xScaleEuclidean(d.xCoordStacked))
-      .at('width',d=> scalesObject.xScaleEuclidean(d.difference))
-      .at('height',3)
-      .st('fill','#E530BE')
-      .at('transform',(d,i)=>{
-        return 'translate('+XBUMP+',0)'
-      })
-      .on('mouseenter',d=>console.log(d.skills))
-
-    $skillSectionsAllJobs
-      .at('transform',(d,i)=>{
-        return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
-    })
+    // $axisDifferenceRectsAllJobs
+    //   .at('x',d=> scalesObject.xScaleEuclidean(d.xCoordStacked))
+    //   .at('width',d=> scalesObject.xScaleEuclidean(d.difference))
+    //   .st('fill','#E530BE')
+    //   .at('transform',(d,i)=>{
+    //     return 'translate('+XBUMP+',0)'
+    //   })
+    //   .at('height', DIFFERENCE_RECT_HEIGHT)
+    //   .on('mouseenter',d=>console.log(d.skills))
+    //
+    // $skillSectionsAllJobs
+    //   .at('transform',(d,i)=>{
+    //     return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
+    // })
   }
 
 }
@@ -473,6 +602,7 @@ function init() {
       setupData(devAndTruckerSkills,allJobSkillsRaw)
       setupScales()
       setupDOMElements(devAndTruckerSkills)
+      setupAnnotations()
       resolve()
       }
     })

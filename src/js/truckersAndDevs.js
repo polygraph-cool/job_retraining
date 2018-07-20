@@ -71,36 +71,36 @@ let jobNameLabel_margin_x = null;
 let jobCircle_margin_x = null;
 let jobNameLabel_margin_y = null;
 
-
-let annoConnector="arrow";
-const thisAnno = [
-  {
-		note: {
-			label:'annoText',
-			title:'annoTitle',
-			wrap:150,
-			align:"middle",
-			},
-			connector:{
-				end:annoConnector
-			},
-			x:100,
-			y:100,
-			dx:30,
-			dy:-30
-		}
-  ];
-
-
-const makeThis = d3.annotation()
-			.type(d3.annotationLabel)
-			.annotations(thisAnno)
-			.editMode(true)
-
-$chartSvg.append("g")
-			.attr("transform","translate("+100+","+100+")")
-			.attr("class","annotation-group")
-			.call(makeThis)
+//
+// let annoConnector="arrow";
+// const thisAnno = [
+//   {
+// 		note: {
+// 			label:'annoText',
+// 			title:'annoTitle',
+// 			wrap:150,
+// 			align:"middle",
+// 			},
+// 			connector:{
+// 				end:annoConnector
+// 			},
+// 			x:100,
+// 			y:100,
+// 			dx:30,
+// 			dy:-30
+// 		}
+//   ];
+//
+//
+// const makeThis = d3.annotation()
+// 			.type(d3.annotationLabel)
+// 			.annotations(thisAnno)
+// 			.editMode(true)
+//
+// $chartSvg.append("g")
+// 			.attr("transform","translate("+100+","+100+")")
+// 			.attr("class","annotation-group")
+// 			.call(makeThis)
 
 
 function setupCirclePatterns(data){

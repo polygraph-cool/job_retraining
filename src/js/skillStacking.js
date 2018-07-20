@@ -404,6 +404,10 @@ function updateStep(step){
 
       $skillSectionsText.text(d=>d.skills)
         .st('text-anchor','right')
+        .st('opacity',(d,i)=>{
+          if(i%5===0){return 1}
+          else{return 0.3}
+        })
 
       $axisLines.at('x1',()=>scalesObject.xScale(0))
         .at('y1',0)

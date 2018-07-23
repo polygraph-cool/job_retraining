@@ -791,7 +791,7 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
 function updateStep(step){
   if(step==='x-axis-base'){
 
-		d3.selectAll('span.title')
+		d3.selectAll('span.secondary-title')
 			.st('display','block')
 
 		$chartSvg

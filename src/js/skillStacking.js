@@ -39,6 +39,7 @@ let $skillItemsAllJobs = null;
 let reverseTransitionTrigger = false;
 let $chartTitle = null;
 
+
 const fileNames = [
   "devs_and_truckers_skills","Choreographers","Dentists","Nurses",
   "Chiropractors","Farmers","Construction_Managers","Firefighters","Geographers","Embalmers",

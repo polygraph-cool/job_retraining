@@ -71,6 +71,7 @@ let jobNameLabel_margin_x = null;
 let jobCircle_margin_x = null;
 let jobNameLabel_margin_y = null;
 
+let $exampleSkillTitle = null;
 //
 // let annoConnector="arrow";
 // const thisAnno = [
@@ -212,6 +213,15 @@ function setupDOMElements(){
 
   setupAxes()
 
+  const exampleTitleCoord = scalesObject.yScale(0.35);
+
+  $exampleSkillTitle = $chartSvg
+    .append('text.example-skill-title')
+    .at('x',introYAxisLocation)
+    .at('y',exampleTitleCoord)
+    .text('Skill: programming')
+    // .st('text-anchor','middle')
+
   const truckerDeveloperJoin = $chartSvg.selectAll('circle.jobs-circles')
     .data(truckersDevelopers)
     .enter()
@@ -313,6 +323,10 @@ function updateStep(step){
   }
   else if(step==='main-job-automation'){
 
+    $exampleSkillTitle
+      .transition()
+      .st('opacity',0)
+
     jobsName_LABELS
       .at('x',jobNameLabel_margin_x)
       .at('y',jobNameLabel_margin_y)
@@ -352,6 +366,14 @@ function updateStep(step){
         .st('display','none')
   }
   else if(step ==='images-two-jobs-two-skills-developers'){
+
+    $exampleSkillTitle
+      .transition()
+      .st('opacity',1)
+
+    d3.select('.chart-title-div')
+      .transition()
+      .st('visibility','hidden')
 
     $chartSvg.selectAll('g.trucker-developer-groups')
       .classed('invisible', false)
@@ -419,6 +441,7 @@ function updateStep(step){
       // $staticImageDiv
       //   .st('display','block')
       //   .st('visibility','visible')
+
 
 
       const middleCoord = scalesObject.yScale(0.5);

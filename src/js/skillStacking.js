@@ -37,6 +37,7 @@ let $skillSectionsAllJobs = null;
 let $skillItemsAllJobs = null;
 
 let reverseTransitionTrigger = false;
+let $chartTitle = null;
 
 const fileNames = [
   "devs_and_truckers_skills","Choreographers","Dentists","Nurses",
@@ -182,6 +183,7 @@ function setupScales(){
 
 
 function setupDOMElements(devAndTruckerSkills) {
+  $chartTitle = d3.select('span.chart-title-pt1')
 
   // Creating group elements for each skill, both for developers and for other jobs
   $skillSections = $chartSvg.selectAll('g.skill-section__two-jobs')
@@ -343,11 +345,22 @@ function setupAnnotations(){
   			.attr("class","annotation-group-similar")
   			.call(makeMostSimilarJobAnno)
 
+
 }
 
 function updateStep(step){
   if(step==='images-two-jobs-all-skills'){
 
+
+    $chartSvg.select('text.example-skill-title')
+      // .transition()
+      .st('opacity',0)
+
+    $chartTitle
+      .text('Skills for truckers and developers')
+
+    d3.select('.chart-title-div')
+      .st('visibility','visible')
 
 
     $skillDifferenceRects
@@ -403,7 +416,17 @@ function updateStep(step){
   }
   else if(step==='images-two-jobs-highlight-skill-differences'){
 
-    console.log(reverseTransitionTrigger);
+    // ACCOUNTING FOR REVERSE:
+    // Removing annotations
+    $chartSvg
+      .selectAll('g.annotation-group-different')
+      .transition()
+      .st('visibility','hidden')
+
+    $chartSvg
+      .selectAll('g.annotation-group-similar')
+      .transition()
+      .st('visibility','hidden')
 
     const delayVar = numOfJobs*TIME_INTERVAL * 0.6
 
@@ -495,6 +518,13 @@ function updateStep(step){
   }
   else if(step==='images-two-jobs-stacked-skills'){
 
+    d3.selectAll('span.secondary-title')
+      .st('display','none')
+
+    $chartTitle
+      .transition()
+      .text("Skills for truckers vs. other jobs")
+
     reverseTransitionTrigger = true;
 
       // Removing axis line visibility in each skill group for trucker/dev
@@ -511,15 +541,7 @@ function updateStep(step){
       .transition()
       .st('opacity',0)
 
-    // ACCOUNTING FOR REVERSE:
-    // Removing annotations
-    $chartSvg
-      .selectAll('g.annotation-group-different')
-      .st('visibility','hidden')
 
-    $chartSvg
-      .selectAll('g.annotation-group-similar')
-      .st('visibility','hidden')
 
      // ACCOUNTING FOR REVERSE:
      // Moving job skill groups back to appropriate place
@@ -576,6 +598,19 @@ function updateStep(step){
 
     $skillDifferenceRects
       .on('mouseenter', d=>console.log(d.skills))
+
+
+    $chartSvg
+      .selectAll('g.annotation-group-different')
+      .transition()
+      .delay(450)
+      .st('visibility','visible')
+
+    $chartSvg
+      .selectAll('g.annotation-group-similar')
+      .transition()
+      .delay(450)
+      .st('visibility','visible')
 
   }
   else if(step==='images-many-jobs-stacked-skills'){

@@ -791,6 +791,9 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
 function updateStep(step){
   if(step==='x-axis-base'){
 
+		d3.selectAll('span.title')
+			.st('display','block')
+
 		$chartSvg
 			.selectAll('g.annotation-group-different')
 			.st('visibility','hidden')

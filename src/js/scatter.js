@@ -25,6 +25,7 @@ let yPadding = null;
 let tooltipXScale = d3.scaleLinear().domain([0,100]);
 
 let yAxisGroup = null;
+let yAxisLabel = null;
 
 
 let $automatability_LABEL = null;
@@ -739,7 +740,7 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
   // Adding automatability/x-axis, and max and min automatability labels
   const formatPercent = d3.format(".0%");
 
-  const yAxisLabel = d3.axisLeft(yScale).ticks(1).tickFormat(formatPercent);
+  yAxisLabel = d3.axisLeft(yScale).ticks(4).tickFormat(formatPercent);
 
   yAxisGroup = $chartSvg.append("g.scatter-y-axis")
     .attr("transform", "translate("+xPadding+",0)")
@@ -749,7 +750,7 @@ function setupDOMElements(leastSimilarJob,mostSimilarJob){
   $automatability_LABEL = $chartSvg.append('text.scatter-label-y-axis')
 
   $automatability_LABEL
-    .at('transform',`translate(${xPadding},${INTRO_Y_AXIS_LOCATION}) rotate(270)`)
+    .at('transform',`translate(${(xPadding/3)},${INTRO_Y_AXIS_LOCATION}) rotate(270)`)
     .st('opacity',0)
     .text('AUTOMATABILITY LIKELIHOOD')
 
@@ -805,7 +806,7 @@ function updateStep(step){
 			.st('opacity',0)
 
     $chartSvg
-      .selectAll('g.all-skills')
+      .selectAll('g.all-jobs')
       .transition()
 			// .delay((d,i)=>{i*100})
 			.at('transform',`translate(0,${INTRO_Y_AXIS_LOCATION})`)
@@ -908,6 +909,8 @@ function updateStep(step){
   else if(step==='xy-axes-scatter'){
 
     yScale.domain([0,0.79])
+
+		yAxisGroup.call(yAxisLabel)
 
     $jobCircles
       .transition()

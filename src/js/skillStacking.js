@@ -14,14 +14,15 @@ const XBUMP = 250;
 const TRANSITION_DURATION_SKILLS_DIFFERENCE = 500;
 const JOB_STACKED_SKILL_DELAY = 3.67647059
 const DIFFERENCE_RECT_HEIGHT = 3
+const TIME_INTERVAL = 50;
 
-let $devCircles = null;
-let $truckerCircles = null;
+let $devSkillCircles = null;
+let $truckerSkillCircles = null;
 let $skillSectionsText= null;
 let $axisLines = null;
 let $skillSectionsTextAllJobs = null;
-let $axisDifferenceRects = null;
-let $axisDifferenceRectsAllJobs = null;
+let $skillDifferenceRects = null;
+let $skillDifferenceRectsAllJobs = null;
 let $truckerDeveloperXAxis = null;
 let $introJobsCircles = null;
 
@@ -34,6 +35,8 @@ let scalesObject = {}
 let $skillSections = null;
 let $skillSectionsAllJobs = null;
 let $skillItemsAllJobs = null;
+
+let reverseTransitionTrigger = false;
 
 const fileNames = [
   "devs_and_truckers_skills","Choreographers","Dentists","Nurses",
@@ -50,6 +53,8 @@ const fileNames = [
   "Librarians","Maids","Bartenders","Dishwashers","Fast_Food_Cooks",
   "Barbers","Real_Estate_Agents","Proofreaders"
 ]
+
+const numOfJobs = fileNames.length;
 
 const pathData = 'assets/data/'
 let files=[]
@@ -186,11 +191,11 @@ function setupDOMElements(devAndTruckerSkills) {
     .st('opacity',0)
     .at('transform', (d,i)=>{return 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (ALL_JOBS_STARTING_Y_LOCATION+(i*ALL_JOBS_SKILL_SPACING)) +')'});
 
-  $skillSectionsAllJobs = $chartSvg.selectAll('g.all-skills')
+  $skillSectionsAllJobs = $chartSvg.selectAll('g.all-jobs')
     .data(allJobSkillsGrouped)
     .enter()
     .append('g')
-    .at('class',d=> 'all-skills '+d.key)
+    .at('class',d=> 'all-jobs '+d.key)
     .st('opacity',0)
 
   $skillItemsAllJobs = $skillSectionsAllJobs.selectAll('g.skill-item')
@@ -208,13 +213,13 @@ function setupDOMElements(devAndTruckerSkills) {
 
 
 // Original bars signifying different skills
-  $axisDifferenceRects = $skillSections.append('rect.skill-difference-axis')
+  $skillDifferenceRects = $skillSections.append('rect.skill-difference-axis')
 
-  $axisDifferenceRectsAllJobs = $skillItemsAllJobs.append('rect.skill-difference-axis-all-jobs')
+  $skillDifferenceRectsAllJobs = $skillItemsAllJobs.append('rect.skill-difference-axis-all-jobs')
 
 // Adding difference rectangles for devs and truckers
 
-  $axisDifferenceRects
+  $skillDifferenceRects
   .at('x', d=>{
     if (+d.devs>=+d.truckers){
       return scalesObject.xScale(+d.truckers)
@@ -231,7 +236,7 @@ function setupDOMElements(devAndTruckerSkills) {
   .st('fill','#E530BE')
   .st('opacity',0)
 
-  $axisDifferenceRectsAllJobs
+  $skillDifferenceRectsAllJobs
     .at('x',d=> scalesObject.xScaleEuclidean(d.xCoordStacked))
     .at('width',d=> scalesObject.xScaleEuclidean(d.difference))
     .st('fill','#E530BE')
@@ -248,14 +253,14 @@ function setupDOMElements(devAndTruckerSkills) {
   })
 
 
-  $devCircles = $skillSections
+  $devSkillCircles = $skillSections
     .append('circle.devs-skill-circle')
 
-  $truckerCircles = $skillSections
+  $truckerSkillCircles = $skillSections
     .append('circle.truckers-skill-circle')
 
   $skillSectionsText= $skillSections
-    .append("text.job-name")
+    .append("text.skill-name")
 
   $truckerDeveloperXAxis = $chartSvg
     .selectAll('.intro-x-axis')
@@ -345,16 +350,16 @@ function updateStep(step){
 
 
 
-    $axisDifferenceRects
+    $skillDifferenceRects
       .transition()
       .st('opacity',0)
 
-    $devCircles
+    $devSkillCircles
       .transition()
       .duration(1000)
       .st('opacity',1)
 
-    $truckerCircles
+    $truckerSkillCircles
       .transition()
       .duration(1000)
       .st('opacity',1)
@@ -366,11 +371,11 @@ function updateStep(step){
     $introJobsCircles
       .st('opacity',0)
 
-    $devCircles.at('cx',(d)=> scalesObject.xScale(d.devs))
+    $devSkillCircles.at('cx',(d)=> scalesObject.xScale(d.devs))
       .at('r',5)
       .on('mouseenter')
 
-    $truckerCircles.at('cx',(d)=>scalesObject.xScale(d.truckers))
+    $truckerSkillCircles.at('cx',(d)=>scalesObject.xScale(d.truckers))
       .at('r',5)
 
     $skillSections
@@ -398,11 +403,26 @@ function updateStep(step){
   }
   else if(step==='images-two-jobs-highlight-skill-differences'){
 
+    console.log(reverseTransitionTrigger);
+
+    const delayVar = numOfJobs*TIME_INTERVAL * 0.6
+
     $skillSections
       .transition()
+      .delay( ()=>{
+        if (reverseTransitionTrigger===true){return delayVar}
+        else {return 0}
+      })
+      // .duration(250)
       .at('transform', (d,i)=>{return 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (ALL_JOBS_STARTING_Y_LOCATION+(i*ALL_JOBS_SKILL_SPACING)) +')'});
 
-      $skillSectionsText.text(d=>d.skills)
+      $skillSectionsText
+        .transition()
+        .delay( ()=>{
+          if (reverseTransitionTrigger===true){return delayVar}
+          else {return 0}
+        })
+        .text(d=>d.skills)
         .st('text-anchor','right')
         .st('opacity',(d,i)=>{
           if(i%5===0){return 1}
@@ -415,16 +435,29 @@ function updateStep(step){
         .at('y2',0)
         .at('stroke-width', 1)
         .st('stroke','black')
+        .transition()
+        .delay( ()=>{
+          if (reverseTransitionTrigger===true){return delayVar}
+          else {return 0}
+        })
         .st('opacity',1)
 
-     $skillSectionsTextAllJobs.at('transform','translate('+JOB_LABEL_MARGIN_LEFT+',0)')
+     $skillSectionsTextAllJobs
         .text(d=>d.key.replace(/_/g,' '))
         .st('text-anchor','right')
+        .transition()
+        .duration((d,i)=>{
+          return (numOfJobs*TIME_INTERVAL) - i*TIME_INTERVAL;
+        })
         .st('opacity', 0)
 
-    $axisDifferenceRects
+    $skillDifferenceRects
       .transition()
-      .duration(1000)
+      .delay( ()=>{
+        if (reverseTransitionTrigger===true){return delayVar}
+        else {return 0}
+      })
+      // .duration(1000)
       .st('opacity',1)
       .at('x', d=>{
         if (+d.devs>=+d.truckers){
@@ -442,16 +475,44 @@ function updateStep(step){
       .at('transform','translate(0,0)')
       .st('fill','#E530BE')
 
-    $devCircles
+    $devSkillCircles
       .transition()
       .st('opacity',0)
 
-    $truckerCircles
+    $truckerSkillCircles
       .transition()
       .st('opacity',0)
+
+    $skillSectionsAllJobs
+      .transition()
+      // .delay(numOfJobs*TIME_INTERVAL)
+      .duration((d,i)=>{
+        return (numOfJobs*TIME_INTERVAL) - i*TIME_INTERVAL;
+      })
+      .st('opacity',0)
+
+    reverseTransitionTrigger = false;
   }
   else if(step==='images-two-jobs-stacked-skills'){
 
+    reverseTransitionTrigger = true;
+
+      // Removing axis line visibility in each skill group for trucker/dev
+    $axisLines
+      .transition()
+      .st('opacity',0)
+
+    // Removing developer skill and trucker skill circles from view
+    $devSkillCircles
+      .transition()
+      .st('opacity',0)
+
+    $truckerSkillCircles
+      .transition()
+      .st('opacity',0)
+
+    // ACCOUNTING FOR REVERSE:
+    // Removing annotations
     $chartSvg
       .selectAll('g.annotation-group-different')
       .st('visibility','hidden')
@@ -460,14 +521,29 @@ function updateStep(step){
       .selectAll('g.annotation-group-similar')
       .st('visibility','hidden')
 
+     // ACCOUNTING FOR REVERSE:
+     // Moving job skill groups back to appropriate place
+
+     // AND
+
+     // waiting 450ms before fading each job's skill difference section, each slower than the next by 50ms
     $skillSectionsAllJobs
+      .at('transform',(d,i)=>{
+        return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
+    })
       .transition()
-      .st('opacity',0)
+      .delay(450)
+      .duration((d,i)=>i*TIME_INTERVAL)
+      .st('opacity',1)
 
-    $axisLines
+    // Waiting 450ms before fading each job's title in
+    $skillSectionsTextAllJobs
       .transition()
-      .st('opacity',0)
+      .delay(450)
+      .st('opacity',1)
 
+
+      // Adding title of "Developer" to the trucker/dev skill difference rectangle group
     $skillSectionsText
       .transition()
       .st('opacity',0)
@@ -479,15 +555,9 @@ function updateStep(step){
       .transition()
       .st('opacity',1)
 
-    $devCircles
-      .transition()
-      .st('opacity',0)
+  // Transitioning trucker/dev skill difference rects to appropriate place
 
-    $truckerCircles
-      .transition()
-      .st('opacity',0)
-
-    $axisDifferenceRects
+    $skillDifferenceRects
       .transition()
       // .delay(1000)
       .duration(TRANSITION_DURATION_SKILLS_DIFFERENCE)
@@ -498,23 +568,15 @@ function updateStep(step){
       })
       .at('height',DIFFERENCE_RECT_HEIGHT)
 
-    // $skillSections
-    //   .transition()
-    //   .duration(TRANSITION_DURATION_SKILLS_DIFFERENCE)
-    //   .at('transform',()=> 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (viewportHeight/2) +')')
-
     $skillSections
       .transition()
       .delay((d,i)=>i*JOB_STACKED_SKILL_DELAY)
       .st('opacity',1)
       .at('transform',()=> 'translate('+0+','+ 2*ALL_JOBS_STARTING_Y_LOCATION +')')
 
-    $axisDifferenceRects
+    $skillDifferenceRects
       .on('mouseenter', d=>console.log(d.skills))
 
-    $skillSectionsTextAllJobs
-      .transition()
-      .st('opacity',0)
   }
   else if(step==='images-many-jobs-stacked-skills'){
 
@@ -542,17 +604,17 @@ function updateStep(step){
     d3.selectAll('.misc-elements')
       .st('visibility','hidden')
 
-    $axisDifferenceRects
+    $skillDifferenceRects
       .transition()
       .at('height', DIFFERENCE_RECT_HEIGHT)
 
-    $skillSectionsAllJobs
-      .transition()
-      .duration((d,i)=>i*50)
-      .st('opacity',1)
-      .at('transform',(d,i)=>{
-        return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
-    })
+    // $skillSectionsAllJobs
+    //   .transition()
+    //   .duration((d,i)=>i*TIME_INTERVAL)
+    //   .st('opacity',1)
+    //   .at('transform',(d,i)=>{
+    //     return 'translate(0,'+(i*ALL_JOBS_STARTING_Y_LOCATION+ 3*ALL_JOBS_STARTING_Y_LOCATION)+')'
+    // })
 
 
     // $skillSections
@@ -565,7 +627,7 @@ function updateStep(step){
       .transition()
       .st('opacity',1)
 
-    // $axisDifferenceRectsAllJobs
+    // $skillDifferenceRectsAllJobs
     //   .at('x',d=> scalesObject.xScaleEuclidean(d.xCoordStacked))
     //   .at('width',d=> scalesObject.xScaleEuclidean(d.difference))
     //   .st('fill','#E530BE')
@@ -631,12 +693,12 @@ export default {init, updateStep}
 
 //     const sceneShowTwoJobsAllSkills = new ScrollMagic.Scene({triggerElement: ".two-jobs-all-skills",offset:  0,duration: 1,triggerHook: 0})
 //     .on("enter", (e)=>{
-//       $devCircles.at('cx',(d)=> xScale(d.devs))
+//       $devSkillCircles.at('cx',(d)=> xScale(d.devs))
 //         .at('r',5)
 //         .st('fill','#0B24FB')
 //         .on('mouseenter')
 //
-//       $truckerCircles.at('cx',(d)=>xScale(d.truckers))
+//       $truckerSkillCircles.at('cx',(d)=>xScale(d.truckers))
 //         .at('r',5)
 //         .st('fill','#EB5757')
 //         .st('opacity',1)
@@ -662,11 +724,11 @@ export default {init, updateStep}
 //     })
 //     .on("leave", (e)=>{
 //       if(e.target.controller().info("scrollDirection") == "REVERSE"){
-//         $devCircles.at('cx',(d)=> xScale(d.devs))
+//         $devSkillCircles.at('cx',(d)=> xScale(d.devs))
 //           .at('r',5)
 //           .st('fill','#0B24FB')
 //
-//         $truckerCircles.st('opacity',0)
+//         $truckerSkillCircles.st('opacity',0)
 //
 //         $skillSections.st('opacity',0)
 //
@@ -695,13 +757,13 @@ export default {init, updateStep}
 //     // showing skill difference
 //     const sceneShowDifferences = new ScrollMagic.Scene({triggerElement: ".two-jobs-skills-difference",offset:  0,duration: 1,triggerHook: 0})
 //     .on("enter", (e)=>{
-//       $axisDifferenceRects
+//       $skillDifferenceRects
 //        .transition()
 //        .st('opacity',1)
 //     })
 //     .on("leave", (e)=>{
 //       if(e.target.controller().info("scrollDirection") == "REVERSE"){
-//         $axisDifferenceRects
+//         $skillDifferenceRects
 //          .transition()
 //          .st('opacity',0)
 //       }
@@ -730,16 +792,16 @@ export default {init, updateStep}
 //       .transition()
 //       .st('opacity',1)
 //
-//     $devCircles
+//     $devSkillCircles
 //       .transition()
 //       .st('opacity',0)
 //
-//     $truckerCircles
+//     $truckerSkillCircles
 //       .transition()
 //       .st('opacity',0)
 //
 //
-//     $axisDifferenceRects
+//     $skillDifferenceRects
 //       .transition()
 //       .delay(1000)
 //       .at('x',d=> xScaleEuclidean(d.xCoordStacked))
@@ -754,7 +816,7 @@ export default {init, updateStep}
 //       .duration(500)
 //       .at('transform',()=> 'translate('+JOB_LABEL_MARGIN_LEFT+','+ (viewportHeight/2) +')')
 //
-//     $axisDifferenceRects
+//     $skillDifferenceRects
 //       .on('mouseenter',d=>console.log(d.skills))})
 //       .on("leave", (e)=>{
 //         if(e.target.controller().info("scrollDirection") == "REVERSE"){}
@@ -768,7 +830,7 @@ export default {init, updateStep}
 //
 //     $skillSections.at('transform',()=> 'translate('+0+','+ 2*ALL_JOBS_STARTING_Y_LOCATION +')')
 //
-//     $axisDifferenceRectsAllJobs
+//     $skillDifferenceRectsAllJobs
 //     .at('x',d=> xScaleEuclidean(d.xCoordStacked))
 //     .at('width',d=> xScaleEuclidean(d.difference))
 //     .at('height',3)

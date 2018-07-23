@@ -51,7 +51,7 @@ const fileNames = [
   "Hairdressers","Journalists","Air_Traffic_Controllers","Dancers","Optometrists",
   "Physician_Assistants","Electricians","Ambulance_Drivers","Athletes","Skincare_Specialists",
   "Private_Cooks","Funeral_Attendants","Actors","Judges","Economists",
-  "historians","Dental_Assistants","Cobblers","Massage_Therapists","Millwrights",
+  "Historians","Dental_Assistants","Cobblers","Massage_Therapists","Millwrights",
   "Librarians","Maids","Bartenders","Dishwashers","Fast_Food_Cooks",
   "Barbers","Real_Estate_Agents","Proofreaders"
 ]
